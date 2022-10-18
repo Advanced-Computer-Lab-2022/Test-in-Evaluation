@@ -3,6 +3,8 @@ import { UserTypes } from "../types/user";
 
 export const UserSchema = new Schema({
     username: { type: String, unique: true },
+    firstName: String,
+    lastName: String,
     passwordHash: String,
     userType: {
         type: String,

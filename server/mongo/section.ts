@@ -5,5 +5,7 @@ import { Schema } from "mongoose";
 export const SectionSchema = new Schema({
     name: String,
     description: String,
+    totalHourse: Number,
+    parentCourse: { type: Schema.Types.ObjectId, ref: "Course" },
     // TODO: add video objects, ...
 });
