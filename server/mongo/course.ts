@@ -4,7 +4,7 @@ export const CourseSchema = new Schema({
     title: String,
     subject: String,
     summary: String,
-    total_hours: Number,
+    totalHours: Number,
     price: Number,
     rating: { sumOfRatings: Number, numberOfRatings: Number },
     instructor: { type: Schema.Types.ObjectId, ref: "User" },
