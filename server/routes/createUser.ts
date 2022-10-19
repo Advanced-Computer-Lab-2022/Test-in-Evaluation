@@ -18,7 +18,7 @@ type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
     app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        if (req.session.data.userType !== UserTypes.admin) return res.status(400).send({ errors: "unauthorized" });
+        if (req.session.data.userType !== UserTypes.admin) return res.status(400).send({ error: "unauthorized" });
 
         const type = req.body.type;
 
