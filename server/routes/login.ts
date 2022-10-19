@@ -16,7 +16,7 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
         const { username, password } = req.body;
 
         const user = await User.findOne({ username });
