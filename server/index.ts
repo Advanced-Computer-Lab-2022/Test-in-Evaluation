@@ -18,3 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 addRoutes(app);
+
+const port = process.env.PORT!;
+
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
