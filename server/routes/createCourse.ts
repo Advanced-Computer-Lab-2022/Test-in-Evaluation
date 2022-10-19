@@ -18,7 +18,7 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
         if (req.session.data.userType !== UserTypes.instructor) return res.status(400).send({ error: "unauthorized" });
 
         const { price, sections, subject, summary, title } = req.body;
