@@ -6,7 +6,7 @@ import { User } from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
-const path = "api/create_user" as const;
+const path = "/api/create_user" as const;
 
 const Input = Record({
     username: String,

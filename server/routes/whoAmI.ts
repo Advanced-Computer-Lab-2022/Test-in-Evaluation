@@ -3,7 +3,7 @@ import { Record, Static } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
 import { Request, Response } from "../types/express";
 
-const path = "api/who_am_i" as const;
+const path = "/api/who_am_i" as const;
 
 const Input = Record({});
 

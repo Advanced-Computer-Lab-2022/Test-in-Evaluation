@@ -5,7 +5,7 @@ import { validateInput } from "../middleware/validateInput";
 import { User } from "../mongo";
 import { Request, Response } from "../types/express";
 
-const path = "api/set_country" as const;
+const path = "/api/set_country" as const;
 
 const Input = Record({
     country: String,

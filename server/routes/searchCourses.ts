@@ -5,7 +5,7 @@ import { Course, User } from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
-const path = "api/search_courses" as const;
+const path = "/api/search_courses" as const;
 
 const Input = Record({
     subject: String.Or(Undefined),

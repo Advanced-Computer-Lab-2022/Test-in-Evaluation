@@ -5,7 +5,7 @@ import { Course, Section } from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
-const path = "api/get_course_preview" as const;
+const path = "/api/get_course_preview" as const;
 
 const Input = Record({
     courseId: String,
