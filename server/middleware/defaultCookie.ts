@@ -8,6 +8,6 @@ const defaultCookieGenerator = (): Cookie => ({
 
 export const defaultCookieMiddleware = (req: Request, res: Response, next: () => any) => {
     // note may cause issues from object instantiation 
-    if (!req.session || !("userType" in req.session)) (req.session as any) = { ...(req.session ?? {}), ...defaultCookieGenerator() };
+    if (!req.session || !("userType" in req.session)) (req.session.data as any) = { ...(req.session.data ?? {}), ...defaultCookieGenerator() };
     return next();
 };
