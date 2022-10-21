@@ -1,4 +1,5 @@
 import "dotenv-safe/config";
+import "./mongo";
 import express from "express";
 import session from "express-session";
 import { defaultCookieMiddleware } from "./middleware/defaultCookie";
