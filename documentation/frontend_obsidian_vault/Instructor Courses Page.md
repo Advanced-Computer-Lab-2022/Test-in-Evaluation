@@ -1,0 +1,11 @@
+
+
+
+- [ ] View all courses given by him
+- [ ] View rating of all courses given by them
+- [ ] View reviews on all courses given by them
+- [ ] Search and filter the courses given by them 
+- [ ] using the [[Search Options]]
+- [ ] and the [[Filtration Options]]
+- [ ] Define a promotion on each course
+- [ ] Report a problem with a course which leads to the [[Reports Page]]

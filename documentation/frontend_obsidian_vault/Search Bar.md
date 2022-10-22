@@ -1,0 +1,4 @@
+- [ ] Takes as an input a query string
+- [ ] Search performed can be on the [[Search Options]]
+- [ ] Allow additional constraints on search results as specified by the available [[Filtration Options]]
+- [ ] Displays a [[Search Result Page]] with only the results matching the filter and search when search is pressed
