@@ -1,0 +1,179 @@
+{
+  "main": {
+    "id": "ec1cdf044888e5c3",
+    "type": "split",
+    "children": [
+      {
+        "id": "016f7088ed0876d9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cea8b22f31cd8a1d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Home Page.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "09467fee3748c12a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Profile Page.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "74508eada97288ef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Course List Page.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "80a66af64bbbd0d6",
+    "type": "split",
+    "children": [
+      {
+        "id": "df372a869fb7e239",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "224def52a27fb5cb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "65b3f13d09debfac",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "e3a969a84337b6c8",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 261.5
+  },
+  "right": {
+    "id": "9e069a206f1a89d5",
+    "type": "split",
+    "children": [
+      {
+        "id": "5dd0bb2e106b5162",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "81ac1dbd4dcecd83",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Home Page.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "5161c8fb7285e09f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Home Page.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "94abefd93cab0159",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ad440a78dfb00be0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Home Page.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "ribbon": {
+    "mostRecentAction": ""
+  },
+  "active": "cea8b22f31cd8a1d",
+  "lastOpenFiles": [
+    "Admin Profile Page.md",
+    "Profile Page.md",
+    "Reports Page.md",
+    "Trainee Profile Page.md",
+    "Instructor Courses Page.md",
+    "Instructor Profile Page.md",
+    "Course Overview Page.md",
+    "Course Subtitle Page.md",
+    "Course Creation Page.md",
+    "Sign Up Page.md"
+  ]
+}

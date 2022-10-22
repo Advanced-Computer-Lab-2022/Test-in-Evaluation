@@ -1,0 +1,11 @@
+
+
+
+- [ ] Start at the top and then transition to a fixed view as you scroll down(see udacity)
+- [ ] Logo which links back to the [[Home Page]] 
+- [ ] [[Search Bar]] which allows you to search all courses with a specific string
+- [ ] View all courses button which leads to [[Course List Page]]
+- [ ] Sign up button which links to the [[Sign Up Page]]
+- [ ] Sign in button which links to the [[Sign In Page]]
+- [ ] Profile button when logged in which leads to the [[Profile Page]] 
+- [ ] Website settings displayed when you press on the profile icon which include log out

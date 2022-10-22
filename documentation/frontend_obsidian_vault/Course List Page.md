@@ -1,0 +1,4 @@
+- [ ] Displays a list of [[Course List Item]]s which represent all the available courses in the website
+- [ ] Courses are seperated into tabs which refer to the their subject(All, Python, C++, etc..)
+- [ ] Can also view courses based on popularity
+- [ ] Can also view courses based on most views
