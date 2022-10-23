@@ -22,13 +22,14 @@ export const addRoute = (app: Express) => {
         let filters = req.body;
         let courseFilters = {};
         if (filters.maxPrice !== undefined)
-            courseFilters = {price: {lte: courseFilters}};
+            courseFilters = {price: {$lte: filters.maxPrice}};
         if (filters.instructor !== undefined)
             courseFilters = {...courseFilters, instructor: filters.instructor};
         if (filters.subject !== undefined)
             courseFilters = {...courseFilters, subject: filters.subject};
         if (filters.title !== undefined)
-            courseFilters = {...courseFilters, title: ".*" + filters.title + ".*"};
-        return await Course.find(courseFilters);
+            courseFilters = {...courseFilters, title: {$regex: ".*" + filters.title + ".*"}};
+        let result = await Course.find(courseFilters);
+        res.send(result);
     });
 };
