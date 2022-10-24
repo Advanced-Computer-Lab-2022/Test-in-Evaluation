@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { UserTypes } from "../types/user";
+import { UserTypes } from "./types/user";
 
 export const UserSchema = new Schema({
     username: { type: String, unique: true },
