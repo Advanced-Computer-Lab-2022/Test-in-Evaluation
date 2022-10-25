@@ -1,11 +1,14 @@
 import "dotenv-safe/config";
-import "./mongo";
+import "./Model";
 import express from "express";
 import session from "express-session";
 import { defaultCookieMiddleware } from "./middleware/defaultCookie";
 import { addRoutes } from "./routes/addRoutes";
+import {getFilteredCourses} from './Controller/getFilteredCourses';
 
 const app = express();
+
+app.get("/courses", getFilteredCourses);
 
 app.use(
     session({
