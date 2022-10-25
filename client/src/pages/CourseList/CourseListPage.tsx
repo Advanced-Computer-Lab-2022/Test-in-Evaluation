@@ -1,9 +1,11 @@
-function CourseListPage() {
+import { Container } from "@mui/system";
+import CourseList from "./CourseList";
+const CourseListPage = () => {
     return (
-        <div className="CourseListPage">
-            This is the CourseListPage Component
-        </div>
+        <Container maxWidth="lg">
+            <CourseList />
+        </Container>
     );
-}
+};
 
 export default CourseListPage;
