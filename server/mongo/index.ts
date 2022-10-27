@@ -4,8 +4,6 @@ import { CourseSchema } from "./course";
 import { ExerciseSchema } from "./exercise";
 import { SectionSchema } from "./section";
 
-mongoose.connect(process.env.MONGODB_URI!);
-
 export const User = mongoose.model("User", UserSchema);
 
 export const Course = mongoose.model("Course", CourseSchema);
