@@ -23,7 +23,7 @@ export const addRoute = (app: Express) => {
         if (!user) return res.status(400).send({ error: "User not found" });
 
         const passwordHash = user.passwordHash || "";
-        const isCorrect = await verify(passwordHash, password);
+        const isCorrect = await verify(passwordHash, password).catch(() => false);
 
         if (!isCorrect) return res.status(400).send({ error: "Incorrect password" });
 

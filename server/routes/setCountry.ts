@@ -14,7 +14,7 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), isNotAdmin, async (req: Request<Input>, res: Response) => {
+    app.post(path, validateInput(Input), isNotAdmin, async (req: Request<Input>, res: Response) => {
         const country = req.body.country;
         if (req.session.data.userType) {
             await User.updateOne({ username: req.session.data.username }, { $set: { country } });

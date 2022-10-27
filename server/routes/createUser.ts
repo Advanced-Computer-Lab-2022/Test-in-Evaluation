@@ -21,23 +21,13 @@ export const addRoute = (app: Express) => {
         if (req.session.data.userType !== UserTypes.admin) return res.status(400).send({ error: "unauthorized" });
 
         const type = req.body.type;
+        const userType = type in UserTypes && UserTypes[type as keyof typeof UserTypes];
+        if (!userType) return res.status(500).send({ error: "unknown type" });
 
-        const base = { username: req.body.username, password: await hash(req.body.password) };
-        if (type === "admin") {
-            await User.create({
-                ...base,
-                userType: UserTypes.admin,
-            });
-        } else if (type === "instructor") {
-            await User.create({
-                ...base,
-                userType: UserTypes.instructor,
-            });
-        } else if (type === "corporate") {
-            await User.create({
-                ...base,
-                userType: UserTypes.corporateTrainee,
-            });
-        } else res.status(500).send({ error: "unknown type" });
+        const newUser = { username: req.body.username, passwordHash: await hash(req.body.password), userType };
+
+        await User.create(newUser);
+
+        res.send({ success: true });
     });
 };

@@ -12,7 +12,7 @@ const Input = Record({
     subject: String,
     summary: String,
     price: Number,
-    sections: Array(Record({ title: String, description: String, totalHours: Number })),
+    sections: Array(Record({ title: String, description: String, totalHours: Number })).withConstraint((sections) => sections.length > 0),
 });
 
 type Input = Static<typeof Input>;
