@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
-import { Course, User } from "../mongo";
+import { Course, User, Subject} from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
@@ -33,10 +33,11 @@ export const addRoute = (app: Express) => {
 
         const rating = ratingHigh || ratingLow ? { ...(ratingLow ? { $gte: ratingLow } : {}), ...(ratingHigh ? { $lte: ratingHigh } : {}) } : undefined;
         const price = priceHigh || priceLow ? { ...(priceLow ? { $gte: priceLow } : {}), ...(priceHigh ? { $lte: priceHigh } : {}) } : undefined;
+        const subjectId = subject ? await Subject.find({Name: subject}) : undefined;
 
         const filter = {
             ...(instructorId ? { instructor: instructorId } : {}),
-            ...(subject ? { subject } : {}),
+            ...(subjectId ? { subjectId } : {}),
             ...(title ? { title: { $regex: title } } : {}),
             ...(rating ? { rating } : {}),
             ...(price ? { price } : {}),
