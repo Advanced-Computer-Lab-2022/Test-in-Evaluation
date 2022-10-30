@@ -24,7 +24,7 @@ body,
     height: 100%;
 }
 
-.App {
+body {
     background: linear-gradient(to right, #2193b0, #6dd5ed);
 }
 
