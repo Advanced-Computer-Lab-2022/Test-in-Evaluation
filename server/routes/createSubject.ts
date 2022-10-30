@@ -5,7 +5,7 @@ import { Subject} from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
-const path = "/api/create_course" as const;
+const path = "/api/create_subject" as const;
 
 const Input = Record({
     Name: String,
