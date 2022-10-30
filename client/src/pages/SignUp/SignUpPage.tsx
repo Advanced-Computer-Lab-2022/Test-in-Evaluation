@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import countryList from "../../data/countries";
+import {countryList} from "../../data/countries";
 import {
     TermsOfService,
     PrivacyPolicy,

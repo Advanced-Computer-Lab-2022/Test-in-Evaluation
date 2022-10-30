@@ -1,5 +1,11 @@
+import ProfileAdministratorPage from "../ProfileAdministrator/ProfileAdministratorPage";
+
 function ProfilePage() {
-    return <div className="ProfilePage">This is the ProfilePage Component</div>;
+    return (
+        <>
+        <ProfileAdministratorPage/>
+        </>
+    );
 }
 
 export default ProfilePage;
