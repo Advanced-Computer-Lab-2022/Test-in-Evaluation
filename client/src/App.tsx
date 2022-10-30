@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "./App.css";
 import Navbar from "./components/Navbar";
 import {
     Home,
@@ -21,14 +20,19 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/signin" element={<SignIn />}></Route>
-                    <Route path="/signup" element={<SignUp />}></Route>
-                    <Route path="/courses" element={<CourseList />}></Route>
-                    <Route path="/search" element={<SearchResult />}></Route>
-                    <Route path="/profile" element={<Profile />}></Route>
-                </Routes>
+                <div style={{ width: "100%", height: "100%" }}>
+                    <Routes>
+                        <Route path="/" element={<Home />}></Route>
+                        <Route path="/signin" element={<SignIn />}></Route>
+                        <Route path="/signup" element={<SignUp />}></Route>
+                        <Route path="/courses" element={<CourseList />}></Route>
+                        <Route
+                            path="/search"
+                            element={<SearchResult />}
+                        ></Route>
+                        <Route path="/profile" element={<Profile />}></Route>
+                    </Routes>
+                </div>
             </BrowserRouter>
         </div>
     );
