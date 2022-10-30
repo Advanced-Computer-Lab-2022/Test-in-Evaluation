@@ -78,7 +78,7 @@ export default function DrawerAppBar() {
     );
 
     return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", marginBottom: "0" }}>
             <AppBar component="nav" sx={{ px: 3 }}>
                 <Toolbar sx={{ justifyContent: "space-between" }}>
                     <IconButton

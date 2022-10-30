@@ -8,6 +8,7 @@ Signing up is specifically for individual trainees ONLY.
 - [ ] Insert Password
 - [ ] Insert Password again
 - [ ] Select Country
+- [ ] Select gender
 - [ ] Already have an account? Sign in which links to [[Sign In Page]]
 - [ ] Display Sign up policies before proceeding with account creation
 - [ ] Display the copyright contract for instructors(?)
