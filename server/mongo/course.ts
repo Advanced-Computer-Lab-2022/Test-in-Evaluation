@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 
 export const CourseSchema = new Schema({
     title: String,
-    subject: String,
+    subject: Schema.Types.ObjectId,
     summary: String,
     totalHours: Number,
     price: Number,
