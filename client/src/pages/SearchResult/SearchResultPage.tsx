@@ -6,6 +6,7 @@ import {
     Typography,
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
+import React from "react";
 import SearchResultItem, { CourseDetails } from "./SearchResultItem";
 
 function SearchResultPage() {
@@ -38,6 +39,13 @@ function SearchResultPage() {
 
     let crsList = [];
     for (let i = 0; i < 10; i++) crsList.push({ id: i, ...crs });
+
+    const [priceRangeValue, setPriceRangeValue] = React.useState<number[]>([
+        0, 10000,
+    ]);
+    const handlePriceRange = (event: Event, newValue: number | number[]) => {
+        setPriceRangeValue(newValue as number[]);
+    };
 
     return (
         <div
@@ -94,6 +102,8 @@ function SearchResultPage() {
                                     min={0}
                                     max={10000}
                                     marks={sliderMarks}
+                                    value={priceRangeValue}
+                                    onChange={handlePriceRange}
                                 />
                             </div>
                         </div>
