@@ -1,6 +1,6 @@
 :root {
---blue: blue;
---sign-up-width: 80%;
+    --blue: blue;
+    --sign-up-width: 80%;
 }
 
 body {
@@ -15,4 +15,16 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
+}
+
+html,
+body,
+#root,
+.App {
+    height: 100%;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
 }

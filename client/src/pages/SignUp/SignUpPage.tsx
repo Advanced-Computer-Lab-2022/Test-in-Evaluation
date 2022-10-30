@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./SignUpPage.css";
 import countryList from "../../data/countries";
 import {
     TermsOfService,
@@ -22,6 +21,7 @@ import {
     MenuItem,
     InputLabel,
     FormControl,
+    Typography,
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -30,14 +30,29 @@ function SignUpPage() {
     const [tab, setTab] = useState("individual");
 
     return (
-        <div className="sign-up-page" style={{ width: "100%", height: "100%" }}>
-            <div className="sign-up-form">
-                <label style={{ paddingLeft: "30px", fontSize: "40px" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                justifyContent: "center",
+                verticalAlign: "middle",
+            }}
+        >
+            <div
+                style={{
+                    padding: "5px",
+                    width: "40%",
+                    boxShadow:
+                        "inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3)",
+                }}
+            >
+                <Typography variant="h2" gutterBottom>
                     Sign Up
-                </label>
+                </Typography>
 
                 <Tabs
-                    style={{ paddingLeft: "10%", width: "100%" }}
+                    style={{ width: "100%" }}
                     value={tab}
                     onChange={(event, value) => {
                         setTab(value);
@@ -48,7 +63,14 @@ function SignUpPage() {
                     <Tab label="Instructor" value="instructor" />
                 </Tabs>
 
-                <div className="form-items">
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "25px",
+                        padding: "10px",
+                    }}
+                >
                     <TextField
                         required
                         variant="outlined"
