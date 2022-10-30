@@ -37,7 +37,7 @@ export const addRoute = (app: Express) => {
 
         const filter = {
             ...(instructorId ? { instructor: instructorId } : {}),
-            ...(subjectId ? { subjectId } : {}),
+            ...(subject ? { subjectId } : {}),
             ...(title ? { title: { $regex: title } } : {}),
             ...(rating ? { rating } : {}),
             ...(price ? { price } : {}),
