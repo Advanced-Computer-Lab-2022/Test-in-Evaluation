@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Home Page.md",
+                "file": "Sign Up Page.md",
                 "mode": "source",
                 "source": false
               }
@@ -109,7 +109,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Home Page.md",
+                "file": "Sign Up Page.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,7 +126,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Home Page.md",
+                "file": "Sign Up Page.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,7 +149,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Home Page.md"
+                "file": "Sign Up Page.md"
               }
             }
           }
@@ -165,15 +165,15 @@
   },
   "active": "cea8b22f31cd8a1d",
   "lastOpenFiles": [
-    "Admin Profile Page.md",
     "Profile Page.md",
+    "Sign Up Page.md",
+    "Home Page.md",
+    "Admin Profile Page.md",
     "Reports Page.md",
     "Trainee Profile Page.md",
     "Instructor Courses Page.md",
     "Instructor Profile Page.md",
     "Course Overview Page.md",
-    "Course Subtitle Page.md",
-    "Course Creation Page.md",
-    "Sign Up Page.md"
+    "Course Subtitle Page.md"
   ]
 }
