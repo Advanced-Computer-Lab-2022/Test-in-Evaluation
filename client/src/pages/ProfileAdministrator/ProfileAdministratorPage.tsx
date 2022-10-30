@@ -16,7 +16,7 @@ function ProfileAdministratorPage() {
             <Box style={{background: 'white', boxShadow:'rgba(0, 0, 0, 0.50) 0px 5px 15px' , width: '800px', height: '800px'}}>
                 <Box sx ={{flexGrow: 1, display: 'flex', height: "100%"}}>
                     <Tabs
-                        sx = {{borderRight: 1,borderColor: 'divider', boxShadow: 'rgba(0, 0, 0, 0.3) 0px 5px 15px'}}
+                        sx = {{paddingY: '40px',borderRight: 1,borderColor: 'divider', boxShadow: 'rgba(0, 0, 0, 0.3) 0px 5px 15px'}}
                         value={optionTab}
                         orientation='vertical'
                         onChange={(event, value) => {

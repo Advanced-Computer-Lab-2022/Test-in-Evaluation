@@ -59,7 +59,7 @@ function AddUser() {
     }
 
     return (
-        <Box sx={{ width: '100%'}}>
+        <Box sx={{ width: '100%', paddingY:'10px'}}>
             <Snackbar autoHideDuration={6000} onClose={() => setSnackbarInfo({...snackbarInfo, snackbarOpen: false})} open={snackbarInfo.snackbarOpen}>
                 <Alert variant='filled' severity={snackbarInfo.snackbarSeverity}>
                     <Typography>
@@ -67,10 +67,11 @@ function AddUser() {
                     </Typography>
                 </Alert>
             </Snackbar>
-            <form onSubmit={handleSubmission}>
-                <Box sx={{display: 'flex', gap: '15px', flexDirection: 'column', justifyContent: 'center'}}>
+            <form style={{height:'100%'}} onSubmit={handleSubmission}>
+                <Box sx={{display: 'flex', gap: '15px', flexDirection: 'column',  height: '96%', justifyContent: 'center'}}>
                     <Box sx={{boxShadow: 'rgba(0, 0, 0, 0.0) 0px 5px 15px' ,width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                         <Tabs
+                            sx={{borderRadius: '100px'}}
                             value={userType}
                             onChange={(event,value) => setUserType(value)}
                         >
@@ -220,6 +221,10 @@ function AddUser() {
                         <MenuItem value={'Male'}>Male</MenuItem>
                         <MenuItem value={'Female'}>Female</MenuItem>
                     </Select>
+                    </Box>
+
+                    <Box sx={{height:'100%'}}>
+
                     </Box>
 
                     <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
