@@ -8,6 +8,7 @@ import {
     CourseList,
     SearchResult,
     Profile,
+    CreateCourse,
 } from "./pages";
 
 import { useNavigate } from "react-router-dom";
@@ -29,6 +30,10 @@ function App() {
                         <Route
                             path="/search"
                             element={<SearchResult />}
+                        ></Route>
+                        <Route
+                            path="/createCourse"
+                            element={<CreateCourse />}
                         ></Route>
                         <Route path="/profile" element={<Profile />}></Route>
                     </Routes>
