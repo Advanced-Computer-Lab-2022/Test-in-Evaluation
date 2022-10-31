@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Course } from "../../global";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../../App";
+import { apiURL, UserContext } from "../../App";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 
 const CourseList = () => {
@@ -18,9 +18,10 @@ const CourseList = () => {
     const getCourses = async () => {
         try {
             setLoading(true);
+            const filter = viewMyCoursesOnly ? {instructor: userState.userInfo.username} : {};
             const res = await axios.post(
-                "http://localhost:8000/api/search_courses",
-                {},
+                apiURL+"/search_courses",
+                filter,
                 { withCredentials: true }
             );
             console.log(res.data.result);
@@ -33,7 +34,7 @@ const CourseList = () => {
     };
     useEffect(() => {
         getCourses();
-    }, []);
+    }, [viewMyCoursesOnly]);
     if (loading) return <div>Loading...</div>;
     return (
         <div>
