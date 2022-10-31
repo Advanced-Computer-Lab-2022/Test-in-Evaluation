@@ -1,11 +1,7 @@
 import { Express } from "express";
 import { Array, Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
-<<<<<<< Updated upstream
-import { Course, Section, Subject, User } from "../mongo";
-=======
 import { Course, Section, User, Subject } from "../mongo";
->>>>>>> Stashed changes
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
