@@ -136,7 +136,6 @@ function SearchResultPage() {
                                 disablePortal
                                 style={{ width: "100%" }}
                                 options={subjects}
-                                onChange={(e,v) => setCourseSubject(v)}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
