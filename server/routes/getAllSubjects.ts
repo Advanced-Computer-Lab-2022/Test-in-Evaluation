@@ -7,9 +7,7 @@ import { UserTypes } from "../types/user";
 
 const path = "/api/get_all_subjects" as const;
 
-const Input = Record({
-    Name: String,
-});
+const Input = Record({});
 
 type Input = Static<typeof Input>;
 
