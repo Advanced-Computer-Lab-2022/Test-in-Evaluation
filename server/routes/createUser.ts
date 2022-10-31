@@ -1,6 +1,6 @@
 import { hash } from "argon2";
 import { Express } from "express";
-import { Record, Static, String } from "runtypes";
+import { Record, Static, String, Union, Literal } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
 import { User } from "../mongo";
 import { Request, Response } from "../types/express";
@@ -9,8 +9,12 @@ import { UserTypes } from "../types/user";
 const path = "/api/create_user" as const;
 
 const Input = Record({
-    username: String,
-    password: String,
+    username: String.withConstraint((s) => s.length > 5),
+    password: String.withConstraint((s) => s.length > 8),
+    firstName: String.withConstraint((s) => s.length > 0),
+    lastName: String.withConstraint((s) => s.length > 0),
+    email: String.withConstraint((s) => s.length > 0),
+    gender: Union(Literal("male"), Literal("female")),
     type: String,
 });
 
@@ -24,7 +28,15 @@ export const addRoute = (app: Express) => {
         const userType = type in UserTypes && UserTypes[type as keyof typeof UserTypes];
         if (!userType) return res.status(500).send({ error: "unknown type" });
 
-        const newUser = { username: req.body.username, passwordHash: await hash(req.body.password), userType };
+        const newUser = {
+            username: req.body.username,
+            passwordHash: await hash(req.body.password),
+            userType,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            gender: req.body.gender,
+        };
 
         await User.create(newUser);
 
