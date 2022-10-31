@@ -71,7 +71,7 @@ function AddUser() {
                 <Box sx={{display: 'flex', gap: '15px', flexDirection: 'column',  height: '96%', justifyContent: 'center'}}>
                     <Box sx={{boxShadow: 'rgba(0, 0, 0, 0.0) 0px 5px 15px' ,width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                         <Tabs
-                            sx={{borderRadius: '100px'}}
+                            sx={{borderRadius: '25px'}}
                             value={userType}
                             onChange={(event,value) => setUserType(value)}
                         >
@@ -223,9 +223,7 @@ function AddUser() {
                     </Select>
                     </Box>
 
-                    <Box sx={{height:'100%'}}>
-
-                    </Box>
+                    <Box sx={{height:'100%'}}/>
 
                     <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                         <Button type='submit' variant='contained'> Add {userType} </Button>
