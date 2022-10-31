@@ -14,12 +14,12 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+    app.delete(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
         if (req.session.data.userType != UserTypes.admin) {
             res.status(500).send("Unauthorized");
             return;
         }
-        await Subject.deleteOne(req.body);
+        await Subject.deleteOne({ Name: req.body.Name });
         res.send({ success: true });
         return;
     });
