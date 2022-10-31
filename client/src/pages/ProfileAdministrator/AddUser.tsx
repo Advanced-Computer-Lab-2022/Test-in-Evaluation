@@ -62,7 +62,7 @@ function AddUser() {
             const type =
                 userType === "Admin"
                     ? "admin"
-                    : "Instructor"
+                    : userType === "Instructor"
                     ? "instructor"
                     : "corporateTrainee";
 
@@ -86,8 +86,6 @@ function AddUser() {
                         snackbarSeverity: "error",
                     });
                 });
-
-            //CALL API HERE!!!
         }
     };
 
@@ -300,6 +298,7 @@ function AddUser() {
                         <Select
                             required
                             sx={{ width: "100%" }}
+                            value={formInput.gender}
                             onChange={(event, value) => {
                                 setFormInput({
                                     ...formInput,
