@@ -14,12 +14,12 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
         if (req.session.data.userType != UserTypes.admin) {
             res.status(500).send("Unauthorized");
             return;
         }
-        await Subject.create(req.body);
+        await Subject.create({Name: req.body.Name});
         res.send({ success: true });
         return;
     });

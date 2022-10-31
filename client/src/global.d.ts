@@ -1,4 +1,5 @@
-export type course = {
+export type Course = {
+    _id: string;
     title: string;
     subject: string;
     summary: string;
@@ -8,5 +9,5 @@ export type course = {
         sumOfRatings: number;
         numberOfRatings: number;
     };
-    instructor: string;
+    instructor: { _id: string; username: string };
 };

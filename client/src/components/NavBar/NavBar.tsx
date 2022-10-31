@@ -13,6 +13,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import NavSearchBar from "../SearchBar/SearchBar";
 
 const drawerWidth = 240;
 type NavItem = {
@@ -86,21 +87,24 @@ export default function DrawerAppBar() {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: "none" } }}
+                        sx={{ mr: 2, display: { md: "none" } }}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            display: { xs: "none", sm: "block" },
-                            "&:hover": { cursor: "pointer" },
-                        }}
-                        onClick={() => navigate("/")}
-                    >
-                        LOGO
-                    </Typography>
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                    <Box sx={{ display: "flex", flexGrow: 1, gap: 0.5 }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                display: { xs: "none", md: "block" },
+                                "&:hover": { cursor: "pointer" },
+                            }}
+                            onClick={() => navigate("/")}
+                        >
+                            LOGO
+                        </Typography>
+                        <NavSearchBar />
+                    </Box>
+                    <Box sx={{ display: { xs: "none", md: "block" } }}>
                         {navItems.map((item) => (
                             <Button
                                 key={item.text}
@@ -123,7 +127,7 @@ export default function DrawerAppBar() {
                         keepMounted: true,
                     }}
                     sx={{
-                        display: { xs: "block", sm: "none" },
+                        display: { xs: "block", md: "none" },
                         "& .MuiDrawer-paper": {
                             boxSizing: "border-box",
                             width: drawerWidth,

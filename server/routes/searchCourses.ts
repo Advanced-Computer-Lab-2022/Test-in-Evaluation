@@ -33,11 +33,11 @@ export const addRoute = (app: Express) => {
 
         const rating = ratingHigh || ratingLow ? { ...(ratingLow ? { $gte: ratingLow } : {}), ...(ratingHigh ? { $lte: ratingHigh } : {}) } : undefined;
         const price = priceHigh || priceLow ? { ...(priceLow ? { $gte: priceLow } : {}), ...(priceHigh ? { $lte: priceHigh } : {}) } : undefined;
-        const subjectId = subject ? await Subject.find({Name: subject}) : undefined;
+        const subjectId = subject ? await Subject.findOne({ Name: subject }).then((v) => v?._id) : undefined;
 
         const filter = {
             ...(instructorId ? { instructor: instructorId } : {}),
-            ...(subject ? { subjectId } : {}),
+            ...(subject ? { subject: subjectId } : {}),
             ...(title ? { title: { $regex: title } } : {}),
             ...(rating ? { rating } : {}),
             ...(price ? { price } : {}),
