@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { Array, Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
-import { Course, Section, User } from "../mongo";
+import { Course, Section, Subject, User } from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
@@ -25,7 +25,9 @@ export const addRoute = (app: Express) => {
         const totalHours = sections.map((v) => v.totalHours).reduce((a, b) => a + b);
         const instructorId = await User.findOne({ username: req.session.data.username }).then((v) => v?._id);
 
-        const course = await Course.create({ price, subject, summary, title, totalHours, instructor: instructorId! });
+        const subjectId = await Subject.create({ Name: subject });
+
+        const course = await Course.create({ price, subjectId, summary, title, totalHours, instructor: instructorId! });
 
         await Promise.all(
             sections.map(({ description, title, totalHours }) =>
