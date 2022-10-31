@@ -5,8 +5,16 @@ import session from "express-session";
 import { defaultCookieMiddleware } from "./middleware/defaultCookie";
 import { addRoutes } from "./routes/addRoutes";
 import mongoose from "mongoose";
+import cors from "cors";
 
 const app = express();
+
+app.use(
+    cors({
+        origin: process.env.CORS_ORIGIN,
+        credentials: true,
+    })
+);
 
 app.use(
     session({
