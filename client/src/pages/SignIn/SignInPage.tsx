@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useState } from "react";
 import axios from "axios";
 import { countries } from "../../data/countries";
 import { apiURL } from "../../App";
@@ -33,10 +33,13 @@ import {
     AlertColor,
 } from "@mui/material";
 
+import { UserContext } from "../../App";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function SignInPage() {
     const navigate = useNavigate();
+    const userState = useContext(UserContext);
 
     type InputObject = {
         username: string;
@@ -60,7 +63,21 @@ function SignInPage() {
         axios
             .post(apiURL + "/login", formInput, { withCredentials: true })
             .then((response) => {
-                navigate("/home");
+                axios
+                    .get(apiURL + "/who_am_i", { withCredentials: true })
+                    .then((response) => {
+                        userState.setLoggedIn(true);
+                        userState.setUserType(response.data.type);
+                        navigate("/home");
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        setSnackbarInfo({
+                            snackbarOpen: true,
+                            snackbarText: error.response.data.error,
+                            snackbarSeverity: "error",
+                        });
+                    });
             })
             .catch((error) => {
                 console.log(error);

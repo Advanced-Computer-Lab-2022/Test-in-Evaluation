@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -14,6 +14,9 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import NavSearchBar from "../SearchBar/SearchBar";
+import axios from "axios";
+
+import { apiURL, UserContext } from "../../App";
 
 const drawerWidth = 240;
 type NavItem = {
@@ -24,6 +27,7 @@ type NavItem = {
 export default function DrawerAppBar() {
     const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const userState = useContext(UserContext);
     const [user, setUser] = useState(false);
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -39,8 +43,13 @@ export default function DrawerAppBar() {
         {
             text: "Logout",
             onClick: () => {
-                setUser(false);
-                navigate("/");
+                axios
+                    .post(apiURL + "/logout", { withCredentials: true })
+                    .then((response) => {
+                        userState.setLoggedIn(false);
+                        userState.setUserType("none");
+                        navigate("/");
+                    });
             },
         },
     ];
@@ -50,12 +59,13 @@ export default function DrawerAppBar() {
         {
             text: "Sign In",
             onClick: () => {
-                setUser(true);
                 navigate("/signin");
             },
         },
     ];
-    const navItems: NavItem[] = user ? loggedInList : loggedOutList;
+    const navItems: NavItem[] = userState.loggedIn
+        ? loggedInList
+        : loggedOutList;
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
