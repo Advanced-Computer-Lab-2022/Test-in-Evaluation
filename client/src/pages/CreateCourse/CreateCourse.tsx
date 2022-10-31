@@ -84,7 +84,7 @@ const CreateCourse = () => {
 
     if (loading) return <div>Loading...</div>;
     return (
-        <Container maxWidth="lg">
+        <Container sx={{ background: "white" }} maxWidth="lg">
             <CreateCourseForm onSubmit={onSubmit}>
                 <TextField
                     variant="outlined"
