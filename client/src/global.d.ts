@@ -1,7 +1,7 @@
 export type Course = {
     _id: string;
     title: string;
-    subject: string;
+    subjectId: { Name: string };
     summary: string;
     totalHours: number;
     price: number;
