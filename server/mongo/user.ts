@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { UserTypes } from "../types/user";
+import { UserTypes, GenderTypes } from "../types/user";
 
 export const UserSchema = new Schema({
     username: { type: String, unique: true },
@@ -9,6 +9,11 @@ export const UserSchema = new Schema({
     userType: {
         type: String,
         enum: UserTypes,
+    },
+    email: String,
+    gender: {
+        type: String,
+        enum: GenderTypes,
     },
     country: String,
     rating: { sumOfRatings: { type: Number, default: 0 }, numberOfRatings: { type: Number, default: 0 } },

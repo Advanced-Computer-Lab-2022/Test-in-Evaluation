@@ -4,3 +4,8 @@ export enum UserTypes {
     corporateTrainee = "corporateTrainee",
     admin = "admin",
 }
+
+export enum GenderTypes {
+    male = "male",
+    female = "female",
+}
