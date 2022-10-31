@@ -4,7 +4,8 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc --build"
+    "build": "tsc --build",
+    "serve": "tsc --build && node ./build/index.js"
   },
   "author": "Test in Evaluation",
   "dependencies": {
