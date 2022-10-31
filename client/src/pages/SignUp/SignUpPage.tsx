@@ -79,17 +79,20 @@ function SignUpPage() {
 
             //CALL API HERE!!!
 
-            axios.post(apiURL+'/sign_up',formInput).then((response) => {
-                console.log(response)
-                navigate('/home')
-            }).catch((error) => {
-                setSnackbarInfo({
-                    snackbarOpen: true,
-                    snackbarText: error.response.data.error,
-                    snackbarSeverity: 'error'
+            axios
+                .post(apiURL + "/sign_up", formInput, { withCredentials: true })
+                .then((response) => {
+                    console.log(response);
+                    navigate("/home");
                 })
-                console.log(error)
-            })
+                .catch((error) => {
+                    setSnackbarInfo({
+                        snackbarOpen: true,
+                        snackbarText: error.response.data.error,
+                        snackbarSeverity: "error",
+                    });
+                    console.log(error);
+                });
 
 
         }
