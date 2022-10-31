@@ -41,7 +41,8 @@ export const addRoute = (app: Express) => {
         try{
             await User.create(newUser);
         } catch (err: any) {
-            res.status(500).send(err.message)
+            res.status(500).send("Duplicate User");
+            return;
         }
 
         res.send({ success: true });
