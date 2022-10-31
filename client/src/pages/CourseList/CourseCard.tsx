@@ -2,34 +2,15 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea, Rating } from "@mui/material";
+import { Course } from "../../global";
 
-type Course = {
-    title: string;
-    subject: string;
-    summary: string;
-    totalHours: number;
-    price: number;
-    rating: {
-        sumOfRatings: number;
-        numberOfRatings: number;
-    };
-    instructor: string;
+type props = {
+    course: Course;
 };
-const course: Course = {
-    title: "Introduction to React",
-    subject: "Web Development",
-    summary: "Learn the basics of React",
-    totalHours: 10.5,
-    price: 49,
-    rating: {
-        sumOfRatings: 22,
-        numberOfRatings: 5,
-    },
-    instructor: "John Doe",
-};
-const CourseCard = () => {
+
+const CourseCard = ({ course }: props) => {
     const courseRating =
-        course.rating.sumOfRatings / course.rating.numberOfRatings;
+        course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
     return (
         <Card sx={{ textAlign: "left" }}>
             <CardActionArea>
@@ -37,7 +18,7 @@ const CourseCard = () => {
                     sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
                 >
                     <Typography gutterBottom variant="h5" component="div">
-                        {course.title}
+                        {course?.title}
                     </Typography>
 
                     <Box
@@ -47,10 +28,10 @@ const CourseCard = () => {
                         }}
                     >
                         <Typography variant="body2" color="text.secondary">
-                            {course.instructor}
+                            {course?.instructor?.username}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {course.subject}
+                            {course?.subject}
                         </Typography>
                     </Box>
 
@@ -82,10 +63,10 @@ const CourseCard = () => {
                         }}
                     >
                         <Typography variant="body2" fontWeight="bold">
-                            Price: {course.price}
+                            Price: {course?.price}
                         </Typography>
                         <Typography variant="subtitle1" color="text.secondary">
-                            {course.totalHours} Hours
+                            {course?.totalHours} Hours
                         </Typography>
                     </Box>
                 </CardContent>
