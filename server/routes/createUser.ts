@@ -38,7 +38,11 @@ export const addRoute = (app: Express) => {
             gender: req.body.gender,
         };
 
-        await User.create(newUser);
+        try{
+            await User.create(newUser);
+        } catch (err: any) {
+            res.status(500).send(err.message)
+        }
 
         res.send({ success: true });
     });
