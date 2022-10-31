@@ -17,7 +17,7 @@ const CourseList = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const getCourses = async () => {
         try {
-            setLoading(true);
+            // setLoading(true);
             const filter = viewMyCoursesOnly ? {instructor: userState.userInfo.username} : {};
             const res = await axios.post(
                 apiURL+"/search_courses",
@@ -26,10 +26,10 @@ const CourseList = () => {
             );
             console.log(res.data.result);
             setCourses(res.data.result);
-            setLoading(false);
+            // setLoading(false);
         } catch (error) {
             console.log(error);
-            setLoading(false);
+            // setLoading(false);
         }
     };
     useEffect(() => {
