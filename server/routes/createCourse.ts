@@ -48,12 +48,15 @@ export const addRoute = (app: Express) => {
 
             await Promise.all(
                 sections.map(({ description, title, totalHours }) =>
-                    Section.create({
-                        description,
-                        name: title,
-                        parentCourse: course._id,
-                        totalHours,
-                    })
+                    Section.findOneAndUpdate(
+                        {
+                            description,
+                            name: title,
+                            parentCourse: course._id,
+                            totalHours,
+                        },
+                        { upsert: true }
+                    )
                 )
             );
 
