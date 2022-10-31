@@ -5,6 +5,8 @@ import {
     PrivacyPolicy,
     ContentOwnershipPolicy,
 } from "../../data/policies";
+import { useNavigate } from "react-router-dom";
+import { apiURL } from "../../App";
 import {
     Alert,
     Autocomplete,
@@ -29,16 +31,16 @@ import {
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import axios from "axios";
 
 function SignUpPage() {
     type InputObject = {
         email: string,
         username: string,
-        firstname: string,
-        lastname: string,
+        firstName: string,
+        lastName: string,
         password: string,
         gender: string,
-        country: string,
         passwordRepeat: string
         acceptPolicies: boolean
     }
@@ -49,6 +51,7 @@ function SignUpPage() {
         snackbarSeverity:AlertColor,
     }
 
+    const navigate = useNavigate();
     const [userType, setUserType] = useState('individual trainee');
     const [formInput, setFormInput] = useState<InputObject>({} as InputObject);
     const [snackbarInfo,setSnackbarInfo] = useState<SnackbarInformation>({} as SnackbarInformation)
@@ -76,11 +79,19 @@ function SignUpPage() {
 
             //CALL API HERE!!!
 
-            setSnackbarInfo({
-                snackbarOpen: true,
-                snackbarText: 'The account has been successfully created',
-                snackbarSeverity: 'success'
+            axios.post(apiURL+'/sign_up',formInput).then((response) => {
+                console.log(response)
+                navigate('/home')
+            }).catch((error) => {
+                setSnackbarInfo({
+                    snackbarOpen: true,
+                    snackbarText: error.response.data.error,
+                    snackbarSeverity: 'error'
+                })
+                console.log(error)
             })
+
+
         }
 
     }
@@ -161,9 +172,9 @@ function SignUpPage() {
                                 required
                                 variant='outlined'
                                 label='First name'
-                                value={formInput.firstname}
+                                value={formInput.firstName}
                                 onChange={(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-                                    setFormInput({...formInput,firstname: event.target.value})
+                                    setFormInput({...formInput,firstName: event.target.value})
                                 }}
                             />
                         </Box>
@@ -173,9 +184,9 @@ function SignUpPage() {
                                 required
                                 variant='outlined'
                                 label='Last name'
-                                value={formInput.lastname}
+                                value={formInput.lastName}
                                 onChange={(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-                                    setFormInput({...formInput,lastname: event.target.value})
+                                    setFormInput({...formInput,lastName: event.target.value})
                                 }}
                             />
                         </Box>
@@ -211,40 +222,6 @@ function SignUpPage() {
                                 }}
                             />
                         </Box>
-                    </Box>
-
-                    <Box sx={{paddingX: '80px'}}>
-                    <Autocomplete
-                        options={countries}
-                        getOptionLabel={(option) => option.label}
-                        renderOption={(props, option) => (
-                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                            <img
-                                loading="lazy"
-                                width="20"
-                                src={`https://flagcdn.com/w20/${option.code.toLowerCase()}.png`}
-                                srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
-                                alt=""
-                            />
-                            {option.label} ({option.code}) +{option.phone}
-                            </Box>
-                        )}
-                        onChange={(event,value) => {
-                            setFormInput({...formInput, country: value?.label as string})
-                        }}
-
-                        renderInput={(params) => (
-                            <TextField
-                            required
-                            {...params}
-                            label="Choose a country"
-                            inputProps={{
-                                ...params.inputProps,
-                                autoComplete: 'new-password',
-                            }}
-                            />
-                        )}
-                    />
                     </Box>
 
                     <Box sx={{paddingX: '80px'}}>

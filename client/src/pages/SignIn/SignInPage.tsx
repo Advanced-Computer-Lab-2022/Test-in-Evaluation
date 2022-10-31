@@ -55,7 +55,7 @@ function SignInPage() {
     const handleSubmission = (event:any) => {
         event.preventDefault();
 
-        axios.post(apiURL+'/login',{username: formInput.username, password: formInput.password}).then((response) => {
+        axios.post(apiURL+'/login',formInput).then((response) => {
             navigate('/home')
         })
         .catch((error) => {
