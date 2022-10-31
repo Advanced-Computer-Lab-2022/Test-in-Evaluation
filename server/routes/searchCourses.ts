@@ -46,7 +46,7 @@ export const addRoute = (app: Express) => {
         };
 
         const result = await Course.find(filter)
-            .populate("instructor subject", "firstName lastName username")
+            .populate("instructor subjectId", "firstName lastName username")
             .then((v) =>
                 v.map((u) => {
                     const ret = u.toObject();
