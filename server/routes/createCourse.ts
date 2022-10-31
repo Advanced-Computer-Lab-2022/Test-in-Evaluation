@@ -1,7 +1,11 @@
 import { Express } from "express";
 import { Array, Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
+<<<<<<< Updated upstream
 import { Course, Section, Subject, User } from "../mongo";
+=======
+import { Course, Section, User, Subject } from "../mongo";
+>>>>>>> Stashed changes
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
@@ -24,10 +28,8 @@ export const addRoute = (app: Express) => {
         const { price, sections, subject, summary, title } = req.body;
         const totalHours = sections.map((v) => v.totalHours).reduce((a, b) => a + b);
         const instructorId = await User.findOne({ username: req.session.data.username }).then((v) => v?._id);
-
-        const subjectId = await Subject.create({ Name: subject });
-
-        const course = await Course.create({ price, subjectId, summary, title, totalHours, instructor: instructorId! });
+        const subjectId = subject ? await Subject.findOne({ Name: subject }).then((v) => v?._id) : undefined;
+        const course = await Course.create({ price, subject: subjectId, summary, title, totalHours, instructor: instructorId! });
 
         await Promise.all(
             sections.map(({ description, title, totalHours }) =>
