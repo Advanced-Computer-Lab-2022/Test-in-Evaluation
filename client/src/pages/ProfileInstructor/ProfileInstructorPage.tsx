@@ -1,9 +1,6 @@
+import CreateCourse from "../CreateCourse/CreateCourse";
 function ProfileInstructorPage() {
-    return (
-        <div className="ProfileInstructorPage">
-            This is the ProfileInstructorPage Component
-        </div>
-    );
+    return <CreateCourse />;
 }
 
 export default ProfileInstructorPage;

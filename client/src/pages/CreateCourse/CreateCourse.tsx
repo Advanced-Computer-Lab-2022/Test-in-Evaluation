@@ -8,27 +8,83 @@ import {
     TextareaAutosize,
     TextField,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { CreateCourseForm } from "./CreateCourseStyles";
+import { useEffect } from "react";
+import axios from "axios";
+
+type NewSection = {
+    title: string;
+    description: string;
+    totalHours: number;
+};
+type NewCourse = {
+    title: string;
+    subject: string;
+    summary: string;
+    price: number;
+    sections: NewSection[];
+};
+type Subject = {
+    _id: string;
+    Name: string;
+};
 
 const CreateCourse = () => {
     const [title, setTitle] = useState("");
-
-    const [subject, setSubject] = useState<string>("Web Development");
+    const [subject, setSubject] = useState<string>("");
     const [summary, setSummary] = useState("");
     const [price, setPrice] = useState(0);
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const [subjects, setSubjects] = useState<Subject[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const getSubjects = async () => {
+        try {
+            setLoading(true);
+            const res = await axios.get(
+                "http://localhost:8000/api/get_all_subjects",
+                { withCredentials: true }
+            );
+            setSubjects(res.data);
+            console.log(res.data);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        getSubjects();
+    }, []);
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newCourse = {
+        const newCourse: NewCourse = {
             title,
             subject,
             summary,
             price,
+            sections: [
+                {
+                    title: "Section 1",
+                    description: "Section 1 summary",
+                    totalHours: 10,
+                },
+            ],
         };
         console.log(newCourse);
+        const res = await axios.post(
+            "http://localhost:8000/api/create_course",
+            newCourse,
+            { withCredentials: true }
+        );
+        console.log(res);
     };
+
+    if (loading) return <div>Loading...</div>;
     return (
-        <Container maxWidth="lg">
+        <Container sx={{ background: "white" }} maxWidth="lg">
             <CreateCourseForm onSubmit={onSubmit}>
                 <TextField
                     variant="outlined"
@@ -44,13 +100,13 @@ const CreateCourse = () => {
                         required
                         value={subject}
                         label="Subject"
-                        onChange={(e) => setSubject(e.target.value as string)}
+                        onChange={(e) => setSubject(e.target.value)}
                     >
-                        <MenuItem value={"Web Development"}>
-                            Web Development
-                        </MenuItem>
-                        <MenuItem value={"Mobile"}>Mobile</MenuItem>
-                        <MenuItem value={"Data Science"}>DataScience</MenuItem>
+                        {subjects.map((subject: Subject) => (
+                            <MenuItem value={subject.Name} key={subject._id}>
+                                {subject.Name}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
                 <TextField
@@ -65,7 +121,7 @@ const CreateCourse = () => {
                     type="number"
                     label="Price"
                     value={price}
-                    onChange={(e) => setPrice(parseInt(e.target.value))}
+                    onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
                 />
                 <Button type="submit" variant="contained">
                     Add Course
