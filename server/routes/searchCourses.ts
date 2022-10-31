@@ -1,7 +1,7 @@
 import { Express } from "express";
 import { Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
-import { Course, User, Subject} from "../mongo";
+import { Course, User, Subject } from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
@@ -44,7 +44,7 @@ export const addRoute = (app: Express) => {
         };
 
         const result = await Course.find(filter)
-            .populate("instructor", "firstName lastName username")
+            .populate("instructor subject", "firstName lastName username")
             .then((v) =>
                 v.map((u) => {
                     const ret = u.toObject();
