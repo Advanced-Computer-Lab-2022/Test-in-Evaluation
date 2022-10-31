@@ -42,7 +42,7 @@ export const addRoute = (app: Express) => {
                 : undefined;
             const course = await Course.create({
                 price,
-                subject: subjectId,
+                subjectId: subjectId,
                 summary,
                 title,
                 totalHours,

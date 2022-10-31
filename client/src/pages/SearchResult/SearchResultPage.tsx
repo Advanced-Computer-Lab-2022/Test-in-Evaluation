@@ -136,6 +136,9 @@ function SearchResultPage() {
                                 disablePortal
                                 style={{ width: "100%" }}
                                 options={subjects}
+                                onInputChange={(event, newInputValue) => {
+                                    setCourseSubject(newInputValue);
+                                }}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -150,6 +153,9 @@ function SearchResultPage() {
                                 disablePortal
                                 style={{ width: "100%" }}
                                 options={instructors}
+                                onInputChange={(event, newInputValue) => {
+                                    setCourseInstructor(newInputValue);
+                                }}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
