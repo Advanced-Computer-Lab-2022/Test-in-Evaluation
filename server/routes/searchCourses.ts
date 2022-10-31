@@ -24,8 +24,9 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
         const { instructor, priceHigh, priceLow, ratingHigh, ratingLow, subject, title } = req.body;
+        console.log(subject);
         const isCorporate = req.session.data.userType === UserTypes.corporateTrainee;
         if ((priceHigh !== undefined || priceLow !== undefined) && isCorporate) return res.status(400).send({ error: "unauthorized" });
 
@@ -34,6 +35,7 @@ export const addRoute = (app: Express) => {
         const rating = ratingHigh || ratingLow ? { ...(ratingLow ? { $gte: ratingLow } : {}), ...(ratingHigh ? { $lte: ratingHigh } : {}) } : undefined;
         const price = priceHigh || priceLow ? { ...(priceLow ? { $gte: priceLow } : {}), ...(priceHigh ? { $lte: priceHigh } : {}) } : undefined;
         const subjectId = subject ? await Subject.findOne({ Name: subject }).then((v) => v?._id) : undefined;
+        console.log(subjectId);
 
         const filter = {
             ...(instructorId ? { instructor: instructorId } : {}),

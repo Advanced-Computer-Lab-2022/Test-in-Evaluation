@@ -8,19 +8,30 @@ import { UserTypes } from "../types/user";
 const path = "/api/get_course_preview" as const;
 
 const Input = Record({
-    courseId: String,
+  courseId: String,
 });
 
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        if (req.session.data.userType === UserTypes.corporateTrainee) return res.status(400).send({ error: "unauthorized" });
-        const { courseId } = req.body;
+  app.post(
+    path,
+    validateInput(Input),
+    async (req: Request<Input>, res: Response) => {
+      if (req.session.data.userType === UserTypes.corporateTrainee)
+        return res.status(400).send({ error: "unauthorized" });
+      const { courseId } = req.body;
 
-        const [course, sections] = await Promise.all([Course.findById(courseId), Section.find({ parentCourse: courseId })]);
+      const [course, sections] = await Promise.all([
+        Course.findById(courseId),
+        Section.find({ parentCourse: courseId }),
+      ]);
 
-        res.send({ course: course!.toObject(), sections: sections.map((v) => v.toObject()) });
-        return;
-    });
+      res.send({
+        course: course!.toObject(),
+        sections: sections.map((v) => v.toObject()),
+      });
+      return;
+    }
+  );
 };
