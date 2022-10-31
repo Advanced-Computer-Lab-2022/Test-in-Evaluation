@@ -1,5 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
+import axios from 'axios'
 import {countries} from "../../data/countries";
+import { apiURL } from "../../App";
+
+import { useNavigate } from "react-router-dom";
+
 import {
     TermsOfService,
     PrivacyPolicy,
@@ -31,6 +36,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function SignInPage() {
+    const navigate = useNavigate();
 
     type InputObject = {
         username: string,
@@ -49,13 +55,17 @@ function SignInPage() {
     const handleSubmission = (event:any) => {
         event.preventDefault();
 
-        setSnackbarInfo({
-            snackbarOpen: true,
-            snackbarText: 'The account has been successfully created',
-            snackbarSeverity: 'success'
+        axios.post(apiURL+'/login',{username: formInput.username, password: formInput.password}).then((response) => {
+            navigate('/home')
         })
-
-        console.log(formInput);
+        .catch((error) => {
+            console.log(error)
+            setSnackbarInfo({
+                snackbarOpen: true,
+                snackbarText: error.response.data.error,
+                snackbarSeverity: 'error'
+            })
+        })
 
     }
 

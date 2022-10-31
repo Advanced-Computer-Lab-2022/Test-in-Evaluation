@@ -11,8 +11,8 @@ import {
     CreateCourse,
 } from "./pages";
 
-import { useNavigate } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
 // const navigate = useNavigate();
 // navigate('INSERT PATH HERE')
 
@@ -43,4 +43,8 @@ function App() {
     );
 }
 
+
+const apiURL = 'http://localhost:8000/api';
+
+export {apiURL};
 export default App;
