@@ -12,7 +12,7 @@ import { addRoute as signUpAddRoute } from "./signUp";
 import { addRoute as createSubjectAddRoute } from "./createSubject";
 import { addRoute as deleteSubjectAddRoute } from "./deleteSubject";
 import { addRoute as getAllSubjectsAddRoute } from "./getAllSubjects";
-
+import { addRoute as getAllInstructorsAddRoute } from "./getAllInstructors";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -29,4 +29,5 @@ export const addRoutes = (app: Express) => {
     createSubjectAddRoute(app);
     deleteSubjectAddRoute(app);
     getAllSubjectsAddRoute(app);
+    getAllInstructorsAddRoute(app);
 };
