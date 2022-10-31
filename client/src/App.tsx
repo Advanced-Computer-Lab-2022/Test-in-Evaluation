@@ -11,12 +11,15 @@ import {
     Profile,
     CreateCourse,
 } from "./pages";
+import { AnyAction } from "redux";
 
 type userState = {
     loggedIn: boolean;
     userType: string;
+    userInfo: any;
     setLoggedIn: Dispatch<SetStateAction<boolean>>;
     setUserType: Dispatch<SetStateAction<string>>;
+    setUserInfo: Dispatch<SetStateAction<any>>;
 };
 
 const UserContext = createContext({} as userState);
@@ -26,14 +29,17 @@ const UserContext = createContext({} as userState);
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userType, setUserType] = useState("none");
+    const [userInfo, setUserInfo] = useState("" as any);
 
     return (
         <UserContext.Provider
             value={{
                 loggedIn,
                 userType,
+                userInfo,
                 setLoggedIn,
                 setUserType,
+                setUserInfo,
             }}
         >
             <div className="App">

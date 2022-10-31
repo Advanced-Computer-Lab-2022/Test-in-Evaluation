@@ -68,6 +68,7 @@ function SignInPage() {
                     .then((response) => {
                         userState.setLoggedIn(true);
                         userState.setUserType(response.data.type);
+                        userState.setUserInfo(response.data);
                         navigate("/home");
                     })
                     .catch((error) => {
