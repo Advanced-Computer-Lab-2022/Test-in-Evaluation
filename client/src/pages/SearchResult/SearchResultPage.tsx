@@ -7,7 +7,9 @@ import {
 } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React from "react";
+import axios from "axios";
 import SearchResultItem, { CourseDetails } from "./SearchResultItem";
+import { apiURL } from "../../App";
 
 function SearchResultPage() {
     const sliderMarks = [
@@ -24,6 +26,15 @@ function SearchResultPage() {
             label: "$10,000",
         },
     ];
+
+    const [subjects, setSubjects] = React.useState([]);
+    React.useEffect(() => {
+        axios
+            .get(apiURL + "/get_all_subjects", { withCredentials: true })
+            .then((response) => {
+                setSubjects(response.data.map((itm: any) => itm.Name));
+            });
+    }, []);
 
     let crs: CourseDetails = {
         name: "Analysis & Design of Algorithms",
@@ -78,7 +89,7 @@ function SearchResultPage() {
                             <Autocomplete
                                 disablePortal
                                 style={{ width: "100%" }}
-                                options={["CS", "Math", "English"]}
+                                options={subjects}
                                 renderInput={(params) => (
                                     <TextField {...params} label="Subject" />
                                 )}
