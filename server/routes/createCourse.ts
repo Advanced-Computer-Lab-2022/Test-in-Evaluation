@@ -24,17 +24,20 @@ export const addRoute = (app: Express) => {
         const { price, sections, subject, summary, title } = req.body;
         const totalHours = sections.map((v) => v.totalHours).reduce((a, b) => a + b);
         const instructorId = await User.findOne({ username: req.session.data.username }).then((v) => v?._id);
-        const subjectId = subject ? await Subject.findOne({ Name: subject }).then((v) => v?._id) : undefined;
+        const subjectId = subject ? await Subject.findOneAndUpdate({ Name: subject }, { upsert: true }).then((v) => v?._id) : undefined;
         const course = await Course.create({ price, subject: subjectId, summary, title, totalHours, instructor: instructorId! });
 
         await Promise.all(
             sections.map(({ description, title, totalHours }) =>
-                Section.create({
-                    description,
-                    name: title,
-                    parentCourse: course._id,
-                    totalHours,
-                })
+                Section.findOneAndUpdate(
+                    {
+                        description,
+                        name: title,
+                        parentCourse: course._id,
+                        totalHours,
+                    },
+                    { upsert: true }
+                )
             )
         );
 

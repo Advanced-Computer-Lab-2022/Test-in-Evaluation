@@ -20,6 +20,7 @@ export const addRoute = (app: Express) => {
 
         const [course, sections] = await Promise.all([Course.findById(courseId), Section.find({ parentCourse: courseId })]);
 
-        return { course: course!.toObject(), sections: sections.map((v) => v.toObject()) };
+        res.send({ course: course!.toObject(), sections: sections.map((v) => v.toObject()) });
+        return;
     });
 };
