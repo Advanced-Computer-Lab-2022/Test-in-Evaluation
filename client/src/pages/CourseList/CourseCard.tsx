@@ -31,7 +31,7 @@ const CourseCard = ({ course }: props) => {
                             {course?.instructor?.username}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {course?.subject}
+                            {course?.subjectId?.Name}
                         </Typography>
                     </Box>
 

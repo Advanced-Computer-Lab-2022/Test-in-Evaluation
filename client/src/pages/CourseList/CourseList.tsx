@@ -10,8 +10,10 @@ const CourseList = () => {
     const getCourses = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(
-                "http://localhost:8000/api/search_courses"
+            const res = await axios.post(
+                "http://localhost:8000/api/search_courses",
+                {},
+                { withCredentials: true }
             );
             console.log(res.data.result);
             setCourses(res.data.result);
