@@ -8,7 +8,7 @@ import {
     TextareaAutosize,
     TextField,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { CreateCourseForm } from "./CreateCourseStyles";
 import { useEffect } from "react";
 import axios from "axios";
@@ -25,27 +25,28 @@ type NewCourse = {
     price: number;
     sections: NewSection[];
 };
-type subject = {
+type Subject = {
     _id: string;
     Name: string;
 };
 
 const CreateCourse = () => {
     const [title, setTitle] = useState("");
-    const [subject, setSubject] = useState<string>("Web Development");
+    const [subject, setSubject] = useState<string>("");
     const [summary, setSummary] = useState("");
     const [price, setPrice] = useState(0);
-    const [subjects, setSubjects] = useState<string[]>([]);
+    const [subjects, setSubjects] = useState<Subject[]>([]);
     const [loading, setLoading] = useState(false);
+
     const getSubjects = async () => {
         try {
             setLoading(true);
             const res = await axios.get(
-                "http://localhost:8000/api/get_all_subjects"
+                "http://localhost:8000/api/get_all_subjects",
+                { withCredentials: true }
             );
             setSubjects(res.data);
             console.log(res.data);
-
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -99,13 +100,13 @@ const CreateCourse = () => {
                         required
                         value={subject}
                         label="Subject"
-                        onChange={(e) => setSubject(e.target.value as string)}
+                        onChange={(e) => setSubject(e.target.value)}
                     >
-                        <MenuItem value={"Web Development"}>
-                            Web Development
-                        </MenuItem>
-                        <MenuItem value={"Mobile"}>Mobile</MenuItem>
-                        <MenuItem value={"Data Science"}>DataScience</MenuItem>
+                        {subjects.map((subject: Subject) => (
+                            <MenuItem value={subject.Name} key={subject._id}>
+                                {subject.Name}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
                 <TextField

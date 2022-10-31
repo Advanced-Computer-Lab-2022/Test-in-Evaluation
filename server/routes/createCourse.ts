@@ -35,7 +35,10 @@ export const addRoute = (app: Express) => {
                 username: req.session.data.username,
             }).then((v) => v?._id);
             const subjectId = subject
-                ? await Subject.findOne({ Name: subject }).then((v) => v?._id)
+                ? await Subject.findOneAndUpdate(
+                      { Name: subject },
+                      { upsert: true }
+                  ).then((v) => v?._id)
                 : undefined;
             const course = await Course.create({
                 price,
