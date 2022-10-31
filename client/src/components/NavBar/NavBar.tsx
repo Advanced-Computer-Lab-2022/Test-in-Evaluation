@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, SetStateAction } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -8,6 +8,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { Select, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -15,6 +16,8 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import NavSearchBar from "../SearchBar/SearchBar";
 import axios from "axios";
+
+import { countries } from "../../data/countries";
 
 import { apiURL, UserContext } from "../../App";
 
@@ -28,7 +31,7 @@ export default function DrawerAppBar() {
     const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false);
     const userState = useContext(UserContext);
-    const [user, setUser] = useState(false);
+    const [country, setCountry] = useState("Egypt");
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -113,6 +116,32 @@ export default function DrawerAppBar() {
                             LOGO
                         </Typography>
                         <NavSearchBar />
+                    </Box>
+                    <Box>
+                        <Typography>Select Country:</Typography>
+                        <Select
+                            value={country}
+                            label="Select Country"
+                            sx={{ background: "white" }}
+                            variant="standard"
+                            onChange={(event) => {
+                                setCountry(event.target.value);
+                            }}
+                        >
+                            {countries.map((element, index) => {
+                                return (
+                                    <MenuItem value={element.label}>
+                                        <img
+                                            loading="lazy"
+                                            width="20"
+                                            src={`https://flagcdn.com/w20/${element.code.toLowerCase()}.png`}
+                                        />{" "}
+                                        &nbsp;
+                                        {element.label}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
                     </Box>
                     <Box sx={{ display: { xs: "none", md: "block" } }}>
                         {navItems.map((item) => (
