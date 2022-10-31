@@ -1,5 +1,6 @@
 import {
     Autocomplete,
+    Button,
     Paper,
     Slider,
     TextField,
@@ -36,20 +37,19 @@ function SearchResultPage() {
             });
     }, []);
 
-    let crs: CourseDetails = {
-        name: "Analysis & Design of Algorithms",
-        subtitles: [
-            { title: "Divide and Conqre", hours: 4, hasExercise: true },
-            { title: "Dyanmic Programming", hours: 2, hasExercise: false },
-            { title: "Graphs", hours: 6, hasExercise: true },
-            { title: "Segment Tree", hours: 8, hasExercise: false },
-        ],
-        price: 5000,
-        discount: 10,
-    };
+    const [instructors, setInstructors] = React.useState([]);
+    React.useEffect(() => {
+        axios
+            .get(apiURL + "/get_all_instructors", { withCredentials: true })
+            .then((response) => {
+                setInstructors(response.data.map((itm: any) => itm.username));
+            });
+    }, []);
 
-    let crsList = [];
-    for (let i = 0; i < 10; i++) crsList.push({ id: i, ...crs });
+    const [courseList, setCourseList] = React.useState<CourseDetails[]>([]);
+    const [courseTitle, setCourseTitle] = React.useState("");
+    const [courseSubject, setCourseSubject] = React.useState("");
+    const [courseInstructor, setCourseInstructor] = React.useState("");
 
     const [priceRangeValue, setPriceRangeValue] = React.useState<number[]>([
         0, 10000,
@@ -57,6 +57,51 @@ function SearchResultPage() {
     const handlePriceRange = (event: Event, newValue: number | number[]) => {
         setPriceRangeValue(newValue as number[]);
     };
+
+    async function filterCourses() {
+        let response = await axios.post(
+            apiURL + "/search_courses",
+            {
+                title: courseTitle,
+                subject: courseSubject,
+                instructor: courseInstructor,
+                priceLow: priceRangeValue[0],
+                priceHigh: priceRangeValue[1],
+            },
+            {
+                withCredentials: true,
+            }
+        );
+
+        let crsList = response.data.result.map((itm: any) => {
+            return {
+                id: itm._id,
+                name: itm.title,
+                price: itm.price,
+                discount: 10,
+            };
+        });
+
+        for (let i = 0; i < crsList.length; i++) {
+            let course_preview = await axios.post(
+                apiURL + "/get_course_preview",
+                { courseId: crsList[i].id },
+                {
+                    withCredentials: true,
+                }
+            );
+            let sections = course_preview.data.sections.map((x: any) => {
+                return {
+                    title: x.name,
+                    hours: x.totalHours,
+                    hasExercise: false,
+                };
+            });
+            crsList[i].subtitles = sections;
+        }
+
+        setCourseList(crsList);
+    }
 
     return (
         <div
@@ -85,21 +130,35 @@ function SearchResultPage() {
                                 style={{ width: "100%" }}
                                 label="Course Name"
                                 variant="outlined"
+                                onChange={(e) => setCourseTitle(e.target.value)}
                             />
                             <Autocomplete
                                 disablePortal
                                 style={{ width: "100%" }}
                                 options={subjects}
+                                onChange={(e,v) => setCourseSubject(v)}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Subject" />
+                                    <TextField
+                                        {...params}
+                                        onChange={(e) =>
+                                            setCourseSubject(e.target.value)
+                                        }
+                                        label="Subject"
+                                    />
                                 )}
                             />
                             <Autocomplete
                                 disablePortal
                                 style={{ width: "100%" }}
-                                options={["Ahmed", "Karim", "Mahmoud"]}
+                                options={instructors}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Instructor" />
+                                    <TextField
+                                        {...params}
+                                        onChange={(e) =>
+                                            setCourseInstructor(e.target.value)
+                                        }
+                                        label="Instructor"
+                                    />
                                 )}
                             />
                             <Typography variant="h6" gutterBottom>
@@ -117,6 +176,9 @@ function SearchResultPage() {
                                     onChange={handlePriceRange}
                                 />
                             </div>
+                            <Button variant="contained" onClick={filterCourses}>
+                                Search
+                            </Button>
                         </div>
                     </Paper>
                 </Grid2>
@@ -125,7 +187,7 @@ function SearchResultPage() {
                         <Typography variant="h4" gutterBottom>
                             Search Results
                         </Typography>
-                        {crsList.map((course) => (
+                        {courseList.map((course) => (
                             <SearchResultItem {...course} />
                         ))}
                     </Paper>
