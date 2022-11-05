@@ -5,15 +5,16 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    TextareaAutosize,
     TextField,
 } from "@mui/material";
+import SectionModal from "./SectionModal";
 import { useState } from "react";
 import { CreateCourseForm } from "./CreateCourseStyles";
 import { useEffect } from "react";
+import SectionList from "./SectionList";
 import axios from "axios";
 
-type NewSection = {
+export type NewSection = {
     title: string;
     description: string;
     totalHours: number;
@@ -37,6 +38,7 @@ const CreateCourse = () => {
     const [price, setPrice] = useState(0);
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const [loading, setLoading] = useState(false);
+    const [sections, setSections] = useState<NewSection[]>([]);
 
     const getSubjects = async () => {
         try {
@@ -60,32 +62,31 @@ const CreateCourse = () => {
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newCourse: NewCourse = {
-            title,
-            subject,
-            summary,
-            price,
-            sections: [
-                {
-                    title: "Section 1",
-                    description: "Section 1 summary",
-                    totalHours: 10,
-                },
-            ],
-        };
-        console.log(newCourse);
-        const res = await axios.post(
-            "http://localhost:8000/api/create_course",
-            newCourse,
-            { withCredentials: true }
-        );
-        console.log(res);
+        try {
+            const newCourse: NewCourse = {
+                title,
+                subject,
+                summary,
+                price,
+                sections,
+            };
+            const res = await axios.post(
+                "http://localhost:8000/api/create_course",
+                newCourse,
+                { withCredentials: true }
+            );
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     if (loading) return <div>Loading...</div>;
     return (
-        <Container sx={{ background: "white" }} maxWidth="lg">
-            <CreateCourseForm onSubmit={onSubmit}>
+        <Container maxWidth="lg">
+            <CreateCourseForm
+                onSubmit={onSubmit}
+                sx={{ background: "#eee", p: "1rem" }}
+            >
                 <TextField
                     variant="outlined"
                     required
@@ -123,6 +124,8 @@ const CreateCourse = () => {
                     value={price}
                     onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
                 />
+                <SectionModal setSections={setSections} />
+                <SectionList sections={sections} />
                 <Button type="submit" variant="contained">
                     Add Course
                 </Button>
