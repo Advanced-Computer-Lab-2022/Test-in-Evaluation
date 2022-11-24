@@ -17,9 +17,11 @@ type userState = {
     loggedIn: boolean;
     userType: string;
     userInfo: any;
+    country: string;
     setLoggedIn: Dispatch<SetStateAction<boolean>>;
     setUserType: Dispatch<SetStateAction<string>>;
     setUserInfo: Dispatch<SetStateAction<any>>;
+    setCountry: Dispatch<SetStateAction<string>>;
 };
 
 const UserContext = createContext({} as userState);
@@ -29,7 +31,10 @@ const UserContext = createContext({} as userState);
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userType, setUserType] = useState("none");
+    const [country, setCountry] = useState("Egypt");
     const [userInfo, setUserInfo] = useState("" as any);
+
+    console.log();
 
     return (
         <UserContext.Provider
@@ -37,9 +42,11 @@ function App() {
                 loggedIn,
                 userType,
                 userInfo,
+                country,
                 setLoggedIn,
                 setUserType,
                 setUserInfo,
+                setCountry,
             }}
         >
             <div className="App">
