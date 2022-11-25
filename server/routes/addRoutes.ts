@@ -15,6 +15,7 @@ import { addRoute as getAllSubjectsAddRoute } from "./getAllSubjects";
 import { addRoute as getAllInstructorsAddRoute } from "./getAllInstructors";
 import { addRoute as changeMyProfileAddRoute } from "./changeMyProfile";
 import { addRoute as setCourseDiscountAddRoute } from "./setCourseDiscount";
+import { addRoute as rateInstructorAddRoute } from "./rateInstructor";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -34,4 +35,5 @@ export const addRoutes = (app: Express) => {
     getAllInstructorsAddRoute(app);
     changeMyProfileAddRoute(app);
     setCourseDiscountAddRoute(app);
+    rateInstructorAddRoute(app);
 };
