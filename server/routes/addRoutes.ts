@@ -13,6 +13,7 @@ import { addRoute as createSubjectAddRoute } from "./createSubject";
 import { addRoute as deleteSubjectAddRoute } from "./deleteSubject";
 import { addRoute as getAllSubjectsAddRoute } from "./getAllSubjects";
 import { addRoute as getAllInstructorsAddRoute } from "./getAllInstructors";
+import { addRoute as changeMyProfileAddRoute } from "./changeMyProfile";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -30,4 +31,5 @@ export const addRoutes = (app: Express) => {
     deleteSubjectAddRoute(app);
     getAllSubjectsAddRoute(app);
     getAllInstructorsAddRoute(app);
+    changeMyProfileAddRoute(app);
 };

@@ -6,6 +6,7 @@ export const UserSchema = new Schema({
     firstName: String,
     lastName: String,
     passwordHash: String,
+    bio: String,
     userType: {
         type: String,
         enum: UserTypes,
@@ -17,5 +18,5 @@ export const UserSchema = new Schema({
     },
     country: String,
     rating: { sumOfRatings: { type: Number, default: 0 }, numberOfRatings: { type: Number, default: 0 } },
-    reviews : [{ reviewerId: { type: Schema.Types.ObjectId, ref: "User" }, review: String, rating: Number }],
+    reviews: [{ reviewerId: { type: Schema.Types.ObjectId, ref: "User" }, review: String, rating: Number }],
 });
