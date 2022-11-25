@@ -10,6 +10,7 @@ import {
     SearchResult,
     Profile,
     CreateCourse,
+    Contract,
 } from "./pages";
 // import { AnyAction } from "redux";
 
@@ -65,6 +66,10 @@ function App() {
                             <Route
                                 path="/profile"
                                 element={<Profile />}
+                            ></Route>
+                            <Route
+                                path="/contract"
+                                element={<Contract />}
                             ></Route>
                         </Routes>
                     </div>
