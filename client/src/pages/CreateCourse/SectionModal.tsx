@@ -15,6 +15,10 @@ const style = {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    gap: "1rem",
 };
 
 type SectionFunction = (newSection: NewSection[]) => NewSection[];
@@ -30,8 +34,7 @@ const SectionModal = ({ setSections }: props) => {
     const [description, setDescription] = useState<string>("");
     const [totalHours, setTotalHours] = useState<number>(0);
 
-    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const onSubmit = () => {
         const newSection: NewSection = {
             title,
             description,
@@ -55,43 +58,34 @@ const SectionModal = ({ setSections }: props) => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <form
-                        onSubmit={onSubmit}
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "1rem",
-                        }}
-                    >
-                        <TextField
-                            fullWidth
-                            label="Title"
-                            required
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                        <TextField
-                            fullWidth
-                            label="Description"
-                            required
-                            multiline
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                        />
-                        <TextField
-                            fullWidth
-                            label="Total Hours"
-                            type="number"
-                            required
-                            value={totalHours}
-                            onChange={(e) =>
-                                setTotalHours(parseInt(e.target.value) || 0)
-                            }
-                        />
-                        <Button type="submit" variant="contained">
-                            Add Section
-                        </Button>
-                    </form>
+                    <TextField
+                        fullWidth
+                        label="Title"
+                        required
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Description"
+                        required
+                        multiline
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <TextField
+                        fullWidth
+                        label="Total Hours"
+                        type="number"
+                        required
+                        value={totalHours}
+                        onChange={(e) =>
+                            setTotalHours(parseInt(e.target.value) || 0)
+                        }
+                    />
+                    <Button variant="contained" onClick={onSubmit} fullWidth>
+                        Add Section
+                    </Button>
                 </Box>
             </Modal>
         </div>
