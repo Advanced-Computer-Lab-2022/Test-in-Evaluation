@@ -6,8 +6,9 @@ export const CourseSchema = new Schema({
     summary: String,
     totalHours: Number,
     price: Number,
-    rating: { sumOfRatings: { type: Number, defualtValue: 0 }, numberOfRatings: { type: Number, defualtValue: 0 } },
+    rating: { sumOfRatings: { type: Number, default: 0 }, numberOfRatings: { type: Number, default: 0 } },
+    reviews: [{ reviewerId: { type: Schema.Types.ObjectId, ref: "User" }, review: String, rating: Number }],
     instructor: { type: Schema.Types.ObjectId, ref: "User" },
     videoPreviewUrl: String,
-    // discount: { rate: Number, endDate: Date },
+    discount: { rate: Number, startDate: Date, endDate: Date },
 });
