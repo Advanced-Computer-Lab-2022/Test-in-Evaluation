@@ -8,4 +8,7 @@ export const SectionSchema = new Schema({
     totalHours: Number,
     parentCourse: { type: Schema.Types.ObjectId, ref: "Course" },
     videoUrl: String,
+    exam: {
+        exercises: [{ question: String, answers: [String], correctAnswer: Number }],
+    },
 });

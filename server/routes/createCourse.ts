@@ -7,12 +7,28 @@ import { UserTypes } from "../types/user";
 
 const path = "/api/create_course" as const;
 
+const section = Record({
+    title: String,
+    description: String,
+    totalHours: Number,
+    videoUrl: String,
+    exam: Record({
+        exercises: Array(
+            Record({
+                question: String,
+                answers: Array(String),
+                correctAnswer: Number,
+            }).withConstraint((excercise) => excercise.answers.length > 1 && typeof excercise.answers[excercise.correctAnswer] === "string")
+        ),
+    }),
+});
+
 const Input = Record({
     title: String,
     subject: String,
     summary: String,
     price: Number,
-    sections: Array(Record({ title: String, description: String, totalHours: Number, videoUrl: String })).withConstraint((sections) => sections.length > 0),
+    sections: Array(section).withConstraint((sections) => sections.length > 0),
     videoPreviewUrl: String,
 });
 
