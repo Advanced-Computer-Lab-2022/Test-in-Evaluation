@@ -1,6 +1,7 @@
 import { Express } from "express";
 import { Record, Static } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
+import { User } from "../mongo";
 import { Request, Response } from "../types/express";
 
 const path = "/api/who_am_i" as const;
@@ -13,7 +14,9 @@ export const addRoute = (app: Express) => {
     app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
         const client = req.session.data;
         if (client.userType) {
-            res.send({ type: client.userType, username: client.username, isGuest: false });
+            const user = await User.findOne({ username: client.username });
+            const { passwordHash, ...retUser } = user!.toObject();
+            res.send({ type: client.userType, username: client.username, isGuest: false, user: retUser });
         } else {
             res.send({ isGuest: true });
         }
