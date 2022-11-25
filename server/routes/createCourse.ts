@@ -12,8 +12,8 @@ const Input = Record({
     subject: String,
     summary: String,
     price: Number,
-    sections: Array(Record({ title: String, description: String, totalHours: Number })).withConstraint((sections) => sections.length > 0),
-    videoPreviewUrl: String.optional(),
+    sections: Array(Record({ title: String, description: String, totalHours: Number, videoUrl: String })).withConstraint((sections) => sections.length > 0),
+    videoPreviewUrl: String,
 });
 
 type Input = Static<typeof Input>;
