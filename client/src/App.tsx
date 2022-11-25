@@ -12,7 +12,7 @@ import {
     CreateCourse,
     Contract,
 } from "./pages";
-import { LoginProtected } from "./components";
+import { LoginProtected, ContractProtected } from "./components";
 // import { AnyAction } from "redux";
 
 type userState = {
@@ -61,14 +61,16 @@ function App() {
                                 element={<SearchResult />}
                             ></Route>
                             <Route element={<LoginProtected />}>
-                                <Route
-                                    path="/createCourse"
-                                    element={<CreateCourse />}
-                                ></Route>
-                                <Route
-                                    path="/profile"
-                                    element={<Profile />}
-                                ></Route>
+                                <Route element={<ContractProtected />}>
+                                    <Route
+                                        path="/createCourse"
+                                        element={<CreateCourse />}
+                                    ></Route>
+                                    <Route
+                                        path="/profile"
+                                        element={<Profile />}
+                                    ></Route>
+                                </Route>
                                 <Route
                                     path="/contract"
                                     element={<Contract />}
