@@ -12,6 +12,7 @@ import { useState } from "react";
 import { CreateCourseForm } from "./CreateCourseStyles";
 import { useEffect } from "react";
 import SectionList from "./SectionList";
+import { Loader } from "../../components";
 import axios from "axios";
 
 export type NewSection = {
@@ -48,7 +49,6 @@ const CreateCourse = () => {
                 { withCredentials: true }
             );
             setSubjects(res.data);
-            console.log(res.data);
             setLoading(false);
         } catch (error) {
             console.log(error);
@@ -62,6 +62,7 @@ const CreateCourse = () => {
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const newCourse: NewCourse = {
                 title,
@@ -75,12 +76,19 @@ const CreateCourse = () => {
                 newCourse,
                 { withCredentials: true }
             );
+            setTitle("");
+            setSubject("");
+            setSummary("");
+            setPrice(0);
+            setSections([]);
+            setLoading(false);
         } catch (error) {
             console.log(error);
+            setLoading(false);
         }
     };
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <Loader open={true} />;
     return (
         <Container maxWidth="lg">
             <CreateCourseForm
@@ -122,7 +130,7 @@ const CreateCourse = () => {
                     type="number"
                     label="Price"
                     value={price}
-                    onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
+                    onChange={(e) => setPrice(parseInt(e.target.value))}
                 />
                 <SectionModal setSections={setSections} />
                 <SectionList sections={sections} />
