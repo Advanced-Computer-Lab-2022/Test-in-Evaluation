@@ -8,5 +8,6 @@ export const CourseSchema = new Schema({
     price: Number,
     rating: { sumOfRatings: { type: Number, defualtValue: 0 }, numberOfRatings: { type: Number, defualtValue: 0 } },
     instructor: { type: Schema.Types.ObjectId, ref: "User" },
+    videoPreviewUrl: String,
     // discount: { rate: Number, endDate: Date },
 });

@@ -12,55 +12,43 @@ const Input = Record({
     subject: String,
     summary: String,
     price: Number,
-    sections: Array(
-        Record({ title: String, description: String, totalHours: Number })
-    ).withConstraint((sections) => sections.length > 0),
+    sections: Array(Record({ title: String, description: String, totalHours: Number })).withConstraint((sections) => sections.length > 0),
+    videoPreviewUrl: String.optional(),
 });
 
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(
-        path,
-        validateInput(Input),
-        async (req: Request<Input>, res: Response) => {
-            if (req.session.data.userType !== UserTypes.instructor)
-                return res.status(400).send({ error: "unauthorized" });
+    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+        if (req.session.data.userType !== UserTypes.instructor) return res.status(400).send({ error: "unauthorized" });
 
-            const { price, sections, subject, summary, title } = req.body;
-            const totalHours = sections
-                .map((v) => v.totalHours)
-                .reduce((a, b) => a + b);
-            const instructorId = await User.findOne({
-                username: req.session.data.username,
-            }).then((v) => v?._id);
-            const subjectId = subject
-                ? await Subject.findOneAndUpdate(
-                      { Name: subject },
-                      { upsert: true }
-                  ).then((v) => v?._id)
-                : undefined;
-            const course = await Course.create({
-                price,
-                subjectId: subjectId,
-                summary,
-                title,
-                totalHours,
-                instructor: instructorId!,
-            });
+        const { price, sections, subject, summary, title, videoPreviewUrl } = req.body;
+        const totalHours = sections.map((v) => v.totalHours).reduce((a, b) => a + b);
+        const instructorId = await User.findOne({
+            username: req.session.data.username,
+        }).then((v) => v?._id);
+        const subjectId = subject ? await Subject.findOneAndUpdate({ Name: subject }, { upsert: true }).then((v) => v?._id) : undefined;
+        const course = await Course.create({
+            price,
+            subjectId: subjectId,
+            summary,
+            title,
+            totalHours,
+            instructor: instructorId!,
+            videoPreviewUrl,
+        });
 
-            await Promise.all(
-                sections.map(({ description, title, totalHours }) =>
-                    Section.create({
-                        description,
-                        name: title,
-                        parentCourse: course._id,
-                        totalHours,
-                    })
-                )
-            );
+        await Promise.all(
+            sections.map(({ description, title, totalHours }) =>
+                Section.create({
+                    description,
+                    name: title,
+                    parentCourse: course._id,
+                    totalHours,
+                })
+            )
+        );
 
-            return res.send({ ok: true });
-        }
-    );
+        return res.send({ ok: true });
+    });
 };
