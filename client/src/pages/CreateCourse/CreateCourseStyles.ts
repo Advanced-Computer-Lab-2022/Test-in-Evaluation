@@ -7,6 +7,7 @@ export const CreateCourseForm = styled("form")({
     width: "max(20rem, 50%)",
     margin: "0 auto",
     padding: "1rem",
+    marginBottom: "1rem",
     "& > *": {
         width: "100%",
     },

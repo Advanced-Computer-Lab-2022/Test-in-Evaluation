@@ -28,13 +28,21 @@ type props = {
 };
 const SectionModal = ({ setSections }: props) => {
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [totalHours, setTotalHours] = useState<number>(0);
+    const [error, setError] = useState<boolean>(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+        setOpen(false);
+        setError(false);
+    };
 
     const onSubmit = () => {
+        if (!title || !description || !totalHours) {
+            setError(true);
+            return;
+        }
         const newSection: NewSection = {
             title,
             description,
@@ -64,6 +72,12 @@ const SectionModal = ({ setSections }: props) => {
                         required
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        error={error && title.trim() === ""}
+                        helperText={
+                            error && title.trim() === ""
+                                ? "Title is required"
+                                : ""
+                        }
                     />
                     <TextField
                         fullWidth
@@ -72,6 +86,12 @@ const SectionModal = ({ setSections }: props) => {
                         multiline
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        error={error && description.trim() === ""}
+                        helperText={
+                            error && description.trim() === ""
+                                ? "Description is required"
+                                : ""
+                        }
                     />
                     <TextField
                         fullWidth
@@ -80,7 +100,13 @@ const SectionModal = ({ setSections }: props) => {
                         required
                         value={totalHours}
                         onChange={(e) =>
-                            setTotalHours(parseInt(e.target.value) || 0)
+                            setTotalHours(parseInt(e.target.value))
+                        }
+                        error={error && totalHours <= 0}
+                        helperText={
+                            error && totalHours <= 0
+                                ? "Total Hours must be greater than zero"
+                                : ""
                         }
                     />
                     <Button variant="contained" onClick={onSubmit} fullWidth>
