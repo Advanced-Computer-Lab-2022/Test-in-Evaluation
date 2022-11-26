@@ -11,3 +11,9 @@ export type Course = {
     };
     instructor: { _id: string; username: string };
 };
+export type UserInfo = {
+    type?: string;
+    username?: string;
+    isGuest: boolean;
+    acceptedContract?: boolean;
+};
