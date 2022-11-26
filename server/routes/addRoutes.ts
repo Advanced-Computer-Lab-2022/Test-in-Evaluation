@@ -20,6 +20,7 @@ import { addRoute as rateCourseAddRoute } from "./rateCourse";
 import { addRoute as solveExerciseAddRoute } from "./solveExercise";
 import { addRoute as viewExerciseResultAddRoute } from "./viewExerciseResult";
 import { addRoute as addExercise } from "./addExercise";
+import { addRoute as acceptContractAddRoute } from "./acceptContract";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -44,4 +45,5 @@ export const addRoutes = (app: Express) => {
     solveExerciseAddRoute(app);
     viewExerciseResultAddRoute(app);
     addExercise(app);
+    acceptContractAddRoute(app);
 };
