@@ -1,10 +1,12 @@
 import {
+    Alert,
     Button,
     Container,
     FormControl,
     InputLabel,
     MenuItem,
     Select,
+    Snackbar,
     TextField,
 } from "@mui/material";
 import SectionModal from "./SectionModal";
@@ -40,6 +42,11 @@ const CreateCourse = () => {
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const [loading, setLoading] = useState(false);
     const [sections, setSections] = useState<NewSection[]>([]);
+    const [alert, setAlert] = useState({
+        isSuccess: false,
+        isError: false,
+        message: "",
+    });
 
     const getSubjects = async () => {
         try {
@@ -82,63 +89,97 @@ const CreateCourse = () => {
             setPrice(0);
             setSections([]);
             setLoading(false);
-        } catch (error) {
+            setAlert({
+                isSuccess: true,
+                isError: false,
+                message: "Your Course Was Created!",
+            });
+        } catch (error: any) {
             console.log(error);
+            setAlert({
+                isSuccess: false,
+                isError: true,
+                message:
+                    (error?.response?.data?.error as string) ||
+                    error?.toString() ||
+                    "Server Error Please Try Again Later",
+            });
             setLoading(false);
         }
     };
 
+    const handleAlertClose = () =>
+        setAlert({ isError: false, isSuccess: false, message: "" });
+
     if (loading) return <Loader open={true} />;
     return (
-        <Container maxWidth="lg">
-            <CreateCourseForm
-                onSubmit={onSubmit}
-                sx={{ background: "#eee", p: "1rem" }}
+        <>
+            <Snackbar
+                open={alert.isSuccess || alert.isError}
+                autoHideDuration={6000}
+                onClose={handleAlertClose}
             >
-                <TextField
-                    variant="outlined"
-                    required
-                    label="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-
-                <FormControl>
-                    <InputLabel>Subject</InputLabel>
-                    <Select
+                <Alert
+                    onClose={handleAlertClose}
+                    severity={alert.isSuccess ? "success" : "error"}
+                    variant="filled"
+                >
+                    {alert.message}
+                </Alert>
+            </Snackbar>
+            <Container maxWidth="lg">
+                <CreateCourseForm
+                    onSubmit={onSubmit}
+                    sx={{ background: "#eee", p: "1rem" }}
+                >
+                    <TextField
+                        variant="outlined"
                         required
-                        value={subject}
-                        label="Subject"
-                        onChange={(e) => setSubject(e.target.value)}
-                    >
-                        {subjects.map((subject: Subject) => (
-                            <MenuItem value={subject.Name} key={subject._id}>
-                                {subject.Name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-                <TextField
-                    required
-                    multiline
-                    label="Summary"
-                    value={summary}
-                    onChange={(e) => setSummary(e.target.value)}
-                />
-                <TextField
-                    required
-                    type="number"
-                    label="Price"
-                    value={price}
-                    onChange={(e) => setPrice(parseInt(e.target.value))}
-                />
-                <SectionModal setSections={setSections} />
-                <SectionList sections={sections} />
-                <Button type="submit" variant="contained">
-                    Add Course
-                </Button>
-            </CreateCourseForm>
-        </Container>
+                        label="Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+
+                    <FormControl>
+                        <InputLabel>Subject</InputLabel>
+                        <Select
+                            required
+                            value={subject}
+                            label="Subject"
+                            onChange={(e) => setSubject(e.target.value)}
+                        >
+                            {subjects.map((subject: Subject) => (
+                                <MenuItem
+                                    value={subject.Name}
+                                    key={subject._id}
+                                >
+                                    {subject.Name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <TextField
+                        required
+                        multiline
+                        label="Summary"
+                        value={summary}
+                        onChange={(e) => setSummary(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        type="number"
+                        label="Price"
+                        value={price}
+                        onChange={(e) => setPrice(parseInt(e.target.value))}
+                    />
+                    <SectionModal setSections={setSections} />
+                    <SectionList sections={sections} />
+                    <Button type="submit" variant="contained">
+                        Add Course
+                    </Button>
+                </CreateCourseForm>
+            </Container>
+        </>
     );
 };
 
