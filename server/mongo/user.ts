@@ -17,5 +17,4 @@ export const UserSchema = new Schema({
     },
     country: String,
     rating: { sumOfRatings: { type: Number, default: 0 }, numberOfRatings: { type: Number, default: 0 } },
-    ratingValue: { type: Number, default: 0 },
 });
