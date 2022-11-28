@@ -3,11 +3,11 @@ import { Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
 import { User, Review, Course } from "../mongo";
 import { Request, Response } from "../types/express";
+import { UserTypes } from "../types/user";
 
 const path = "/api/write_review" as const;
 
 const Input = Record({
-    reviewerUserName: String,
     reviewed: String,
     score: Number,
     text: String
@@ -18,11 +18,17 @@ type Input = Static<typeof Input>;
 export const addRoute = (app: Express) => {
     // works for both create and update
     app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { reviewerUserName, reviewed, score, text } = req.body;
+        if (req.session.data.userType != UserTypes.individualTrainee && req.session.data.userType != UserTypes.corporateTrainee){
+            return res.status(400).send("Unauthorized"); 
+        }
+        const { reviewed, score, text } = req.body;
+        const reviewerUserName = req.session.data.username;
         const reviewer = await User.findOne({username: reviewerUserName});
         const oldReview = await Review.findOne({reviewer, reviewed});
+        const reviewedObj = await getReviewedObject(reviewed);
+        if (!reviewedObj)
+            return res.status(400).send("Invalid Content");
         if (oldReview) { // update
-            const reviewedObj = await getReviewedObject(reviewed);
             reviewedObj.rating.sumOfRatings += score - (oldReview.score ? oldReview.score : 0);
 
             oldReview.score = score;
@@ -30,7 +36,6 @@ export const addRoute = (app: Express) => {
             await oldReview.save();
         }
         else { // create
-            const reviewedObj = await getReviewedObject(reviewed);
             reviewedObj.rating.sumOfRatings += score;
             reviewedObj.rating.numberOfRatings++;
             
@@ -40,7 +45,7 @@ export const addRoute = (app: Express) => {
     });
 };
 
-async function getReviewedObject(reviewedId: string) : Promise<any> {
+export async function getReviewedObject(reviewedId: string) : Promise<any> {
     const course = await Course.findById(reviewedId);
     if (course)
         return course;
