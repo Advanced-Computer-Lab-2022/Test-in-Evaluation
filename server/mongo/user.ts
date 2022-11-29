@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { UserTypes, GenderTypes } from "../types/user";
 
 export const UserSchema = new Schema({
@@ -18,3 +18,5 @@ export const UserSchema = new Schema({
     country: String,
     rating: { sumOfRatings: { type: Number, default: 0 }, numberOfRatings: { type: Number, default: 0 } },
 });
+
+UserSchema.index( { email: 1 }, { unique: true } );
