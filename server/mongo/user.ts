@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema } from "mongoose";
 import { UserTypes, GenderTypes } from "../types/user";
 
 export const UserSchema = new Schema({
