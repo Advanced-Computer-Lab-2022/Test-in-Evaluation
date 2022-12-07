@@ -11,7 +11,7 @@ import {
     Profile,
     CreateCourse,
 } from "./pages";
-import { AnyAction } from "redux";
+// import { AnyAction } from "redux";
 
 type userState = {
     loggedIn: boolean;
