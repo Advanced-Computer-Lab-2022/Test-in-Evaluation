@@ -19,6 +19,7 @@ import { addRoute as rateInstructorAddRoute } from "./rateInstructor";
 import { addRoute as rateCourseAddRoute } from "./rateCourse";
 import { addRoute as solveExerciseAddRoute } from "./solveExercise";
 import { addRoute as viewExerciseResultAddRoute } from "./viewExerciseResult";
+import { addRoute as addExercise } from "./addExercise";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -42,4 +43,5 @@ export const addRoutes = (app: Express) => {
     rateCourseAddRoute(app);
     solveExerciseAddRoute(app);
     viewExerciseResultAddRoute(app);
+    addExercise(app);
 };
