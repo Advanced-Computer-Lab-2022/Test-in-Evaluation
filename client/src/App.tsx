@@ -14,6 +14,7 @@ import {
     Contract,
 } from "./pages";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
+import CreateQuiz from "./components/Excercies/CreateQuiz";
 // import { AnyAction } from "redux";
 
 type userState = {
@@ -87,7 +88,7 @@ function App() {
                             ></Route>
                             <Route
                                 path="/quiz"
-                                element={<Quiz questions={quizQuestions} />}
+                                element={<CreateQuiz />}
                             ></Route>
                             <Route element={<LoginProtected />}>
                                 <Route element={<ContractProtected />}>
