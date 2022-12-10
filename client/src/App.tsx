@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import Navbar from "./components/NavBar/NavBar";
+import type { Question } from "./components/Excercies/Quiz";
 import {
     Home,
     SignIn,
@@ -12,7 +13,7 @@ import {
     CreateCourse,
     Contract,
 } from "./pages";
-import { LoginProtected, ContractProtected } from "./components";
+import { LoginProtected, ContractProtected, Quiz } from "./components";
 // import { AnyAction } from "redux";
 
 type userState = {
@@ -27,6 +28,30 @@ type userState = {
 const UserContext = createContext({} as userState);
 // const navigate = useNavigate();
 // navigate('INSERT PATH HERE')
+
+const quizQuestions: Question[] = [
+    {
+        question: "What is the capital of France?",
+        answers: ["Paris", "London", "Berlin", "Rome"],
+        correctAnswer: 0,
+    },
+    {
+        question: "What is the capital of Germany?",
+        answers: ["Paris", "London", "Berlin", "Rome"],
+        correctAnswer: 2,
+    },
+    {
+        question: "What is the capital of Italy?",
+        answers: ["Paris", "London", "Berlin", "Rome"],
+        correctAnswer: 3,
+    },
+    {
+        question: "What is the capital of England?",
+        answers: ["Paris", "London", "Berlin", "Rome"],
+        correctAnswer: 1,
+    },
+];
+
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -59,6 +84,10 @@ function App() {
                             <Route
                                 path="/search"
                                 element={<SearchResult />}
+                            ></Route>
+                            <Route
+                                path="/quiz"
+                                element={<Quiz questions={quizQuestions} />}
                             ></Route>
                             <Route element={<LoginProtected />}>
                                 <Route element={<ContractProtected />}>
