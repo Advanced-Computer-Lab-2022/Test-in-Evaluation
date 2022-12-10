@@ -1,4 +1,4 @@
-import { UserContext } from "../../App";
+import { apiURL, UserContext } from "../../App";
 import { useContext, useReducer } from "react";
 import React from "react";
 
@@ -11,6 +11,7 @@ import {
     Radio,
     TextField,
 } from "@mui/material";
+import axios from "axios";
 
 type CreateQuizProps = {
     courseId: String;
@@ -68,7 +69,20 @@ const CreateQuiz = ({ courseId, subtitleId }: CreateQuizProps) => {
         setQuizQuestions(newQuestions);
     };
 
-    const createQuiz = () => {};
+    const createQuiz = async () => {
+        const res = await axios.post(
+            apiURL + `/set_subtitle_exercise`,
+            {
+                courseId: courseId,
+                subtitleId: subtitleId,
+                exercises: quizQuestions,
+            },
+            { withCredentials: true }
+        );
+        if (res.status === 200) {
+            alert("Quiz saved successfully.");
+        }
+    };
 
     return (
         <div>
