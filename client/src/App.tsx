@@ -53,7 +53,6 @@ const quizQuestions: Question[] = [
     },
 ];
 
-
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userType, setUserType] = useState("none");
@@ -88,7 +87,12 @@ function App() {
                             ></Route>
                             <Route
                                 path="/quiz"
-                                element={<CreateQuiz />}
+                                element={
+                                    <CreateQuiz
+                                        courseId="6366a61d8a1874b4703987f6"
+                                        subtitleId="6366a6228a1874b4703987f9"
+                                    />
+                                }
                             ></Route>
                             <Route element={<LoginProtected />}>
                                 <Route element={<ContractProtected />}>

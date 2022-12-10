@@ -12,7 +12,12 @@ import {
     TextField,
 } from "@mui/material";
 
-const CreateQuiz = () => {
+type CreateQuizProps = {
+    courseId: String;
+    subtitleId: String;
+};
+
+const CreateQuiz = ({ courseId, subtitleId }: CreateQuizProps) => {
     const [quizQuestions, setQuizQuestions] = React.useState<Question[]>([]);
 
     const { userInfo } = useContext(UserContext);
@@ -62,6 +67,8 @@ const CreateQuiz = () => {
         );
         setQuizQuestions(newQuestions);
     };
+
+    const createQuiz = () => {};
 
     return (
         <div>
@@ -133,12 +140,7 @@ const CreateQuiz = () => {
                     })}
                 </CardContent>
                 <CardActions>
-                    <Button
-                        onClick={() =>
-                            console.log(JSON.stringify(quizQuestions))
-                        }
-                        variant="contained"
-                    >
+                    <Button onClick={createQuiz} variant="contained">
                         Create Quiz
                     </Button>
                 </CardActions>
