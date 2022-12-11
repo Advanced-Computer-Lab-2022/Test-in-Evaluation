@@ -1,6 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+    createContext,
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useState,
+} from "react";
 import Navbar from "./components/NavBar/NavBar";
 import {
     Home,
@@ -14,6 +20,7 @@ import {
     Course,
 } from "./pages";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
+import axios from "axios";
 // import { AnyAction } from "redux";
 
 type userState = {
@@ -33,6 +40,18 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [userType, setUserType] = useState("none");
     const [userInfo, setUserInfo] = useState("" as any);
+
+    useEffect(() => {
+        axios
+            .get(apiURL + "/who_am_i", { withCredentials: true })
+            .then((res) => {
+                if (!res.data.isGuest) {
+                    setLoggedIn(true);
+                    setUserType(res.data.type);
+                    setUserInfo(res.data);
+                }
+            });
+    }, []);
 
     return (
         <UserContext.Provider
