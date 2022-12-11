@@ -4,7 +4,7 @@ import { validateInput } from "../middleware/validateInput";
 import { Course, User } from "../mongo";
 import { Request, Response } from "../types/express";
 
-const path = "/api/<MyMethod>" as const;
+const path = "/api/set_course_discount" as const;
 
 const Input = Record({
     discount: Number.withConstraint((n) => n >= 0 && n <= 1, { name: "discount must be between 0 and 1" }),
