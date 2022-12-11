@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import Navbar from "./components/NavBar/NavBar";
-import type { Question } from "./components/Excercies/Quiz";
 import {
     Home,
     SignIn,
@@ -12,9 +11,9 @@ import {
     Profile,
     CreateCourse,
     Contract,
+    Course,
 } from "./pages";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
-import CreateQuiz from "./components/Excercies/CreateQuiz";
 // import { AnyAction } from "redux";
 
 type userState = {
@@ -29,29 +28,6 @@ type userState = {
 const UserContext = createContext({} as userState);
 // const navigate = useNavigate();
 // navigate('INSERT PATH HERE')
-
-const quizQuestions: Question[] = [
-    {
-        question: "What is the capital of France?",
-        answers: ["Paris", "London", "Berlin", "Rome"],
-        correctAnswer: 0,
-    },
-    {
-        question: "What is the capital of Germany?",
-        answers: ["Paris", "London", "Berlin", "Rome"],
-        correctAnswer: 2,
-    },
-    {
-        question: "What is the capital of Italy?",
-        answers: ["Paris", "London", "Berlin", "Rome"],
-        correctAnswer: 3,
-    },
-    {
-        question: "What is the capital of England?",
-        answers: ["Paris", "London", "Berlin", "Rome"],
-        correctAnswer: 1,
-    },
-];
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -85,16 +61,10 @@ function App() {
                                 path="/search"
                                 element={<SearchResult />}
                             ></Route>
-                            <Route
-                                path="/quiz"
-                                element={
-                                    <CreateQuiz
-                                        courseId="6366a61d8a1874b4703987f6"
-                                        subtitleId="6366a6228a1874b4703987f9"
-                                    />
-                                }
-                            ></Route>
                             <Route element={<LoginProtected />}>
+                                <Route path="/course/:courseId">
+                                    <Course />
+                                </Route>
                                 <Route element={<ContractProtected />}>
                                     <Route
                                         path="/createCourse"
