@@ -62,9 +62,10 @@ function App() {
                                 element={<SearchResult />}
                             ></Route>
                             <Route element={<LoginProtected />}>
-                                <Route path="/course/:courseId">
-                                    <Course />
-                                </Route>
+                                <Route
+                                    path="/course/:courseId"
+                                    element={<Course />}
+                                ></Route>
                                 <Route element={<ContractProtected />}>
                                     <Route
                                         path="/createCourse"

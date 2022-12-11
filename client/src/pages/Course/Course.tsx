@@ -5,25 +5,40 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 type Course = {
-    title: String;
-    subject: String;
-    summary: String;
-    totalHours: Number;
-    price: Number;
-    rating: {
-        sumOfRatings: Number;
-        numberOfRatings: Number;
+    course: {
+        title: String;
+        subjectId: {
+            Name: String;
+        };
+        summary: String;
+        totalHours: Number;
+        price: Number;
+        rating: {
+            sumOfRatings: Number;
+            numberOfRatings: Number;
+        };
+        reviews: [
+            {
+                reviewer: String;
+                review: String;
+                rating: Number;
+            }
+        ];
+        instructor: String;
+        videoPreviewUrl: String;
+        discount: { rate: Number; startDate: Date; endDate: Date };
     };
-    reviews: [
-        {
-            reviewer: String;
-            review: String;
-            rating: Number;
-        }
-    ];
-    instructor: String;
-    videoPreviewUrl: String;
-    discount: { rate: Number; startDate: Date; endDate: Date };
+    sections: {
+        name: String;
+        description: String;
+        totalHours: Number;
+        videoUrl: String;
+        exam: {
+            exercises: [
+                { question: String; answers: [String]; correctAnswer: Number }
+            ];
+        };
+    }[];
 };
 
 const Course = () => {
@@ -34,21 +49,25 @@ const Course = () => {
 
     React.useEffect(() => {
         axios
-            .get(`${apiURL}/get_course/${courseId}`)
+            .post(
+                `${apiURL}/get_course`,
+                { courseId: courseId },
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => {
+                console.dir(res);
                 setCourse(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
             });
     }, []);
 
     return (
         <div>
             <div>
-                <h1>{course?.title}</h1>
-                <h2>{course?.subject}</h2>
-                <h3>{course?.summary}</h3>
+                <h1>{course?.course.title}</h1>
+                <h2>{course?.course.subjectId.Name}</h2>
+                <h3>{course?.course.summary}</h3>
             </div>
         </div>
     );

@@ -21,7 +21,9 @@ export const addRoute = (app: Express) => {
             const { courseId } = req.body;
 
             const [course, sections] = await Promise.all([
-                Course.findById(courseId),
+                Course.findById(courseId)
+                    .populate("instructor")
+                    .populate("subjectId"),
                 Section.find({ parentCourse: courseId }),
             ]);
 

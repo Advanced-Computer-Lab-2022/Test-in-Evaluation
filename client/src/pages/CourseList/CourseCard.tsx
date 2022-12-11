@@ -3,17 +3,29 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea, Rating } from "@mui/material";
 import { Course } from "../../global";
+import { useNavigate } from "react-router-dom";
 
 type props = {
     course: Course;
 };
 
 const CourseCard = ({ course }: props) => {
+    const navigate = useNavigate();
+
     const courseRating =
         course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
+
+    const onCourseClick = (id: String) => {
+        navigate(`/course/${id}`);
+    };
+
     return (
         <Card sx={{ textAlign: "left" }}>
-            <CardActionArea>
+            <CardActionArea
+                onClick={() => {
+                    onCourseClick(course._id);
+                }}
+            >
                 <CardContent
                     sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
                 >
