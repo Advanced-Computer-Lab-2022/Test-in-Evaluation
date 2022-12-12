@@ -35,7 +35,7 @@ type Course = {
         };
         reviews: Review[];
         instructor: any;
-        videoPreviewUrl: String;
+        videoPreviewUrl: string;
         discount: { rate: Number; startDate: Date; endDate: Date };
     };
     sections: Section[];

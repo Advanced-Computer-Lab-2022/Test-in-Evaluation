@@ -2,11 +2,19 @@ import { apiURL, UserContext } from "../../App";
 import { useContext, useReducer } from "react";
 import React from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { Accordion, Box, Chip, Typography } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import {
+    Accordion,
+    Box,
+    Chip,
+    Rating,
+    styled,
+    Typography,
+} from "@mui/material";
 import YoutubeEmbed from "./YoutubeEmbed";
-
+import { GetCurrency } from "../../data/currency";
 import type { Course } from "../../types/Types";
+import { Star, StarBorder } from "@mui/icons-material";
 
 /*
 
@@ -28,6 +36,15 @@ solve subtitle excersise
 view course subtitles video
 
 */
+
+const StyledRating = styled(Rating)({
+    "& .MuiRating-iconFilled": {
+        color: "#ffffff",
+    },
+    "& .MuiRating-iconHover": {
+        color: "#eeeeee",
+    },
+});
 
 const CoursePage = () => {
     const { userInfo } = useContext(UserContext);
@@ -77,22 +94,99 @@ const CoursePage = () => {
                         width: "100%",
                         display: "flex",
                         flexDirection: "row",
+                        boxShadow: "0px 0px 20px 2px rgba(0.0,0.0,0.0,0.5)",
                     }}
                 >
-                    <Box sx={{ width: "50%" }}>
-                        <Typography>{course?.course.summary}</Typography>
+                    <Box
+                        sx={{
+                            width: "50%",
+                            padding: "30px",
+                            background:
+                                "repeating-linear-gradient(-20deg,#171718,#171718 10px,#111 10px,#111 20px)",
+                        }}
+                    >
+                        <Typography sx={{ color: "white" }}>
+                            {course?.course.summary}
+                        </Typography>
                     </Box>
                     <Box
                         sx={{
                             width: "50%",
                             display: "flex",
                             justifyContent: "center",
+                            alignContent: "center",
+                            alignItems: "center",
+                            justifyItems: "center",
+                            backgroundColor: "#171718",
+                            padding: "17px",
+                            gap: "17px",
+                            flexDirection: "column",
                         }}
                     >
                         <YoutubeEmbed
-                            style={{ width: "100%", height: "300px" }}
+                            style={{ aspectRatio: "16 / 9", width: "100%" }}
                             url="https://www.youtube.com/embed/CermGp8bwFE"
                         />
+
+                        <Typography sx={{ color: "white" }}>
+                            <Link
+                                to={`/instructor/${course?.course.instructor._id}`}
+                                style={{ color: "white" }}
+                            >
+                                {course?.course.instructor.firstName +
+                                    " " +
+                                    course?.course.instructor.lastName}
+                            </Link>
+                        </Typography>
+                        <Box sx={{ display: "flex", gap: "15px" }}>
+                            <Chip
+                                sx={{
+                                    backgroundColor: "white",
+                                    fontWeight: "bold",
+                                }}
+                                label={course?.course.subjectId.Name}
+                            />
+                            <Chip
+                                sx={{
+                                    backgroundColor: "white",
+                                    fontWeight: "bold",
+                                }}
+                                label={
+                                    course?.course.totalHours.toString() +
+                                    " Hours"
+                                }
+                            />
+                            <Chip
+                                sx={{
+                                    backgroundColor: "white",
+                                    fontWeight: "bold",
+                                }}
+                                label={
+                                    course?.course.price.toString() +
+                                    " " +
+                                    GetCurrency()
+                                }
+                            />
+                        </Box>
+
+                        <Box>
+                            <Typography sx={{ color: "white" }}>
+                                Rate Course:
+                            </Typography>
+                        </Box>
+
+                        <Box>
+                            <StyledRating
+                                name="customized-color"
+                                defaultValue={2}
+                                getLabelText={(value: number) =>
+                                    `${value} Heart${value !== 1 ? "s" : ""}`
+                                }
+                                precision={0.1}
+                                icon={<Star fontSize="inherit" />}
+                                emptyIcon={<StarBorder fontSize="inherit" />}
+                            />
+                        </Box>
                     </Box>
 
                     <Box></Box>

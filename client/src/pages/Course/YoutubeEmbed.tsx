@@ -1,6 +1,6 @@
 import React from "react";
 
-const YoutubeEmbed: React.FC<{ url: string; style?: any }> = ({
+const YoutubeEmbed: React.FC<{ url: string | undefined; style?: any }> = ({
     url,
     style,
 }) => {
