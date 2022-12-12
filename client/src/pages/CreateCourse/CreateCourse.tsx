@@ -16,16 +16,26 @@ import { useEffect } from "react";
 import SectionList from "./SectionList";
 import { Loader } from "../../components";
 import axios from "axios";
+import { apiURL } from "../../App";
 
 export type NewSection = {
     title: string;
     description: string;
     totalHours: number;
+    videoUrl: string;
+    exam: {
+        exercises: {
+            question: string;
+            answers: string[];
+            correctAnswer: Number;
+        }[];
+    };
 };
 type NewCourse = {
     title: string;
     subject: string;
     summary: string;
+    videoPreviewUrl: string;
     price: number;
     sections: NewSection[];
 };
@@ -38,6 +48,7 @@ const CreateCourse = () => {
     const [title, setTitle] = useState("");
     const [subject, setSubject] = useState<string>("");
     const [summary, setSummary] = useState("");
+    const [videoPreviewURL, setVideoPreviewURL] = useState("");
     const [price, setPrice] = useState(0);
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const [loading, setLoading] = useState(false);
@@ -75,14 +86,14 @@ const CreateCourse = () => {
                 title,
                 subject,
                 summary,
+                videoPreviewUrl: videoPreviewURL,
                 price,
                 sections,
             };
-            const res = await axios.post(
-                "http://localhost:8000/api/create_course",
-                newCourse,
-                { withCredentials: true }
-            );
+            console.dir(newCourse);
+            const res = await axios.post(apiURL + "/create_course", newCourse, {
+                withCredentials: true,
+            });
             setTitle("");
             setSubject("");
             setSummary("");
@@ -164,6 +175,12 @@ const CreateCourse = () => {
                         label="Summary"
                         value={summary}
                         onChange={(e) => setSummary(e.target.value)}
+                    />
+                    <TextField
+                        required
+                        label="Video Preview URL"
+                        value={videoPreviewURL}
+                        onChange={(e) => setVideoPreviewURL(e.target.value)}
                     />
                     <TextField
                         required
