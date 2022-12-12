@@ -36,6 +36,7 @@ import {
 import { UserContext } from "../../App";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { log } from "console";
 
 function SignInPage() {
     const navigate = useNavigate();
@@ -69,7 +70,8 @@ function SignInPage() {
                         userState.setLoggedIn(true);
                         userState.setUserType(response.data.type);
                         userState.setUserInfo(response.data);
-                        navigate("/home");
+
+                        navigate("/");
                     })
                     .catch((error) => {
                         console.log(error);
