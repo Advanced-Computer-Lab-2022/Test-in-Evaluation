@@ -77,7 +77,10 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />}></Route>
                             <Route path="/signin" element={<SignIn />}></Route>
-                            <Route path="/forgot_password" element={<ForgotPassword />}></Route>
+                            <Route
+                                path="/forgot_password"
+                                element={<ForgotPassword />}
+                            ></Route>
                             <Route path="/signup" element={<SignUp />}></Route>
                             <Route
                                 path="/courses"
@@ -87,7 +90,7 @@ function App() {
                                 path="/search"
                                 element={<SearchResult />}
                             ></Route>
-                            <Route element={<LoginProtected />}>
+                            <Route>
                                 <Route
                                     path="/course/:courseId"
                                     element={<Course />}
