@@ -15,6 +15,7 @@ import { addRoute as getAllSubjectsAddRoute } from "./getAllSubjects";
 import { addRoute as getAllInstructorsAddRoute } from "./getAllInstructors";
 import { addRoute as writeReviewAddRoute } from "./writeReview";
 import { addRoute as getAllReviewsAddRoute } from "./getAllReviews";
+import { addRoute as acceptContractAddRoute } from "./acceptContract";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -34,4 +35,5 @@ export const addRoutes = (app: Express) => {
     getAllInstructorsAddRoute(app);
     writeReviewAddRoute(app);
     getAllReviewsAddRoute(app);
+    acceptContractAddRoute(app);
 };

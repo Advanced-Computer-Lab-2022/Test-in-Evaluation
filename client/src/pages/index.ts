@@ -7,3 +7,4 @@ export { default as SearchResult } from "./SearchResult/SearchResultPage";
 export { default as SignIn } from "./SignIn/SignInPage";
 export { default as SignUp } from "./SignUp/SignUpPage";
 export { default as CreateCourse } from "./CreateCourse/CreateCourse";
+export { default as Contract } from "./ContractPage/ContractPage";
