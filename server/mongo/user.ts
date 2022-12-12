@@ -23,3 +23,5 @@ export const UserSchema = new Schema({
         numberOfRatings: { type: Number, default: 0 },
     }
 });
+
+UserSchema.index( { email: 1 }, { unique: true } );
