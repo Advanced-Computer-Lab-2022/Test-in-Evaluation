@@ -9,3 +9,4 @@ export { default as SignUp } from "./SignUp/SignUpPage";
 export { default as CreateCourse } from "./CreateCourse/CreateCourse";
 export { default as Contract } from "./ContractPage/ContractPage";
 export { default as Course } from "./Course/Course";
+export { default as InstructorReviews } from "./InstructorReviews/InstructorReviews";
