@@ -15,8 +15,6 @@ import { addRoute as getAllSubjectsAddRoute } from "./getAllSubjects";
 import { addRoute as getAllInstructorsAddRoute } from "./getAllInstructors";
 import { addRoute as changeMyProfileAddRoute } from "./changeMyProfile";
 import { addRoute as setCourseDiscountAddRoute } from "./setCourseDiscount";
-import { addRoute as rateInstructorAddRoute } from "./rateInstructor";
-import { addRoute as rateCourseAddRoute } from "./rateCourse";
 import { addRoute as solveExerciseAddRoute } from "./solveExercise";
 import { addRoute as viewExerciseResultAddRoute } from "./viewExerciseResult";
 import { addRoute as addExercise } from "./addExercise";
@@ -39,8 +37,6 @@ export const addRoutes = (app: Express) => {
     getAllInstructorsAddRoute(app);
     changeMyProfileAddRoute(app);
     setCourseDiscountAddRoute(app);
-    rateInstructorAddRoute(app);
-    rateCourseAddRoute(app);
     solveExerciseAddRoute(app);
     viewExerciseResultAddRoute(app);
     addExercise(app);
