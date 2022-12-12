@@ -6,6 +6,7 @@ export const UserSchema = new Schema({
     firstName: String,
     lastName: String,
     passwordHash: String,
+    bio: String,
     userType: {
         type: String,
         enum: UserTypes,
@@ -21,5 +22,4 @@ export const UserSchema = new Schema({
         sumOfRatings: { type: Number, default: 0 },
         numberOfRatings: { type: Number, default: 0 },
     },
-    ratingValue: { type: Number, default: 0 },
 });
