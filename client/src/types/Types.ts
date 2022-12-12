@@ -1,20 +1,20 @@
 type Review = {
     reviewer: string;
     review: string;
-    rating: Number;
+    rating: number;
 };
 
 type Exercise = {
     question: string;
     answers: string[];
-    correctAnswer: Number;
+    correctAnswer: number;
 };
 
 type Section = {
     _id: string;
     name: string;
     description: string;
-    totalHours: Number;
+    totalHours: number;
     videoUrl: string;
     exam: {
         exercises: Exercise[];
@@ -28,16 +28,17 @@ type Course = {
             Name: string;
         };
         summary: string;
-        totalHours: Number;
-        price: Number;
+        totalHours: number;
+        price: number;
         rating: {
-            sumOfRatings: Number;
-            numberOfRatings: Number;
+            sumOfRatings: number;
+            numberOfRatings: number;
         };
         reviews: Review[];
         instructor: any;
         videoPreviewUrl: string;
-        discount: { rate: Number; startDate: Date; endDate: Date };
+        discount: { rate: number; startDate: Date; endDate: Date };
+        _id: string;
     };
     sections: Section[];
 };

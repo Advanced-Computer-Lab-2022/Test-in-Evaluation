@@ -27,7 +27,7 @@ export type NewSection = {
         exercises: {
             question: string;
             answers: string[];
-            correctAnswer: Number;
+            correctAnswer: number;
         }[];
     };
 };

@@ -1,49 +1,26 @@
-import React, { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import axios from "axios";
-import { countries } from "../../data/countries";
 import { apiURL } from "../../App";
 import { useNavigate, redirect, Link } from "react-router-dom";
 
 import {
-    TermsOfService,
-    PrivacyPolicy,
-    ContentOwnershipPolicy,
-} from "../../data/policies";
-import {
     Alert,
-    Autocomplete,
     Box,
-    Tabs,
-    Tab,
-    ToggleButtonGroup,
-    ToggleButton,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     Snackbar,
-    Checkbox,
     Button,
     TextField,
-    Select,
-    MenuItem,
-    InputLabel,
-    FormControl,
     Typography,
     AlertColor,
 } from "@mui/material";
 
 import { UserContext } from "../../App";
 
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { log } from "console";
-
-function SignInPage() {
+function ForgotPassword() {
     const navigate = useNavigate();
     const userState = useContext(UserContext);
 
     type InputObject = {
-        username: string;
-        password: string;
+        email: string;
     };
 
     type SnackbarInformation = {
@@ -61,31 +38,19 @@ function SignInPage() {
         event.preventDefault();
 
         axios
-            .post(apiURL + "/login", formInput, { withCredentials: true })
+            .post(apiURL + "/forgot_password", formInput, { withCredentials: true })
             .then((response) => {
-                axios
-                    .get(apiURL + "/who_am_i", { withCredentials: true })
-                    .then((response) => {
-                        userState.setLoggedIn(true);
-                        userState.setUserType(response.data.type);
-                        userState.setUserInfo(response.data);
-
-                        navigate("/");
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        setSnackbarInfo({
-                            snackbarOpen: true,
-                            snackbarText: error.response.data.error,
-                            snackbarSeverity: "error",
-                        });
-                    });
+                setSnackbarInfo({
+                    snackbarOpen: true,
+                    snackbarText: "Email Sent",
+                    snackbarSeverity: "success",
+                });
             })
             .catch((error) => {
                 console.log(error);
                 setSnackbarInfo({
                     snackbarOpen: true,
-                    snackbarText: error.response.data.error,
+                    snackbarText: error.response.data,
                     snackbarSeverity: "error",
                 });
             });
@@ -144,8 +109,8 @@ function SignInPage() {
                                     sx={{ width: "100%" }}
                                     required
                                     variant="outlined"
-                                    label="Username"
-                                    value={formInput.username}
+                                    label="Email"
+                                    value={formInput.email}
                                     onChange={(
                                         event: ChangeEvent<
                                             | HTMLInputElement
@@ -154,7 +119,7 @@ function SignInPage() {
                                     ): void => {
                                         setFormInput({
                                             ...formInput,
-                                            username: event.target.value,
+                                            email: event.target.value,
                                         });
                                     }}
                                 />
@@ -167,32 +132,7 @@ function SignInPage() {
                                     justifyContent: "center",
                                 }}
                             >
-                                <TextField
-                                    sx={{ width: "100%" }}
-                                    required
-                                    variant="outlined"
-                                    label="Password"
-                                    type="password"
-                                    value={formInput.password}
-                                    onChange={(
-                                        event: ChangeEvent<
-                                            | HTMLInputElement
-                                            | HTMLTextAreaElement
-                                        >
-                                    ): void => {
-                                        setFormInput({
-                                            ...formInput,
-                                            password: event.target.value,
-                                        });
-                                    }}
-                                />
                             </Box>
-                            <Link to="/forgot_password" style={{
-                                    paddingLeft: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "left",
-                                }}>Forgot Password?</Link>
                             <Box
                                 sx={{
                                     display: "flex",
@@ -206,7 +146,7 @@ function SignInPage() {
                                     variant="contained"
                                 >
                                     {" "}
-                                    SIGN IN{" "}
+                                    Reset Password{" "}
                                 </Button>
                             </Box>
                         </Box>
@@ -217,4 +157,4 @@ function SignInPage() {
     );
 }
 
-export default SignInPage;
+export default ForgotPassword;
