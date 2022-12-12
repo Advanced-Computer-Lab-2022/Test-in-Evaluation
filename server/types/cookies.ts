@@ -8,6 +8,7 @@ export interface GuestCookie {
 export interface InstructorCookie {
     userType: UserTypes.instructor;
     username: string;
+    acceptedContract: boolean;
     // id: string;
 }
 
@@ -29,4 +30,9 @@ export interface AdminCookie {
     // id: string;
 }
 
-export type Cookie = GuestCookie | InstructorCookie | IndividualTraineeCookie | CorporateTraineeCookie | AdminCookie;
+export type Cookie =
+    | GuestCookie
+    | InstructorCookie
+    | IndividualTraineeCookie
+    | CorporateTraineeCookie
+    | AdminCookie;
