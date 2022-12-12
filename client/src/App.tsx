@@ -19,6 +19,7 @@ import {
     Contract,
     Course,
 } from "./pages";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
 import axios from "axios";
 // import { AnyAction } from "redux";
@@ -76,6 +77,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<Home />}></Route>
                             <Route path="/signin" element={<SignIn />}></Route>
+                            <Route path="/forgot_password" element={<ForgotPassword />}></Route>
                             <Route path="/signup" element={<SignUp />}></Route>
                             <Route
                                 path="/courses"

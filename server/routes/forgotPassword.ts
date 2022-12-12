@@ -19,7 +19,7 @@ export const addRoute = (app: Express) => {
         const { email } = req.body;
         const user = await User.findOne({ email });
         if (!user || user.userType == UserTypes.admin) {
-            return res.status(400).send("Invalid User")
+            return res.status(401).send("Invalid User")
         }
         const newPassword = randomlyGeneratePassword();
         user.passwordHash = await hash(newPassword);
