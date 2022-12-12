@@ -21,5 +21,5 @@ export const UserSchema = new Schema({
     rating: {
         sumOfRatings: { type: Number, default: 0 },
         numberOfRatings: { type: Number, default: 0 },
-    },
+    }
 });
