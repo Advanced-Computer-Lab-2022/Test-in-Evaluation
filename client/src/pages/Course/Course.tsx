@@ -5,8 +5,11 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import {
     Accordion,
+    AccordionDetails,
+    AccordionSummary,
     Box,
     Chip,
+    Divider,
     Rating,
     styled,
     Typography,
@@ -188,8 +191,33 @@ const CoursePage = () => {
                             />
                         </Box>
                     </Box>
-
-                    <Box></Box>
+                </Box>
+                <Box>
+                    {course?.sections.map((val, idx) => {
+                        return (
+                            <Box>
+                                <Accordion>
+                                    <AccordionSummary
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography>
+                                            {"Section " +
+                                                (idx + 1) +
+                                                " - " +
+                                                val.name}
+                                        </Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>
+                                            {val.description}
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                                <Divider />
+                            </Box>
+                        );
+                    })}
                 </Box>
 
                 {/* <YoutubeEmbed
