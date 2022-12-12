@@ -8,7 +8,7 @@ import { getReviewedObject } from "./writeReview";
 const path = "/api/get_all_reviews" as const;
 
 const Input = Record({
-    reviewed: String,
+  reviewed: String,
 });
 
 type Input = Static<typeof Input>;
