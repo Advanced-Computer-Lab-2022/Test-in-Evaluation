@@ -3,14 +3,29 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea, Rating } from "@mui/material";
 import { Course } from "../../global";
+import { useState, useContext, SetStateAction } from "react";
+import { apiURL, UserContext } from "../../App";
+import { countries } from "../../data/countries";
+
+const countryToCurrency = require("country-to-currency");
+
+const currencyOfCountry = (countryName: string) => {
+    const [validCountry] = countries.filter(
+        (element) => element.label === countryName
+    );
+    return countryToCurrency[validCountry.code];
+};
 
 type props = {
     course: Course;
 };
 
 const CourseCard = ({ course }: props) => {
+    const userState = useContext(UserContext);
+
     const courseRating =
         course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
+
     return (
         <Card sx={{ textAlign: "left" }}>
             <CardActionArea>
@@ -63,7 +78,10 @@ const CourseCard = ({ course }: props) => {
                         }}
                     >
                         <Typography variant="body2" fontWeight="bold">
-                            Price: {course?.price}
+                            Price:{" "}
+                            {course?.price +
+                                " " +
+                                currencyOfCountry(userState.country)}
                         </Typography>
                         <Typography variant="subtitle1" color="text.secondary">
                             {course?.totalHours} Hours

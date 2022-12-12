@@ -10,21 +10,34 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import React from "react";
 import axios from "axios";
 import SearchResultItem, { CourseDetails } from "./SearchResultItem";
-import { apiURL } from "../../App";
+import { apiURL, UserContext } from "../../App";
+import { useState, useContext, SetStateAction } from "react";
+import { countries } from "../../data/countries";
+
+const countryToCurrency = require("country-to-currency");
+
+const currencyOfCountry = (countryName: string) => {
+    const [validCountry] = countries.filter(
+        (element) => element.label === countryName
+    );
+    return countryToCurrency[validCountry.code];
+};
 
 function SearchResultPage() {
+    const userState = useContext(UserContext);
+
     const sliderMarks = [
         {
             value: 0,
-            label: "$0",
+            label: "0 " + currencyOfCountry(userState.country),
         },
         {
             value: 5000,
-            label: "$5,000",
+            label: "5,000 " + currencyOfCountry(userState.country),
         },
         {
             value: 10000,
-            label: "$10,000",
+            label: "10,000 " + currencyOfCountry(userState.country),
         },
     ];
 
@@ -115,7 +128,7 @@ function SearchResultPage() {
         >
             <Grid2 container spacing={2} style={{ width: "75%" }}>
                 <Grid2 xs={4}>
-                    <Paper style={{ padding: "1em" }} elevation={3}>
+                    <Paper style={{ padding: "2em" }} elevation={3}>
                         <Typography variant="h4" gutterBottom>
                             Filter Courses
                         </Typography>

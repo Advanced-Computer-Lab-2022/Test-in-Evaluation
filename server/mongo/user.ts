@@ -6,6 +6,7 @@ export const UserSchema = new Schema({
     firstName: String,
     lastName: String,
     passwordHash: String,
+    bio: String,
     userType: {
         type: String,
         enum: UserTypes,

@@ -16,9 +16,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import NavSearchBar from "../SearchBar/SearchBar";
 import axios from "axios";
-
 import { countries } from "../../data/countries";
-
 import { apiURL, UserContext } from "../../App";
 
 const drawerWidth = 240;
@@ -31,7 +29,7 @@ export default function DrawerAppBar() {
     const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false);
     const userState = useContext(UserContext);
-    const [country, setCountry] = useState("Egypt");
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -120,12 +118,12 @@ export default function DrawerAppBar() {
                     <Box>
                         <Typography>Select Country:</Typography>
                         <Select
-                            value={country}
+                            value={userState.country}
                             label="Select Country"
                             sx={{ background: "white" }}
                             variant="standard"
                             onChange={(event) => {
-                                setCountry(event.target.value);
+                                userState.setCountry(event.target.value);
                             }}
                         >
                             {countries.map((element, index) => {

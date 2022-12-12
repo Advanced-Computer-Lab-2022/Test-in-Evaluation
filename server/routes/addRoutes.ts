@@ -15,6 +15,11 @@ import { addRoute as getAllSubjectsAddRoute } from "./getAllSubjects";
 import { addRoute as getAllInstructorsAddRoute } from "./getAllInstructors";
 import { addRoute as writeReviewAddRoute } from "./writeReview";
 import { addRoute as getAllReviewsAddRoute } from "./getAllReviews";
+import { addRoute as changeMyProfileAddRoute } from "./changeMyProfile";
+import { addRoute as setCourseDiscountAddRoute } from "./setCourseDiscount";
+import { addRoute as solveExerciseAddRoute } from "./solveExercise";
+import { addRoute as viewExerciseResultAddRoute } from "./viewExerciseResult";
+import { addRoute as addExercise } from "./addExercise";
 import { addRoute as acceptContractAddRoute } from "./acceptContract";
 
 export const addRoutes = (app: Express) => {
@@ -35,5 +40,10 @@ export const addRoutes = (app: Express) => {
     getAllInstructorsAddRoute(app);
     writeReviewAddRoute(app);
     getAllReviewsAddRoute(app);
+    changeMyProfileAddRoute(app);
+    setCourseDiscountAddRoute(app);
+    solveExerciseAddRoute(app);
+    viewExerciseResultAddRoute(app);
+    addExercise(app);
     acceptContractAddRoute(app);
 };
