@@ -81,18 +81,6 @@ const CoursePage = () => {
                     backgroundColor: "white",
                 }}
             >
-                <Box>
-                    <Typography
-                        style={{
-                            fontSize: "45px",
-                            color: "#0C0E43",
-                            textAlign: "center",
-                        }}
-                    >
-                        {course?.course.title}
-                    </Typography>
-                </Box>
-
                 <Box
                     sx={{
                         width: "100%",
@@ -104,14 +92,36 @@ const CoursePage = () => {
                     <Box
                         sx={{
                             width: "50%",
-                            padding: "30px",
+                            padding: "15px",
                             background:
                                 "repeating-linear-gradient(-20deg,#171718,#171718 10px,#111 10px,#111 20px)",
                         }}
                     >
-                        <Typography sx={{ color: "white" }}>
-                            {course?.course.summary}
-                        </Typography>
+                        <Box>
+                            {course?.sections.map((val, idx) => {
+                                return (
+                                    <Box>
+                                        <Accordion>
+                                            <AccordionSummary
+                                                aria-controls="panel1a-content"
+                                                id="panel1a-header"
+                                            >
+                                                <Typography>
+                                                    {"Section " +
+                                                        (idx + 1) +
+                                                        " - " +
+                                                        val.name}
+                                                </Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Subtitle subtitle={val} />
+                                            </AccordionDetails>
+                                        </Accordion>
+                                        <Divider />
+                                    </Box>
+                                );
+                            })}
+                        </Box>
                     </Box>
                     <Box
                         sx={{
@@ -127,10 +137,26 @@ const CoursePage = () => {
                             flexDirection: "column",
                         }}
                     >
+                        <Box>
+                            <Typography
+                                style={{
+                                    fontSize: "45px",
+                                    color: "white",
+                                    textAlign: "center",
+                                }}
+                            >
+                                {course?.course.title}
+                            </Typography>
+                        </Box>
                         <YoutubeEmbed
                             style={{ aspectRatio: "16 / 9", width: "100%" }}
                             url={course?.course.videoPreviewUrl}
                         />
+                        <Box>
+                            <Typography sx={{ color: "white" }}>
+                                {course?.course.summary}
+                            </Typography>
+                        </Box>
 
                         <Typography sx={{ color: "white" }}>
                             <Link
@@ -192,31 +218,6 @@ const CoursePage = () => {
                             />
                         </Box>
                     </Box>
-                </Box>
-                <Box>
-                    {course?.sections.map((val, idx) => {
-                        return (
-                            <Box>
-                                <Accordion>
-                                    <AccordionSummary
-                                        aria-controls="panel1a-content"
-                                        id="panel1a-header"
-                                    >
-                                        <Typography>
-                                            {"Section " +
-                                                (idx + 1) +
-                                                " - " +
-                                                val.name}
-                                        </Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Subtitle subtitle={val} />
-                                    </AccordionDetails>
-                                </Accordion>
-                                <Divider />
-                            </Box>
-                        );
-                    })}
                 </Box>
 
                 {/* <YoutubeEmbed
