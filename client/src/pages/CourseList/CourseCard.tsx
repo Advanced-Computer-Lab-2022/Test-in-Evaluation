@@ -7,15 +7,7 @@ import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
 import { useNavigate } from "react-router-dom";
-
-const countryToCurrency = require("country-to-currency");
-
-const currencyOfCountry = (countryName: string) => {
-    const [validCountry] = countries.filter(
-        (element) => element.label === countryName
-    );
-    return countryToCurrency[validCountry.code];
-};
+import { currencyOfCountry } from "../../data/currency";
 
 type props = {
     course: Course;

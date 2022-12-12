@@ -128,7 +128,10 @@ export default function DrawerAppBar() {
                         >
                             {countries.map((element, index) => {
                                 return (
-                                    <MenuItem value={element.label}>
+                                    <MenuItem
+                                        value={element.label}
+                                        key={element.label}
+                                    >
                                         <img
                                             loading="lazy"
                                             width="20"

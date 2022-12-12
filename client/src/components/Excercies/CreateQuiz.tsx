@@ -2,7 +2,6 @@ import { apiURL, UserContext } from "../../App";
 import { useContext, useReducer } from "react";
 import React from "react";
 
-import { Question } from "./Quiz";
 import {
     Button,
     Card,
@@ -12,6 +11,7 @@ import {
     TextField,
 } from "@mui/material";
 import axios from "axios";
+import { Exercise } from "../../types/Types";
 
 type CreateQuizProps = {
     courseId: String;
@@ -19,7 +19,7 @@ type CreateQuizProps = {
 };
 
 const CreateQuiz = ({ courseId, subtitleId }: CreateQuizProps) => {
-    const [quizQuestions, setQuizQuestions] = React.useState<Question[]>([]);
+    const [quizQuestions, setQuizQuestions] = React.useState<Exercise[]>([]);
 
     const { userInfo } = useContext(UserContext);
 

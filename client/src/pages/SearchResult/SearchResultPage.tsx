@@ -13,15 +13,7 @@ import SearchResultItem, { CourseDetails } from "./SearchResultItem";
 import { apiURL, UserContext } from "../../App";
 import { useState, useContext, SetStateAction } from "react";
 import { countries } from "../../data/countries";
-
-const countryToCurrency = require("country-to-currency");
-
-const currencyOfCountry = (countryName: string) => {
-    const [validCountry] = countries.filter(
-        (element) => element.label === countryName
-    );
-    return countryToCurrency[validCountry.code];
-};
+import { currencyOfCountry } from "../../data/currency";
 
 function SearchResultPage() {
     const userState = useContext(UserContext);
