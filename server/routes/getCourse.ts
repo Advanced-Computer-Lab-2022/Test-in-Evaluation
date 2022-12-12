@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { Express } from "express";
 import { Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
@@ -8,30 +9,30 @@ import { UserTypes } from "../types/user";
 const path = "/api/get_course" as const;
 
 const Input = Record({
-    courseId: String,
+  courseId: String,
 });
 
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(
-        path,
-        validateInput(Input),
-        async (req: Request<Input>, res: Response) => {
-            const { courseId } = req.body;
+  app.post(
+    path,
+    validateInput(Input),
+    async (req: Request<Input>, res: Response) => {
+      console.log("GET COURSES BACKEND");
+      console.log(req.body);
+      const { courseId } = req.body;
 
-            const [course, sections] = await Promise.all([
-                Course.findById(courseId)
-                    .populate("instructor")
-                    .populate("subjectId"),
-                Section.find({ parentCourse: courseId }),
-            ]);
+      const [course, sections] = await Promise.all([
+        Course.findById(courseId).populate("instructor").populate("subjectId"),
+        Section.find({ parentCourse: courseId }),
+      ]);
 
-            res.send({
-                course: course!.toObject(),
-                sections: sections.map((v) => v.toObject()),
-            });
-            return;
-        }
-    );
+      res.send({
+        course: course!.toObject(),
+        sections: sections.map((v) => v.toObject()),
+      });
+      return;
+    }
+  );
 };

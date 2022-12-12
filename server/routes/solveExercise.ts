@@ -8,30 +8,38 @@ import { UserTypes } from "../types/user";
 const path = "/api/solve_exercise" as const;
 
 const Input = Record({
-    sectionId: String,
-    answers: Array(Number),
+  sectionId: String,
+  answers: Array(Number),
 });
 
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { sectionId, answers } = req.body;
+  app.post(
+    path,
+    validateInput(Input),
+    async (req: Request<Input>, res: Response) => {
+      const { sectionId, answers } = req.body;
 
-        const client = req.session.data;
+      const client = req.session.data;
 
-        if (client.userType !== UserTypes.corporateTrainee && client.userType !== UserTypes.individualTrainee) return res.status(400).send({ error: "unauthorized" });
+      if (
+        client.userType !== UserTypes.corporateTrainee &&
+        client.userType !== UserTypes.individualTrainee
+      )
+        return res.status(400).send({ error: "unauthorized" });
 
-        const user = await User.findOne({ username: client.username });
+      const user = await User.findOne({ username: client.username });
 
-        if (!user) return res.status(400).send({ error: "user not found" });
+      if (!user) return res.status(400).send({ error: "user not found" });
 
-        await ExerciseSolution.create({
-            sectionId,
-            answers,
-            userId: user._id,
-        });
+      await ExerciseSolution.create({
+        sectionId,
+        answers,
+        userId: user._id,
+      });
 
-        res.send({ success: true });
-    });
+      res.send({ success: true });
+    }
+  );
 };
