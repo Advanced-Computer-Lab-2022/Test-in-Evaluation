@@ -73,24 +73,6 @@ const CoursePage = () => {
     const [courseReviews, setCourseReviews] = useState<any[]>([] as any[]);
     const [courseRating, setCourseRating] = useState(0);
 
-    const reviewArray: Review[] = [
-        {
-            reviewer: "YEET",
-            review: "YOTE",
-            rating: 0.45,
-        },
-        {
-            reviewer: "YEETUS",
-            review: "was good",
-            rating: 5,
-        },
-        {
-            reviewer: "other person",
-            review: "was bad",
-            rating: 0.45,
-        },
-    ];
-
     React.useEffect(() => {
         axios
             .post(
@@ -111,6 +93,7 @@ const CoursePage = () => {
                         { withCredentials: true }
                     )
                     .then((result) => {
+                        console.dir(result);
                         setCourseReviews(result.data);
                     })
                     .catch((err) => {});
@@ -367,7 +350,7 @@ const CoursePage = () => {
                             gap: "2px",
                         }}
                     >
-                        {courseReviews.map((val, idx) => {
+                        {/* {courseReviews.map((val, idx) => {
                             return (
                                 <>
                                     <Box
@@ -422,7 +405,8 @@ const CoursePage = () => {
                                     <Divider />
                                 </>
                             );
-                        })}
+                        })
+                        } */}
                     </Box>
                 </Box>
 

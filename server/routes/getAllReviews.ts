@@ -14,21 +14,24 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(
-        path,
-        validateInput(Input),
-        async (req: Request<Input>, res: Response) => {
-            const { reviewed } = req.body;
-            const reviewedObj = await getReviewedObject(reviewed);
-            if (!reviewedObj) return res.status(400).send("Invalid Content");
-            let reviews = await Review.find({ reviewed });
-            reviews = reviews.map((review: any) => ({...review, reviewerName: getReviewerName(review.reviewer)}));
-            res.send();
-        }
-    );
+  app.post(
+    path,
+    validateInput(Input),
+    async (req: Request<Input>, res: Response) => {
+      const { reviewed } = req.body;
+      const reviewedObj = await getReviewedObject(reviewed);
+      if (!reviewedObj) return res.status(400).send("Invalid Content");
+      let reviews = await Review.find({ reviewed });
+      reviews = reviews.map((review: any) => ({
+        ...review,
+        reviewerName: getReviewerName(review.reviewer),
+      }));
+      res.send(reviews);
+    }
+  );
 };
 
-async function getReviewerName(reviewer: any) : Promise<string> {
-    const reviewerUser = await User.findById(reviewer);
-    return reviewerUser?.firstName + " " + reviewerUser?.lastName;
+async function getReviewerName(reviewer: any): Promise<string> {
+  const reviewerUser = await User.findById(reviewer);
+  return reviewerUser?.firstName + " " + reviewerUser?.lastName;
 }
