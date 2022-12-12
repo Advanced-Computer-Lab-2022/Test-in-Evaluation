@@ -79,50 +79,21 @@ const CoursePage = () => {
                     marginRight: "20px",
                     padding: "10px",
                     backgroundColor: "white",
+                    display: "flex",
+                    alignContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
                 }}
             >
                 <Box
                     sx={{
                         width: "100%",
+                        maxWidth: "1400px",
                         display: "flex",
                         flexDirection: "row",
                         boxShadow: "0px 0px 20px 2px rgba(0.0,0.0,0.0,0.5)",
                     }}
                 >
-                    <Box
-                        sx={{
-                            width: "50%",
-                            padding: "15px",
-                            background:
-                                "repeating-linear-gradient(-20deg,#171718,#171718 10px,#111 10px,#111 20px)",
-                        }}
-                    >
-                        <Box>
-                            {course?.sections.map((val, idx) => {
-                                return (
-                                    <Box>
-                                        <Accordion>
-                                            <AccordionSummary
-                                                aria-controls="panel1a-content"
-                                                id="panel1a-header"
-                                            >
-                                                <Typography>
-                                                    {"Section " +
-                                                        (idx + 1) +
-                                                        " - " +
-                                                        val.name}
-                                                </Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails>
-                                                <Subtitle subtitle={val} />
-                                            </AccordionDetails>
-                                        </Accordion>
-                                        <Divider />
-                                    </Box>
-                                );
-                            })}
-                        </Box>
-                    </Box>
                     <Box
                         sx={{
                             width: "50%",
@@ -218,7 +189,45 @@ const CoursePage = () => {
                             />
                         </Box>
                     </Box>
+                    <Box
+                        sx={{
+                            width: "50%",
+                            padding: "15px",
+                            background:
+                                "repeating-linear-gradient(-20deg,#171718,#171718 10px,#111 10px,#111 20px)",
+                        }}
+                    >
+                        <Box>
+                            {course?.sections.map((val, idx) => {
+                                return (
+                                    <Box>
+                                        <Accordion>
+                                            <AccordionSummary
+                                                aria-controls="panel1a-content"
+                                                id="panel1a-header"
+                                            >
+                                                <Typography>
+                                                    {"Section " +
+                                                        (idx + 1) +
+                                                        " - " +
+                                                        val.name}
+                                                </Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Subtitle subtitle={val} />
+                                            </AccordionDetails>
+                                        </Accordion>
+                                        <Divider />
+                                    </Box>
+                                );
+                            })}
+                        </Box>
+                    </Box>
                 </Box>
+
+                <Divider />
+
+                <Box>Reviews</Box>
 
                 {/* <YoutubeEmbed
                     url={"https://www.youtube.com/embed/CermGp8bwFE"}
