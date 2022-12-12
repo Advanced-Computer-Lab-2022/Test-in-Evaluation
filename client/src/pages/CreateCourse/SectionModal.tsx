@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { NewSection } from "./CreateCourse";
 import ExercisesModal from "./ExercisesModal";
-import { Question } from "../../components/Excercies/Quiz";
+import { Exercise } from "../../types/Types";
 
 const style = {
     position: "absolute" as "absolute",
@@ -33,7 +33,7 @@ const SectionModal = ({ setSections }: props) => {
     const [description, setDescription] = useState<string>("");
     const [videoURL, setVideoURL] = useState<string>("");
     const [totalHours, setTotalHours] = useState<number>(0);
-    const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
+    const [quizQuestions, setQuizQuestions] = useState<Exercise[]>([]);
     const [error, setError] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);

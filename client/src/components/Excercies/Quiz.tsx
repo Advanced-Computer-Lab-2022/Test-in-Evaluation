@@ -1,16 +1,23 @@
 import { UserContext } from "../../App";
 import { useContext, useReducer } from "react";
-import { Box, Stepper, Step, StepButton, Typography, Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
+import {
+    Box,
+    Stepper,
+    Step,
+    StepButton,
+    Typography,
+    Button,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+} from "@mui/material";
 import React from "react";
+import { Exercise } from "../../types/Types";
 
 type QuizProps = {
-    questions: Question[];
-};
-
-type Question = {
-    question: string;
-    answers: string[];
-    correctAnswer: number;
+    questions: Exercise[];
 };
 
 const Quiz = ({ questions }: QuizProps) => {
@@ -41,8 +48,9 @@ const Quiz = ({ questions }: QuizProps) => {
 
     const handleNext = () => {
         const newActiveStep =
-            isLastStep() && !allStepsCompleted() ?
-                questions.findIndex((step, i) => !(i in completed)) : activeStep + 1;
+            isLastStep() && !allStepsCompleted()
+                ? questions.findIndex((step, i) => !(i in completed))
+                : activeStep + 1;
         setActiveStep(newActiveStep);
     };
 
@@ -66,8 +74,10 @@ const Quiz = ({ questions }: QuizProps) => {
         setCompleted({});
     };
 
-    const forceUpdate = useReducer(x => x + 1, 0)[1];
-    const handleOnRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const forceUpdate = useReducer((x) => x + 1, 0)[1];
+    const handleOnRadioChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         console.log(event.target.value);
         const newCompleted = completed;
         newCompleted[activeStep] = parseInt(event.target.value);
@@ -78,11 +88,17 @@ const Quiz = ({ questions }: QuizProps) => {
     return (
         <div>
             <h1>Quiz</h1>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: "100%" }}>
                 <Stepper nonLinear activeStep={activeStep}>
                     {questions.map((quest, index) => (
-                        <Step key={"Question " + (index + 1)} completed={completed[index] !== undefined}>
-                            <StepButton color="inherit" onClick={handleStep(index)}>
+                        <Step
+                            key={"Question " + (index + 1)}
+                            completed={completed[index] !== undefined}
+                        >
+                            <StepButton
+                                color="inherit"
+                                onClick={handleStep(index)}
+                            >
                                 {"Question " + index}
                             </StepButton>
                         </Step>
@@ -94,14 +110,20 @@ const Quiz = ({ questions }: QuizProps) => {
                             <Typography sx={{ mt: 2, mb: 1 }}>
                                 All questions completed - you&apos;re finished.
                             </Typography>
-                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                                <Box sx={{ flex: '1 1 auto' }} />
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    pt: 2,
+                                }}
+                            >
+                                <Box sx={{ flex: "1 1 auto" }} />
                                 <Button onClick={handleSubmit}>Submit</Button>
                             </Box>
                         </React.Fragment>
                     ) : (
                         <React.Fragment>
-                            <div style={{ padding: '5px' }}>
+                            <div style={{ padding: "5px" }}>
                                 <Typography variant="h4">
                                     {questions[activeStep].question}
                                 </Typography>
@@ -109,17 +131,33 @@ const Quiz = ({ questions }: QuizProps) => {
                                     <RadioGroup
                                         aria-labelledby="demo-radio-buttons-group-label"
                                         ref={radioGroupRef}
-                                        value={completed[activeStep] == undefined ? null : completed[activeStep]}
+                                        value={
+                                            completed[activeStep] == undefined
+                                                ? null
+                                                : completed[activeStep]
+                                        }
                                         onChange={handleOnRadioChange}
                                         name="radio-buttons-group"
                                     >
-                                        {questions[activeStep].answers.map((choice, index) => (
-                                            <FormControlLabel value={index} control={<Radio />} label={choice} />
-                                        ))}
+                                        {questions[activeStep].answers.map(
+                                            (choice, index) => (
+                                                <FormControlLabel
+                                                    value={index}
+                                                    control={<Radio />}
+                                                    label={choice}
+                                                />
+                                            )
+                                        )}
                                     </RadioGroup>
                                 </FormControl>
                             </div>
-                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    pt: 2,
+                                }}
+                            >
                                 <Button
                                     color="inherit"
                                     disabled={activeStep === 0}
@@ -128,7 +166,7 @@ const Quiz = ({ questions }: QuizProps) => {
                                 >
                                     Back
                                 </Button>
-                                <Box sx={{ flex: '1 1 auto' }} />
+                                <Box sx={{ flex: "1 1 auto" }} />
                                 <Button onClick={handleNext} sx={{ mr: 1 }}>
                                     Next
                                 </Button>
@@ -136,10 +174,9 @@ const Quiz = ({ questions }: QuizProps) => {
                         </React.Fragment>
                     )}
                 </div>
-            </Box >
-        </div >
+            </Box>
+        </div>
     );
 };
 
-export type { Question };
 export default Quiz;

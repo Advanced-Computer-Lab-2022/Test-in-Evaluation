@@ -1,32 +1,32 @@
 type Review = {
-    reviewer: String;
-    review: String;
+    reviewer: string;
+    review: string;
     rating: Number;
 };
 
-type Excersize = {
-    question: String;
-    answers: [String];
+type Exercise = {
+    question: string;
+    answers: string[];
     correctAnswer: Number;
 };
 
 type Section = {
-    name: String;
-    description: String;
+    name: string;
+    description: string;
     totalHours: Number;
-    videoUrl: String;
+    videoUrl: string;
     exam: {
-        exercises: Excersize[];
+        exercises: Exercise[];
     };
 };
 
 type Course = {
     course: {
-        title: String;
+        title: string;
         subjectId: {
-            Name: String;
+            Name: string;
         };
-        summary: String;
+        summary: string;
         totalHours: Number;
         price: Number;
         rating: {
@@ -41,4 +41,4 @@ type Course = {
     sections: Section[];
 };
 
-export type { Review, Excersize, Section, Course };
+export type { Review, Exercise, Section, Course };

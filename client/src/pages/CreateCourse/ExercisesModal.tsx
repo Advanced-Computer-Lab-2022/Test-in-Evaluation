@@ -2,7 +2,6 @@ import { apiURL, UserContext } from "../../App";
 import { useContext, useReducer } from "react";
 import React from "react";
 
-import { Question } from "./../../components/Excercies/Quiz";
 import {
     Button,
     Card,
@@ -12,10 +11,11 @@ import {
     TextField,
 } from "@mui/material";
 import Modal from "@mui/material/Modal";
+import { Exercise } from "../../types/Types";
 
 type ExercisesModalParams = {
-    quizQuestions: Question[];
-    setQuizQuestions: React.Dispatch<React.SetStateAction<Question[]>>;
+    quizQuestions: Exercise[];
+    setQuizQuestions: React.Dispatch<React.SetStateAction<Exercise[]>>;
 };
 
 const style = {

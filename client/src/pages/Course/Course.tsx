@@ -18,6 +18,7 @@ import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
 import type { Course } from "../../types/Types";
 import { Star, StarBorder } from "@mui/icons-material";
+import Subtitle from "./Subtitle";
 
 /*
 
@@ -128,7 +129,7 @@ const CoursePage = () => {
                     >
                         <YoutubeEmbed
                             style={{ aspectRatio: "16 / 9", width: "100%" }}
-                            url="https://www.youtube.com/embed/CermGp8bwFE"
+                            url={course?.course.videoPreviewUrl}
                         />
 
                         <Typography sx={{ color: "white" }}>
@@ -209,9 +210,7 @@ const CoursePage = () => {
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
-                                        <Typography>
-                                            {val.description}
-                                        </Typography>
+                                        <Subtitle subtitle={val} />
                                     </AccordionDetails>
                                 </Accordion>
                                 <Divider />
