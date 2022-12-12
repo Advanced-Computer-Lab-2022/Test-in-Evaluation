@@ -14,21 +14,25 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { email, bio } = req.body;
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const { email, bio } = req.body;
 
-        const client = req.session.data;
+            const client = req.session.data;
 
-        if (client.userType === null) return res.status(400).send({ error: "unauthorized" });
+            if (client.userType === null)
+                return res.status(400).send({ error: "unauthorized" });
 
-        const obj = {
-            username: client.username,
-            ...(email ? { email } : {}),
-            ...(bio ? { bio } : {}),
-        };
+            const obj = {
+                ...(email ? { email } : {}),
+                ...(bio ? { bio } : {}),
+            };
 
-        await User.updateOne(obj);
+            await User.updateOne({ username: client.username }, obj);
 
-        res.send({ success: true });
-    });
+            res.send({ success: true });
+        }
+    );
 };
