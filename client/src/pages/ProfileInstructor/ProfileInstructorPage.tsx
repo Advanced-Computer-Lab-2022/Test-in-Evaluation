@@ -9,10 +9,8 @@ function ProfileInstructorPage() {
             <Box
                 sx={{
                     background: "white",
-                    flexGrow: 1,
                     display: "flex",
                     minHeight: "80vh",
-                    // minHeight: "100%",
                 }}
             >
                 <Tabs
@@ -29,10 +27,12 @@ function ProfileInstructorPage() {
                     }}
                 >
                     <Tab label="Create a new course" value="createCourse" />
-                    <Tab label="Show Reviews" value="instructorReviews" />
+                    <Tab label="Show My Reviews" value="instructorReviews" />
                 </Tabs>
-                {optionTab === "createCourse" && <CreateCourse />}
-                {optionTab === "instructorMyReviews" && <InstructorReviews />}
+                <Box sx={{ flexGrow: 1, p: 2 }}>
+                    {optionTab === "createCourse" && <CreateCourse />}
+                    {optionTab === "instructorReviews" && <InstructorReviews />}
+                </Box>
             </Box>
         </Container>
     );

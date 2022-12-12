@@ -34,9 +34,11 @@ const InstructorReviews = () => {
     useEffect(() => {
         getInstructorReviews();
     }, []);
+    if (loading) {
+        <Loader open={loading} />;
+    }
     return (
         <>
-            <Loader open={loading} />
             <Box>{reviews.map((review) => review.text)}</Box>
         </>
     );
