@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Card, Rating, Typography } from "@mui/material";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { apiURL, UserContext } from "../../App";
@@ -10,6 +10,7 @@ type Review = {
     score: number;
     reviewer: string;
     reviewed: string;
+    reviewerName: string;
 };
 const InstructorReviews = () => {
     const [reviews, setReviews] = useState<Review[]>([]);
@@ -39,7 +40,21 @@ const InstructorReviews = () => {
     }
     return (
         <>
-            <Box>{reviews.map((review) => review.text)}</Box>
+            <Box>
+                {reviews.map((review) => (
+                    <Card sx={{ padding: "5px" }}>
+                        <Typography variant="h6">
+                            {review.reviewerName}
+                        </Typography>
+                        <Typography>{review.text}</Typography>
+                        <Rating
+                            name="read-only"
+                            value={review.score}
+                            readOnly
+                        />
+                    </Card>
+                ))}
+            </Box>
         </>
     );
 };
