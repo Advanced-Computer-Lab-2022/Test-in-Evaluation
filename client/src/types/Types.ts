@@ -11,6 +11,7 @@ type Exercise = {
 };
 
 type Section = {
+    _id: string;
     name: string;
     description: string;
     totalHours: Number;

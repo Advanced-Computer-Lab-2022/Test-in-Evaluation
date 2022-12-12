@@ -1,4 +1,4 @@
-import { UserContext } from "../../App";
+import { apiURL, UserContext } from "../../App";
 import { useContext, useReducer } from "react";
 import {
     Box,
@@ -14,13 +14,16 @@ import {
     RadioGroup,
 } from "@mui/material";
 import React from "react";
-import { Exercise } from "../../types/Types";
+import { Exercise, Section } from "../../types/Types";
+import axios from "axios";
 
 type QuizProps = {
+    section: Section;
     questions: Exercise[];
+    setExerciseOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Quiz = ({ questions }: QuizProps) => {
+const Quiz = ({ section, questions, setExerciseOpen }: QuizProps) => {
     const { userInfo } = useContext(UserContext);
 
     const [activeStep, setActiveStep] = React.useState(0);
@@ -69,9 +72,21 @@ const Quiz = ({ questions }: QuizProps) => {
         handleNext();
     };
 
-    const handleSubmit = () => {
-        setActiveStep(0);
-        setCompleted({});
+    const handleSubmit = async () => {
+        console.log(Object.values(completed));
+        let res = await axios.post(
+            apiURL + "/solve_exercise",
+            {
+                sectionId: section._id,
+                answers: Object.values(completed),
+            },
+            {
+                withCredentials: true,
+            }
+        );
+        if (res.data.success) {
+            setExerciseOpen(false);
+        }
     };
 
     const forceUpdate = useReducer((x) => x + 1, 0)[1];
@@ -87,7 +102,22 @@ const Quiz = ({ questions }: QuizProps) => {
 
     return (
         <div>
-            <h1>Quiz</h1>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    marginBottom: "1rem",
+                }}
+            >
+                <Typography variant="h5">{section.name} Exercise</Typography>
+                <Button
+                    variant="contained"
+                    onClick={() => setExerciseOpen(false)}
+                >
+                    Close
+                </Button>
+            </Box>
             <Box sx={{ width: "100%" }}>
                 <Stepper nonLinear activeStep={activeStep}>
                     {questions.map((quest, index) => (
@@ -105,74 +135,65 @@ const Quiz = ({ questions }: QuizProps) => {
                     ))}
                 </Stepper>
                 <div>
-                    {allStepsCompleted() ? (
-                        <React.Fragment>
-                            <Typography sx={{ mt: 2, mb: 1 }}>
-                                All questions completed - you&apos;re finished.
+                    <React.Fragment>
+                        <div style={{ padding: "5px" }}>
+                            <Typography variant="h4">
+                                {questions[activeStep].question}
                             </Typography>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    pt: 2,
-                                }}
-                            >
-                                <Box sx={{ flex: "1 1 auto" }} />
-                                <Button onClick={handleSubmit}>Submit</Button>
-                            </Box>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <div style={{ padding: "5px" }}>
-                                <Typography variant="h4">
-                                    {questions[activeStep].question}
-                                </Typography>
-                                <FormControl>
-                                    <RadioGroup
-                                        aria-labelledby="demo-radio-buttons-group-label"
-                                        ref={radioGroupRef}
-                                        value={
-                                            completed[activeStep] == undefined
-                                                ? null
-                                                : completed[activeStep]
-                                        }
-                                        onChange={handleOnRadioChange}
-                                        name="radio-buttons-group"
-                                    >
-                                        {questions[activeStep].answers.map(
-                                            (choice, index) => (
-                                                <FormControlLabel
-                                                    value={index}
-                                                    control={<Radio />}
-                                                    label={choice}
-                                                />
-                                            )
-                                        )}
-                                    </RadioGroup>
-                                </FormControl>
-                            </div>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    pt: 2,
-                                }}
-                            >
-                                <Button
-                                    color="inherit"
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    sx={{ mr: 1 }}
+                            <FormControl>
+                                <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    ref={radioGroupRef}
+                                    value={
+                                        completed[activeStep] == undefined
+                                            ? null
+                                            : completed[activeStep]
+                                    }
+                                    onChange={handleOnRadioChange}
+                                    name="radio-buttons-group"
                                 >
-                                    Back
-                                </Button>
-                                <Box sx={{ flex: "1 1 auto" }} />
-                                <Button onClick={handleNext} sx={{ mr: 1 }}>
-                                    Next
-                                </Button>
-                            </Box>
-                        </React.Fragment>
-                    )}
+                                    {questions[activeStep].answers.map(
+                                        (choice, index) => (
+                                            <FormControlLabel
+                                                value={index}
+                                                control={<Radio />}
+                                                label={choice}
+                                            />
+                                        )
+                                    )}
+                                </RadioGroup>
+                            </FormControl>
+                        </div>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                pt: 2,
+                            }}
+                        >
+                            <Button
+                                color="inherit"
+                                disabled={activeStep === 0}
+                                onClick={handleBack}
+                                sx={{ mr: 1 }}
+                            >
+                                Back
+                            </Button>
+                            <Box sx={{ flex: "1 1 auto" }} />
+                            <Button onClick={handleNext} sx={{ mr: 1 }}>
+                                Next
+                            </Button>
+                        </Box>
+                        {allStepsCompleted() && (
+                            <Button
+                                variant="contained"
+                                sx={{ width: "100%", marginTop: "20px" }}
+                                onClick={handleSubmit}
+                            >
+                                Submit
+                            </Button>
+                        )}
+                    </React.Fragment>
                 </div>
             </Box>
         </div>

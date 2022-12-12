@@ -71,7 +71,11 @@ const Subtitle = ({ subtitle }: params) => {
 
             <Modal open={isExerciseOpen}>
                 <Box sx={style}>
-                    <Quiz questions={subtitle.exam.exercises} />
+                    <Quiz
+                        section={subtitle}
+                        questions={subtitle.exam.exercises}
+                        setExerciseOpen={setExerciseOpen}
+                    />
                 </Box>
             </Modal>
 
