@@ -350,7 +350,7 @@ const CoursePage = () => {
                             gap: "2px",
                         }}
                     >
-                        {/* {courseReviews.map((val, idx) => {
+                        {courseReviews.map((val, idx) => {
                             return (
                                 <>
                                     <Box
@@ -375,7 +375,7 @@ const CoursePage = () => {
                                                     color: "white",
                                                 }}
                                             >
-                                                {val.reviewer + " "}
+                                                {val.reviewerName + " "}
                                             </Typography>
                                             <StyledRating
                                                 name="customized-color"
@@ -405,8 +405,7 @@ const CoursePage = () => {
                                     <Divider />
                                 </>
                             );
-                        })
-                        } */}
+                        })}
                     </Box>
                 </Box>
 
