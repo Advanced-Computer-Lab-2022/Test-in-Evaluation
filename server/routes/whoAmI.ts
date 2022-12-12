@@ -18,7 +18,7 @@ export const addRoute = (app: Express) => {
         async (req: Request<Input>, res: Response) => {
             const client = req.session.data;
             if (client.userType) {
-                  const user = await User.findOne({ username: client.username });
+                const user = await User.findOne({ username: client.username });
                 const { passwordHash, ...retUser } = user!.toObject();
                 if (client.userType == UserTypes.instructor)
                     res.send({
@@ -26,14 +26,14 @@ export const addRoute = (app: Express) => {
                         username: client.username,
                         acceptedContract: client.acceptedContract,
                         isGuest: false,
-                        user: retUser
+                        user: retUser,
                     });
                 else
                     res.send({
                         type: client.userType,
                         username: client.username,
                         isGuest: false,
-                        user: retUser
+                        user: retUser,
                     });
             } else {
                 res.send({ isGuest: true });

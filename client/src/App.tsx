@@ -1,6 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+    createContext,
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useState,
+} from "react";
 import Navbar from "./components/NavBar/NavBar";
 import {
     Home,
@@ -11,8 +17,10 @@ import {
     Profile,
     CreateCourse,
     Contract,
+    Course,
 } from "./pages";
-import { LoginProtected, ContractProtected } from "./components";
+import { LoginProtected, ContractProtected, Quiz } from "./components";
+import axios from "axios";
 // import { AnyAction } from "redux";
 
 type userState = {
@@ -36,7 +44,17 @@ function App() {
     const [country, setCountry] = useState("Egypt");
     const [userInfo, setUserInfo] = useState("" as any);
 
-    console.log();
+    useEffect(() => {
+        axios
+            .get(apiURL + "/who_am_i", { withCredentials: true })
+            .then((res) => {
+                if (!res.data.isGuest) {
+                    setLoggedIn(true);
+                    setUserType(res.data.type);
+                    setUserInfo(res.data);
+                }
+            });
+    }, []);
 
     return (
         <UserContext.Provider
@@ -68,6 +86,10 @@ function App() {
                                 element={<SearchResult />}
                             ></Route>
                             <Route element={<LoginProtected />}>
+                                <Route
+                                    path="/course/:courseId"
+                                    element={<Course />}
+                                ></Route>
                                 <Route element={<ContractProtected />}>
                                     <Route
                                         path="/createCourse"

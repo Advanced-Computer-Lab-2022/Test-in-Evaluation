@@ -17,11 +17,18 @@ export const UserSchema = new Schema({
         enum: GenderTypes,
     },
     country: String,
-    acceptedContract: { type: Boolean, default: false },
     rating: {
         sumOfRatings: { type: Number, default: 0 },
         numberOfRatings: { type: Number, default: 0 },
-    }
+    },
+    reviews: [
+        {
+            reviewerId: { type: Schema.Types.ObjectId, ref: "User" },
+            review: String,
+            rating: Number,
+        },
+    ],
+    acceptedContract: { type: Boolean, default: false },
 });
 
-UserSchema.index( { email: 1 }, { unique: true } );
+UserSchema.index({ email: 1 }, { unique: true });

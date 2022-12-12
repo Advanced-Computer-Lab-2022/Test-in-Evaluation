@@ -22,6 +22,7 @@ import { addRoute as solveExerciseAddRoute } from "./solveExercise";
 import { addRoute as viewExerciseResultAddRoute } from "./viewExerciseResult";
 import { addRoute as addExercise } from "./addExercise";
 import { addRoute as acceptContractAddRoute } from "./acceptContract";
+import { addRoute as getCourse } from "./getCourse";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -48,4 +49,5 @@ export const addRoutes = (app: Express) => {
     viewExerciseResultAddRoute(app);
     addExercise(app);
     acceptContractAddRoute(app);
+    getCourse(app);
 };

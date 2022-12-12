@@ -6,6 +6,7 @@ import { Course } from "../../global";
 import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
+import { useNavigate } from "react-router-dom";
 
 const countryToCurrency = require("country-to-currency");
 
@@ -23,12 +24,22 @@ type props = {
 const CourseCard = ({ course }: props) => {
     const userState = useContext(UserContext);
 
+    const navigate = useNavigate();
+
     const courseRating =
         course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
 
+    const onCourseClick = (id: String) => {
+        navigate(`/course/${id}`);
+    };
+
     return (
         <Card sx={{ textAlign: "left" }}>
-            <CardActionArea>
+            <CardActionArea
+                onClick={() => {
+                    onCourseClick(course._id);
+                }}
+            >
                 <CardContent
                     sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}
                 >
