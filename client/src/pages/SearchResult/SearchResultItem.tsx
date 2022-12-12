@@ -10,6 +10,19 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import { useState, useContext, SetStateAction } from "react";
+import { apiURL, UserContext } from "../../App";
+import { countries } from "../../data/countries";
+
+const countryToCurrency = require("country-to-currency");
+
+const currencyOfCountry = (countryName: string) => {
+    const [validCountry] = countries.filter(
+        (element) => element.label === countryName
+    );
+    return countryToCurrency[validCountry.code];
+};
+
 export interface CourseDetails {
     name: string;
     subtitles: {
@@ -23,6 +36,7 @@ export interface CourseDetails {
 
 function SearchResultItem(courseInfo: CourseDetails) {
     let totalHours = 0;
+    const userState = useContext(UserContext);
     for (let subtitle of courseInfo.subtitles) {
         totalHours += subtitle.hours;
     }
@@ -94,7 +108,9 @@ function SearchResultItem(courseInfo: CourseDetails) {
                         {courseInfo.discount > 0 && (
                             <div style={{ display: "flex", gap: "5px" }}>
                                 <Typography variant="h5" gutterBottom>
-                                    ${courseInfo.price}
+                                    {courseInfo.price +
+                                        " " +
+                                        currencyOfCountry(userState.country)}
                                 </Typography>
                                 <Typography
                                     sx={{ fontSize: 14, alignSelf: "center" }}
