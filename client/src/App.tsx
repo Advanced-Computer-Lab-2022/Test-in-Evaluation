@@ -18,6 +18,7 @@ import {
     CreateCourse,
     Contract,
     Course,
+    Instructor,
 } from "./pages";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
@@ -94,6 +95,10 @@ function App() {
                                 <Route
                                     path="/course/:courseId"
                                     element={<Course />}
+                                ></Route>
+                                <Route
+                                    path="/instructor/:instructorId"
+                                    element={<Instructor />}
                                 ></Route>
                                 <Route element={<ContractProtected />}>
                                     <Route

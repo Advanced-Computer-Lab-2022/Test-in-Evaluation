@@ -1,3 +1,15 @@
+type User = {
+    _id: string;
+    username: string;
+    userType: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    address: string;
+    bio: string;
+};
+
 type Review = {
     reviewer: string;
     review: string;
@@ -35,7 +47,7 @@ type Course = {
             numberOfRatings: number;
         };
         reviews: Review[];
-        instructor: any;
+        instructor: User;
         videoPreviewUrl: string;
         discount: { rate: number; startDate: Date; endDate: Date };
         _id: string;
@@ -50,4 +62,4 @@ type ExerciseSolution = {
     solutions: number[];
 };
 
-export type { Review, Exercise, Section, Course, ExerciseSolution };
+export type { Review, Exercise, Section, Course, ExerciseSolution, User };
