@@ -16,26 +16,36 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { username, password } = req.body;
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const { username, password } = req.body;
 
-        const user = await User.findOne({ username });
-        if (!user) return res.status(400).send({ error: "User not found" });
+            const user = await User.findOne({ username });
+            if (!user) return res.status(400).send({ error: "User not found" });
 
-        const passwordHash = user.passwordHash || "";
-        const isCorrect = await verify(passwordHash, password).catch(() => false);
+            const passwordHash = user.passwordHash || "";
+            const isCorrect = await verify(passwordHash, password).catch(
+                () => false
+            );
 
-        if (!isCorrect) return res.status(400).send({ error: "Incorrect password" });
+            if (!isCorrect)
+                return res.status(400).send({ error: "Incorrect password" });
 
-        const userType = UserTypes[user.userType! as keyof typeof UserTypes];
+            const userType =
+                UserTypes[user.userType! as keyof typeof UserTypes];
 
-        if (!userType) return res.status(400).send({ error: "User type not found" });
+            if (!userType)
+                return res.status(400).send({ error: "User type not found" });
 
-        req.session.data = {
-            userType,
-            username: user.username!,
-        };
+            req.session.data = {
+                userType,
+                username: user.username!,
+                acceptedContract: user.acceptedContract!,
+            };
 
-        res.send({ success: true });
-    });
+            res.send({ success: true });
+        }
+    );
 };

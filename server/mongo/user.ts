@@ -17,6 +17,7 @@ export const UserSchema = new Schema({
         enum: GenderTypes,
     },
     country: String,
+    acceptedContract: { type: Boolean, default: false },
     rating: {
         sumOfRatings: { type: Number, default: 0 },
         numberOfRatings: { type: Number, default: 0 },

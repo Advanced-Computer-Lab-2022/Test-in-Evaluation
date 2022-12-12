@@ -4,7 +4,7 @@ import { validateInput } from "../middleware/validateInput";
 import { ExerciseSolution, Section, User } from "../mongo";
 import { Request, Response } from "../types/express";
 
-const path = "/api/<MyMethod>" as const;
+const path = "/api/view_exercise_result" as const;
 
 const Input = Record({
     sectionId: String,
