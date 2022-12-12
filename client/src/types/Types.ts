@@ -43,4 +43,11 @@ type Course = {
     sections: Section[];
 };
 
-export type { Review, Exercise, Section, Course };
+type ExerciseSolution = {
+    _id: string;
+    section: string;
+    user: string;
+    solutions: number[];
+};
+
+export type { Review, Exercise, Section, Course, ExerciseSolution };

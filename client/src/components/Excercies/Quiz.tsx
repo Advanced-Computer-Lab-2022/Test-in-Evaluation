@@ -1,5 +1,5 @@
 import { apiURL, UserContext } from "../../App";
-import { useContext, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import {
     Box,
     Stepper,
@@ -14,22 +14,40 @@ import {
     RadioGroup,
 } from "@mui/material";
 import React from "react";
-import { Exercise, Section } from "../../types/Types";
+import { Exercise, ExerciseSolution, Section } from "../../types/Types";
 import axios from "axios";
 
 type QuizProps = {
+    isView: boolean;
+    solution: ExerciseSolution | null;
     section: Section;
     questions: Exercise[];
     setExerciseOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Quiz = ({ section, questions, setExerciseOpen }: QuizProps) => {
+const Quiz = ({
+    isView,
+    solution,
+    section,
+    questions,
+    setExerciseOpen,
+}: QuizProps) => {
     const { userInfo } = useContext(UserContext);
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [completed, setCompleted] = React.useState<{
         [k: number]: number;
     }>({});
+
+    useEffect(() => {
+        if (isView && solution) {
+            let tmp: any = {};
+            for (let i = 0; i < solution.solutions.length; i++) {
+                tmp[i] = solution.solutions[i];
+            }
+            setCompleted(tmp);
+        }
+    }, [solution, isView]);
 
     const radioGroupRef = React.useRef<HTMLDivElement>(null);
 
@@ -63,13 +81,6 @@ const Quiz = ({ section, questions, setExerciseOpen }: QuizProps) => {
 
     const handleStep = (step: number) => () => {
         setActiveStep(step);
-    };
-
-    const handleComplete = () => {
-        const newCompleted = completed;
-        newCompleted[activeStep] = 1;
-        setCompleted(newCompleted);
-        handleNext();
     };
 
     const handleSubmit = async () => {
@@ -157,7 +168,30 @@ const Quiz = ({ section, questions, setExerciseOpen }: QuizProps) => {
                                             <FormControlLabel
                                                 value={index}
                                                 control={<Radio />}
-                                                label={choice}
+                                                label={
+                                                    <Typography
+                                                        sx={{
+                                                            color: isView
+                                                                ? questions[
+                                                                      activeStep
+                                                                  ]
+                                                                      .correctAnswer ===
+                                                                  index
+                                                                    ? "green"
+                                                                    : solution
+                                                                          ?.solutions[
+                                                                          activeStep
+                                                                      ] ===
+                                                                      index
+                                                                    ? "red"
+                                                                    : "black"
+                                                                : "black",
+                                                        }}
+                                                    >
+                                                        {choice}
+                                                    </Typography>
+                                                }
+                                                disabled={isView}
                                             />
                                         )
                                     )}
@@ -189,6 +223,7 @@ const Quiz = ({ section, questions, setExerciseOpen }: QuizProps) => {
                                 variant="contained"
                                 sx={{ width: "100%", marginTop: "20px" }}
                                 onClick={handleSubmit}
+                                disabled={isView}
                             >
                                 Submit
                             </Button>
