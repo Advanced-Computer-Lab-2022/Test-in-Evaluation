@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
 import { NewSection } from "./CreateCourse";
+import ExercisesModal from "./ExercisesModal";
+import { Question } from "../../components/Excercies/Quiz";
 
 const style = {
     position: "absolute" as "absolute",
@@ -27,11 +29,13 @@ type props = {
     setSections: (a: SectionFunction) => void;
 };
 const SectionModal = ({ setSections }: props) => {
-    const [open, setOpen] = useState(false);
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+    const [videoURL, setVideoURL] = useState<string>("");
     const [totalHours, setTotalHours] = useState<number>(0);
+    const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
     const [error, setError] = useState<boolean>(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
@@ -47,6 +51,10 @@ const SectionModal = ({ setSections }: props) => {
             title,
             description,
             totalHours,
+            videoUrl: videoURL,
+            exam: {
+                exercises: quizQuestions,
+            },
         };
         setSections((oldSections) => [...oldSections, newSection]);
         setTitle("");
@@ -108,6 +116,17 @@ const SectionModal = ({ setSections }: props) => {
                                 ? "Total Hours must be greater than zero"
                                 : ""
                         }
+                    />
+                    <TextField
+                        fullWidth
+                        label="Video URL"
+                        required
+                        value={videoURL}
+                        onChange={(e) => setVideoURL(e.target.value)}
+                    />
+                    <ExercisesModal
+                        quizQuestions={quizQuestions}
+                        setQuizQuestions={setQuizQuestions}
                     />
                     <Button variant="contained" onClick={onSubmit} fullWidth>
                         Add Section
