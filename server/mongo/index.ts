@@ -3,9 +3,10 @@ import { UserSchema } from "./user";
 import { CourseSchema } from "./course";
 import { ExerciseSchema } from "./exercise";
 import { SectionSchema } from "./section";
-import { SubjectSchema } from './subject';
-import { ReviewSchema } from './review';
+import { SubjectSchema } from "./subject";
+import { ReviewSchema } from "./review";
 import { ExerciseSolutionSchema } from "./exerciseSolution";
+import { EnrollmentSchema } from "./enrollment";
 
 export const User = mongoose.model("User", UserSchema);
 
@@ -20,3 +21,5 @@ export const Subject = mongoose.model("Subject", SubjectSchema);
 export const Review = mongoose.model("Review", ReviewSchema);
 
 export const ExerciseSolution = mongoose.model("ExerciseSolution", ExerciseSolutionSchema);
+
+export const Enrollment = mongoose.model("Enrollment", EnrollmentSchema);
