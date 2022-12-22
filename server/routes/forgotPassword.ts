@@ -15,21 +15,25 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { email } = req.body;
-        const user = await User.findOne({ email });
-        if (!user || user.userType == UserTypes.admin) {
-            return res.status(401).send("Invalid User")
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const { email } = req.body;
+            const user = await User.findOne({ email });
+            if (!user || user.userType == UserTypes.admin) {
+                return res.status(401).send("Invalid User");
+            }
+            const newPassword = randomlyGeneratePassword();
+            user.passwordHash = await hash(newPassword);
+            user.save();
+            sendEmail(email, user.firstName ?? "", newPassword);
+            res.send({ success: true });
         }
-        const newPassword = randomlyGeneratePassword();
-        user.passwordHash = await hash(newPassword);
-        user.save();
-        sendEmail(email, user.firstName ?? "", newPassword);
-        res.send({ success: true });
-    });
+    );
 };
 
-function randomlyGeneratePassword() : string {
+function randomlyGeneratePassword(): string {
     var password = "";
     const lowerCase = "abcdefghijklmnopqrstuvwxyz";
     const upperCase = lowerCase.toUpperCase();
@@ -42,7 +46,7 @@ function randomlyGeneratePassword() : string {
             case 0:
                 password += lowerCase[Math.floor(Math.random() * 26)];
                 break;
-            
+
             case 1:
                 password += upperCase[Math.floor(Math.random() * 26)];
                 break;
@@ -59,23 +63,27 @@ function randomlyGeneratePassword() : string {
     return password;
 }
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 const mailer = nodemailer.createTransport({
-  service: 'hotmail',
-  auth: {
-    user: process.env.TEAM_EMAIL,
-    pass: process.env.TEAM_PASSWORD
-  }
+    service: "hotmail",
+    auth: {
+        user: process.env.TEAM_EMAIL,
+        pass: process.env.TEAM_PASSWORD,
+    },
 });
 
-function sendEmail(email: string, firstName: string, newPassword: string) : void {
+function sendEmail(
+    email: string,
+    firstName: string,
+    newPassword: string
+): void {
     const mail = {
         from: process.env.TEAM_EMAIL,
         to: email,
-        subject: 'Password Change',
-        text: `Dear ${firstName},\nYour new password is ${newPassword}`
+        subject: "Password Change",
+        text: `Dear ${firstName},\nYour new password is ${newPassword}`,
     };
 
-    mailer.sendMail(mail); 
+    mailer.sendMail(mail);
 }
