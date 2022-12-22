@@ -116,7 +116,7 @@ export default function DrawerAppBar() {
                         <NavSearchBar />
                     </Box>
                     <Box>
-                        <Typography>Select Country:</Typography>
+                        <Typography>Country:</Typography>
                         <Select
                             value={userState.country}
                             label="Select Country"
