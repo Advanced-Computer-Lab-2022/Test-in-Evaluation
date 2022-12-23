@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
-import type { Course, Review } from "../../types/Types";
+import type { CourseWithSections, Review } from "../../types/Types";
 import { Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 
@@ -66,7 +66,7 @@ const StyledRating = styled(Rating)({
 
 const CoursePage = () => {
     const { userInfo } = useContext(UserContext);
-    const [course, setCourse] = React.useState<Course>();
+    const [course, setCourse] = React.useState<CourseWithSections>();
     const { courseId } = useParams();
     const [rating, setRating] = useState<number | null>(2.5);
     const [review, setReview] = useState<string | null>("");

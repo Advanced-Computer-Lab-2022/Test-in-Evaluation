@@ -35,7 +35,7 @@ export default function DrawerAppBar() {
     };
 
     const commonNavItems: NavItem[] = [
-        { text: "Courses", onClick: () => navigate("/courses") },
+        { text: "My Courses", onClick: () => navigate("/courses") },
         { text: "search", onClick: () => navigate("/search") },
     ];
     const loggedInList: NavItem[] = [

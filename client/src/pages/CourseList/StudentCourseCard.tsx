@@ -2,21 +2,22 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea, Rating } from "@mui/material";
-import { Course } from "../../global";
 import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
 import { useNavigate } from "react-router-dom";
 import { currencyOfCountry } from "../../data/currency";
+import { Enrollment } from "../../types/Types";
 
 type props = {
-    course: Course;
+    enrollment: Enrollment;
 };
 
-const CourseCard = ({ course }: props) => {
+const StudentCourseCard = ({ enrollment }: props) => {
     const userState = useContext(UserContext);
-
     const navigate = useNavigate();
+
+    const course = enrollment.courseId;
 
     const courseRating =
         course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
@@ -96,4 +97,4 @@ const CourseCard = ({ course }: props) => {
     );
 };
 
-export default CourseCard;
+export default StudentCourseCard;
