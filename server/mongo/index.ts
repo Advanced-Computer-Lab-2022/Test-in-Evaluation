@@ -7,6 +7,7 @@ import { SubjectSchema } from "./subject";
 import { ReviewSchema } from "./review";
 import { ExerciseSolutionSchema } from "./exerciseSolution";
 import { EnrollmentSchema } from "./enrollment";
+import { ReportedProblemSchema } from "./reportedProblem";
 
 export const User = mongoose.model("User", UserSchema);
 
@@ -23,3 +24,5 @@ export const Review = mongoose.model("Review", ReviewSchema);
 export const ExerciseSolution = mongoose.model("ExerciseSolution", ExerciseSolutionSchema);
 
 export const Enrollment = mongoose.model("Enrollment", EnrollmentSchema);
+
+export const ReportedProblem = mongoose.model("ReportedProblem", ReportedProblemSchema);
