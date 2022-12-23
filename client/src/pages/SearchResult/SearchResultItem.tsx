@@ -1,12 +1,12 @@
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Typography,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
@@ -14,113 +14,125 @@ import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
 import { currencyOfCountry } from "../../data/currency";
+import { Box } from "@mui/system";
 
 export interface CourseDetails {
-    name: string;
-    subtitles: {
-        title: string;
-        hours: number;
-        hasExercise: boolean;
-    }[];
-    price: number;
-    discount: number;
+  name: string;
+  desc: string;
+  subtitles: {
+    title: string;
+    hours: number;
+    hasExercise: boolean;
+  }[];
+  price: number;
+  discount: number;
+  rating: number;
 }
 
 function SearchResultItem(courseInfo: CourseDetails) {
-    let totalHours = 0;
-    const userState = useContext(UserContext);
-    for (let subtitle of courseInfo.subtitles) {
-        totalHours += subtitle.hours;
-    }
+  let totalHours = 0;
+  const userState = useContext(UserContext);
+  for (let subtitle of courseInfo.subtitles) {
+    totalHours += subtitle.hours;
+  }
 
-    return (
-        <Accordion>
-            <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+  return (
+    <Accordion>
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
+      >
+        <Typography variant="h4">{courseInfo.name}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Card elevation={0} sx={{ minWidth: 275 }}>
+          <CardContent sx={{ padding: 0 }}>
+            <Typography variant="subtitle1">{courseInfo.desc}</Typography>
+            <Box
+              sx={{
+                marginTop: "10px",
+                display: "flex",
+                gap: "5px",
+              }}
             >
-                <Typography>{courseInfo.name}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                <Card elevation={0} sx={{ minWidth: 275 }}>
-                    <CardContent sx={{ padding: 0 }}>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {totalHours} total hours
+              </Typography>
+              <strong>&#183;</strong>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {courseInfo.rating} stars
+              </Typography>
+            </Box>
+            <Typography variant="h6" component="div">
+              Course Subtitles
+            </Typography>
+            <ul>
+              {courseInfo.subtitles.map((st) => (
+                <li>
+                  <div style={{ display: "flex", gap: "5px" }}>
+                    <Typography variant="button" display="block" gutterBottom>
+                      {st.title}
+                    </Typography>
+                    <strong>&#183;</strong>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {st.hours} hours
+                    </Typography>
+                    {st.hasExercise && (
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "5px",
+                        }}
+                      >
+                        <strong>&#183;</strong>
                         <Typography
-                            sx={{ fontSize: 14 }}
-                            color="text.secondary"
-                            gutterBottom
+                          sx={{ fontSize: 14 }}
+                          color="text.secondary"
+                          gutterBottom
                         >
-                            {totalHours} total hours
+                          Has Exercise
                         </Typography>
-                        <Typography variant="h6" component="div">
-                            Course Subtitles
-                        </Typography>
-                        <ul>
-                            {courseInfo.subtitles.map((st) => (
-                                <li>
-                                    <div
-                                        style={{ display: "flex", gap: "5px" }}
-                                    >
-                                        <Typography
-                                            variant="button"
-                                            display="block"
-                                            gutterBottom
-                                        >
-                                            {st.title}
-                                        </Typography>
-                                        <strong>&#183;</strong>
-                                        <Typography
-                                            sx={{ fontSize: 14 }}
-                                            color="text.secondary"
-                                            gutterBottom
-                                        >
-                                            {st.hours} hours
-                                        </Typography>
-                                        {st.hasExercise && (
-                                            <div
-                                                style={{
-                                                    display: "flex",
-                                                    gap: "5px",
-                                                }}
-                                            >
-                                                <strong>&#183;</strong>
-                                                <Typography
-                                                    sx={{ fontSize: 14 }}
-                                                    color="text.secondary"
-                                                    gutterBottom
-                                                >
-                                                    Has Exercise
-                                                </Typography>
-                                            </div>
-                                        )}
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                        {courseInfo.discount > 0 && (
-                            <div style={{ display: "flex", gap: "5px" }}>
-                                <Typography variant="h5" gutterBottom>
-                                    {courseInfo.price +
-                                        " " +
-                                        currencyOfCountry(userState.country)}
-                                </Typography>
-                                <Typography
-                                    sx={{ fontSize: 14, alignSelf: "center" }}
-                                    color="green"
-                                    gutterBottom
-                                >
-                                    {courseInfo.discount}% off
-                                </Typography>
-                            </div>
-                        )}
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Learn More</Button>
-                    </CardActions>
-                </Card>
-            </AccordionDetails>
-        </Accordion>
-    );
+                      </div>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div style={{ display: "flex", gap: "5px" }}>
+              <Typography variant="h5" gutterBottom>
+                {courseInfo.price + " " + currencyOfCountry(userState.country)}
+              </Typography>
+              {courseInfo.discount > 0 && (
+                <Typography
+                  sx={{ fontSize: 14, alignSelf: "center" }}
+                  color="green"
+                  gutterBottom
+                >
+                  {courseInfo.discount}% off
+                </Typography>
+              )}
+            </div>
+          </CardContent>
+          <CardActions>
+            <Button size="small">Learn More</Button>
+          </CardActions>
+        </Card>
+      </AccordionDetails>
+    </Accordion>
+  );
 }
 
 export default SearchResultItem;
