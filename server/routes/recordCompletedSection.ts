@@ -4,6 +4,7 @@ import { Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
 import { Enrollment, Section, User } from "../mongo";
 import { Request, Response } from "../types/express";
+import { sendEmail } from "../utils/sendEmail";
 
 const path = "/api/record_completed_section" as const;
 
@@ -30,8 +31,15 @@ export const addRoute = (app: Express) => {
         if (!enrollment) return res.status(400).send("Enrollment doesn't exist");
 
         // if not already completed mark as completed
-        if (!enrollment.completedSections.map(({ sectionId }) => sectionId?.toString()).includes(sectionId)) {
-            await Enrollment.updateOne({ _id: enrollment._id }, { $push: { completedSections: { sectionId } } });
+        const shouldUpdate = !enrollment.completedSections.map(({ sectionId }) => sectionId?.toString()).includes(sectionId);
+        if (shouldUpdate) {
+            const x = await Enrollment.updateOne({ _id: enrollment._id }, { $push: { completedSections: { sectionId } } });
+        }
+
+        const allSections = await Section.find({ parentCourse: courseId });
+        if (allSections.length <= enrollment.completedSections.length + +shouldUpdate) {
+            const emailBody = `Congratulations! You have completed the course!\nYou can view your certificate here: http://localhost:${process.env.PORT}/api/get_certificate?enrollmentId=${enrollment._id}`;
+            await sendEmail(user.email!, "Course Completed", emailBody);
         }
 
         res.send({ success: true });

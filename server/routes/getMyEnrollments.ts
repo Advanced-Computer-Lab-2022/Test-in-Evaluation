@@ -1,8 +1,9 @@
 import { Express } from "express";
 import { Record, Static } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
-import { Enrollment, User } from "../mongo";
+import { Course, Enrollment, User } from "../mongo";
 import { Request, Response } from "../types/express";
+import { UserTypes } from "../types/user";
 
 const path = "/api/get_my_enrollments" as const;
 
@@ -19,7 +20,18 @@ export const addRoute = (app: Express) => {
         if (!user) return res.status(404).send("User not found");
         const userId = user._id;
 
-        const enrollments = await Enrollment.find({ studentId: userId });
-        return res.status(200).send(enrollments);
+        if (userSession.userType === UserTypes.instructor) {
+            const courses = await Course.find({ instructor: userId });
+            const coursesWithEnrollments = await Promise.all(
+                courses.map(async (course) => {
+                    const enrollments = await Enrollment.find({ courseId: course._id });
+                    return { course, enrollments };
+                })
+            );
+            return res.status(200).send(coursesWithEnrollments);
+        } else {
+            const enrollments = await Enrollment.find({ studentId: userId });
+            return res.status(200).send(enrollments);
+        }
     });
 };
