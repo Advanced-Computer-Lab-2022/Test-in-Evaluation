@@ -25,6 +25,8 @@ import { LoginProtected, ContractProtected, Quiz } from "./components";
 import axios from "axios";
 // import { AnyAction } from "redux";
 
+axios.defaults.withCredentials = true;
+
 type userState = {
     loggedIn: boolean;
     userType: string;
