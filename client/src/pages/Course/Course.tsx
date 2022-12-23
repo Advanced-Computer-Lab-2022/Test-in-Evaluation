@@ -1,5 +1,5 @@
 import { apiURL, UserContext } from "../../App";
-import { useContext, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import React from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -72,6 +72,18 @@ const CoursePage = () => {
     const [review, setReview] = useState<string | null>("");
     const [courseReviews, setCourseReviews] = useState<any[]>([] as any[]);
     const [courseRating, setCourseRating] = useState(0);
+
+    const [isEnrolled, setIsEnrolled] = useState(false);
+    useEffect(() => {
+        axios
+            .post(`${apiURL}/get_is_enrolled`, {
+                courseId: courseId!,
+            })
+            .then((res) => {
+                console.log("is enrolled " + res.data);
+                setIsEnrolled(res.data);
+            });
+    }, [courseId]);
 
     React.useEffect(() => {
         axios
@@ -225,29 +237,40 @@ const CoursePage = () => {
                         }}
                     >
                         <Box>
-                            {course?.sections.map((val, idx) => {
-                                return (
-                                    <Box>
-                                        <Accordion>
-                                            <AccordionSummary
-                                                aria-controls="panel1a-content"
-                                                id="panel1a-header"
-                                            >
-                                                <Typography>
-                                                    {"Section " +
-                                                        (idx + 1) +
-                                                        " - " +
-                                                        val.name}
-                                                </Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails>
-                                                <Subtitle subtitle={val} />
-                                            </AccordionDetails>
-                                        </Accordion>
-                                        <Divider />
-                                    </Box>
-                                );
-                            })}
+                            {isEnrolled ? (
+                                <Box>
+                                    {course?.sections.map((val, idx) => {
+                                        return (
+                                            <Box>
+                                                <Accordion>
+                                                    <AccordionSummary
+                                                        aria-controls="panel1a-content"
+                                                        id="panel1a-header"
+                                                    >
+                                                        <Typography>
+                                                            {"Section " +
+                                                                (idx + 1) +
+                                                                " - " +
+                                                                val.name}
+                                                        </Typography>
+                                                    </AccordionSummary>
+                                                    <AccordionDetails>
+                                                        <Subtitle
+                                                            subtitle={val}
+                                                        />
+                                                    </AccordionDetails>
+                                                </Accordion>
+                                                <Divider />
+                                            </Box>
+                                        );
+                                    })}
+                                </Box>
+                            ) : (
+                                <Box>
+                                    {/* Add some more info like price, etc... */}
+                                    <Button variant="contained">Enroll</Button>
+                                </Box>
+                            )}
                         </Box>
                     </Box>
                 </Box>
