@@ -28,6 +28,9 @@ export const addRoute = (app: Express) => {
         Section.find({ parentCourse: courseId }),
       ]);
 
+      // increment course views count
+      await Course.updateOne({ _id: courseId }, { $inc: { viewsCount: 1 } });
+
       res.send({
         course: course!.toObject(),
         sections: sections.map((v) => v.toObject()),

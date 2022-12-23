@@ -29,6 +29,7 @@ export const UserSchema = new Schema({
     },
   ],
   acceptedContract: { type: Boolean, default: false },
+  wallet: { type: Number, default: 0 },
 });
 
 UserSchema.index({ email: 1 }, { unique: true });

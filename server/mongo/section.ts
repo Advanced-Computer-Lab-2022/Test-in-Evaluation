@@ -10,5 +10,5 @@ export const SectionSchema = new Schema({
   videoUrl: String,
   exam: {
     exercises: [{ question: String, answers: [String], correctAnswer: Number }],
-  },
+  }, 
 });

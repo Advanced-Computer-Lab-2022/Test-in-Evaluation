@@ -13,4 +13,5 @@ export const CourseSchema = new Schema({
   instructor: { type: Schema.Types.ObjectId, ref: "User" },
   videoPreviewUrl: String,
   discount: { rate: Number, startDate: Date, endDate: Date },
+  viewsCount: { type: Number, default: 0 },
 });

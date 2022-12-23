@@ -20,9 +20,15 @@ import { addRoute as changeMyProfileAddRoute } from "./changeMyProfile";
 import { addRoute as setCourseDiscountAddRoute } from "./setCourseDiscount";
 import { addRoute as solveExerciseAddRoute } from "./solveExercise";
 import { addRoute as viewExerciseResultAddRoute } from "./viewExerciseResult";
-import { addRoute as addExercise } from "./addExercise";
+import { addRoute as addExerciseAddRoute } from "./addExercise";
 import { addRoute as acceptContractAddRoute } from "./acceptContract";
-import { addRoute as getCourse } from "./getCourse";
+import { addRoute as getCourseAddRoute } from "./getCourse";
+import { addRoute as enrollInCourseAddRoute } from "./enrollInCourse";
+import { addRoute as getMyEnrollmentsAddRoute } from "./getMyEnrollments";
+import { addRoute as recordCompletedSectionAddRoute } from "./recordCompletedSection";
+import { addRoute as getUserAddRoute } from "./getUser";
+import { addRoute as payToWalletAddRoute } from "./payToWallet";
+import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -47,7 +53,13 @@ export const addRoutes = (app: Express) => {
     setCourseDiscountAddRoute(app);
     solveExerciseAddRoute(app);
     viewExerciseResultAddRoute(app);
-    addExercise(app);
+    addExerciseAddRoute(app);
     acceptContractAddRoute(app);
-    getCourse(app);
+    getCourseAddRoute(app);
+    enrollInCourseAddRoute(app);
+    getMyEnrollmentsAddRoute(app);
+    recordCompletedSectionAddRoute(app);
+    getUserAddRoute(app);
+    payToWalletAddRoute(app);
+    getPendingEnrollmentsAddRoute(app);
 };

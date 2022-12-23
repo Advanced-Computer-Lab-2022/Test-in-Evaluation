@@ -5,6 +5,7 @@ import { validateInput } from "../middleware/validateInput";
 import { User } from "../mongo";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
+import { sendEmail } from "../utils/sendEmail";
 
 const path = "/api/forgot_password" as const;
 
@@ -15,22 +16,19 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(
-        path,
-        validateInput(Input),
-        async (req: Request<Input>, res: Response) => {
-            const { email } = req.body;
-            const user = await User.findOne({ email });
-            if (!user || user.userType == UserTypes.admin) {
-                return res.status(401).send("Invalid User");
-            }
-            const newPassword = randomlyGeneratePassword();
-            user.passwordHash = await hash(newPassword);
-            user.save();
-            sendEmail(email, user.firstName ?? "", newPassword);
-            res.send({ success: true });
+    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user || user.userType == UserTypes.admin) {
+            return res.status(401).send("Invalid User");
         }
-    );
+        const newPassword = randomlyGeneratePassword();
+        user.passwordHash = await hash(newPassword);
+        user.save();
+        sendResetEmail(email, user.firstName ?? "", newPassword);
+        res.send({ success: true });
+    });
+
 };
 
 function randomlyGeneratePassword(): string {
@@ -63,27 +61,7 @@ function randomlyGeneratePassword(): string {
     return password;
 }
 
-const nodemailer = require("nodemailer");
-
-const mailer = nodemailer.createTransport({
-    service: "hotmail",
-    auth: {
-        user: process.env.TEAM_EMAIL,
-        pass: process.env.TEAM_PASSWORD,
-    },
-});
-
-function sendEmail(
-    email: string,
-    firstName: string,
-    newPassword: string
-): void {
-    const mail = {
-        from: process.env.TEAM_EMAIL,
-        to: email,
-        subject: "Password Change",
-        text: `Dear ${firstName},\nYour new password is ${newPassword}`,
-    };
-
-    mailer.sendMail(mail);
+export function sendResetEmail(email: string, firstName: string, newPassword: string) {
+    const body = `Dear ${firstName},\nYour new password is ${newPassword}`;
+    return sendEmail(email, "Password Change", body);
 }
