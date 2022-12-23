@@ -341,8 +341,8 @@ function SignUpPage() {
                                         });
                                     }}
                                 >
-                                    <MenuItem value={"Male"}>Male</MenuItem>
-                                    <MenuItem value={"Female"}>Female</MenuItem>
+                                    <MenuItem value={"male"}>Male</MenuItem>
+                                    <MenuItem value={"female"}>Female</MenuItem>
                                 </Select>
                             </Box>
 
