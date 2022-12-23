@@ -15,8 +15,10 @@ import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
 import { currencyOfCountry } from "../../data/currency";
 import { Box } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 export interface CourseDetails {
+  id: string;
   name: string;
   desc: string;
   subtitles: {
@@ -35,6 +37,8 @@ function SearchResultItem(courseInfo: CourseDetails) {
   for (let subtitle of courseInfo.subtitles) {
     totalHours += subtitle.hours;
   }
+
+  const navigate = useNavigate();
 
   return (
     <Accordion>
@@ -127,7 +131,12 @@ function SearchResultItem(courseInfo: CourseDetails) {
             </div>
           </CardContent>
           <CardActions>
-            <Button size="small">Learn More</Button>
+            <Button
+              size="small"
+              onClick={() => navigate(`/course/${courseInfo.id}`)}
+            >
+              Learn More
+            </Button>
           </CardActions>
         </Card>
       </AccordionDetails>
