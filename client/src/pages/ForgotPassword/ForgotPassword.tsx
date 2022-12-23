@@ -38,7 +38,9 @@ function ForgotPassword() {
         event.preventDefault();
 
         axios
-            .post(apiURL + "/forgot_password", formInput, { withCredentials: true })
+            .post(apiURL + "/forgot_password", formInput, {
+                withCredentials: true,
+            })
             .then((response) => {
                 setSnackbarInfo({
                     snackbarOpen: true,
@@ -131,8 +133,7 @@ function ForgotPassword() {
                                     flexDirection: "row",
                                     justifyContent: "center",
                                 }}
-                            >
-                            </Box>
+                            ></Box>
                             <Box
                                 sx={{
                                     display: "flex",

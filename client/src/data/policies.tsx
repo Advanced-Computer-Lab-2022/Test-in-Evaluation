@@ -1,20 +1,13 @@
-const TermsOfService =
-`
+const TermsOfService = `
 Insert Terms of Service Policy Here
-`
+`;
 
-
-const PrivacyPolicy =
-`
+const PrivacyPolicy = `
 Insert Privacy Policy Here
-`
+`;
 
-const ContentOwnershipPolicy =
-`
+const ContentOwnershipPolicy = `
 Insert Content Ownership Policy Here
-`
+`;
 
-
-export {TermsOfService, PrivacyPolicy, ContentOwnershipPolicy}
-
-
+export { TermsOfService, PrivacyPolicy, ContentOwnershipPolicy };

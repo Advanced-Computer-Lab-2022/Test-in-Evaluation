@@ -1,4 +1,3 @@
-
-- [ ] Course title
-- [ ] Course subject
-- [ ] Instructor name
+-   [ ] Course title
+-   [ ] Course subject
+-   [ ] Instructor name

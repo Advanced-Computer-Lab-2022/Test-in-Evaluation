@@ -12,9 +12,13 @@ const Input = Record({});
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const result = await Subject.find();
-        res.send(result);
-        return;
-    });
+    app.get(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const result = await Subject.find();
+            res.send(result);
+            return;
+        }
+    );
 };

@@ -1,5 +1,5 @@
 {
-  "devDependencies": {
-    "@types/nodemailer": "^6.4.6"
-  }
+    "devDependencies": {
+        "@types/nodemailer": "^6.4.6"
+    }
 }

@@ -14,13 +14,18 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        if (req.session.data.userType !== UserTypes.admin) return res.status(401).send("Unauthorized");
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            if (req.session.data.userType !== UserTypes.admin)
+                return res.status(401).send("Unauthorized");
 
-        const user = await User.findById(req.body.userId);
+            const user = await User.findById(req.body.userId);
 
-        if (!user) return res.status(404).send("User not found");
+            if (!user) return res.status(404).send("User not found");
 
-        return res.status(200).send(user);
-    });
+            return res.status(200).send(user);
+        }
+    );
 };

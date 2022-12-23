@@ -8,7 +8,6 @@ import { apiURL, UserContext } from "../../App";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 
 const CourseList = () => {
-
     const [viewMyCoursesOnly, setViewMyCoursesOnly] = useState(false);
 
     const userState = useContext(UserContext);
@@ -18,12 +17,12 @@ const CourseList = () => {
     const getCourses = async () => {
         try {
             // setLoading(true);
-            const filter = viewMyCoursesOnly ? {instructor: userState.userInfo.username} : {};
-            const res = await axios.post(
-                apiURL+"/search_courses",
-                filter,
-                { withCredentials: true }
-            );
+            const filter = viewMyCoursesOnly
+                ? { instructor: userState.userInfo.username }
+                : {};
+            const res = await axios.post(apiURL + "/search_courses", filter, {
+                withCredentials: true,
+            });
             console.log(res.data.result);
             setCourses(res.data.result);
             // setLoading(false);
@@ -38,14 +37,24 @@ const CourseList = () => {
     if (loading) return <div>Loading...</div>;
     return (
         <div>
-        {userState.userType === "instructor" && (<div>
-            <FormControlLabel control={<Checkbox value={viewMyCoursesOnly} onChange={(e, v) => setViewMyCoursesOnly(v)} />} label="View My Courses Only" />
-        </div>)}
-        <CourseContainer>
-            {courses.map((course) => (
-                <CourseCard course={course} key={course._id} />
-            ))}
-        </CourseContainer>
+            {userState.userType === "instructor" && (
+                <div>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                value={viewMyCoursesOnly}
+                                onChange={(e, v) => setViewMyCoursesOnly(v)}
+                            />
+                        }
+                        label="View My Courses Only"
+                    />
+                </div>
+            )}
+            <CourseContainer>
+                {courses.map((course) => (
+                    <CourseCard course={course} key={course._id} />
+                ))}
+            </CourseContainer>
         </div>
     );
 };

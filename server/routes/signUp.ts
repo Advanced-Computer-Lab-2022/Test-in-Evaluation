@@ -20,31 +20,44 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        if (req.session.data.userType) return res.status(400).send({ error: "You can't sign up because you are already signed in" });
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            if (req.session.data.userType)
+                return res
+                    .status(400)
+                    .send({
+                        error: "You can't sign up because you are already signed in",
+                    });
 
-        const { username, password, firstName, lastName, email, gender } = req.body;
-        const country = req.session.data.country;
-        const userType = UserTypes.individualTrainee;
+            const { username, password, firstName, lastName, email, gender } =
+                req.body;
+            const country = req.session.data.country;
+            const userType = UserTypes.individualTrainee;
 
-        const user = await User.create({
-            username,
-            passwordHash: await hash(password),
-            firstName,
-            lastName,
-            userType,
-            country,
-            email,
-            gender,
-        }).catch((v) => null);
+            const user = await User.create({
+                username,
+                passwordHash: await hash(password),
+                firstName,
+                lastName,
+                userType,
+                country,
+                email,
+                gender,
+            }).catch((v) => null);
 
-        if (!user) return res.status(400).send({ error: "Error while creating user" });
+            if (!user)
+                return res
+                    .status(400)
+                    .send({ error: "Error while creating user" });
 
-        req.session.data = {
-            userType,
-            username,
-        };
+            req.session.data = {
+                userType,
+                username,
+            };
 
-        return res.send({ success: true });
-    });
+            return res.send({ success: true });
+        }
+    );
 };

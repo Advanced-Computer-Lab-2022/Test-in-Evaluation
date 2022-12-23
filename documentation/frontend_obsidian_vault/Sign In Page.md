@@ -1,5 +1,5 @@
-- [ ] Insert username/email field, text is plainly visible
-- [ ] Insert password field, should have password characters
-- [ ] Forgot password link which displays a reset link sent notification
-- [ ] No account? Sign up here link which links to [[Sign Up Page]]
-- [ ] Sign in with your google account?
+-   [ ] Insert username/email field, text is plainly visible
+-   [ ] Insert password field, should have password characters
+-   [ ] Forgot password link which displays a reset link sent notification
+-   [ ] No account? Sign up here link which links to [[Sign Up Page]]
+-   [ ] Sign in with your google account?

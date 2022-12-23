@@ -12,9 +12,15 @@ const Input = Record({});
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const result = await User.find({ userType: UserTypes.instructor }).then((arr) => arr.map((v) => v.toObject()));
-        res.send(result.map(({ passwordHash, ...rest }) => rest));
-        return;
-    });
+    app.get(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const result = await User.find({
+                userType: UserTypes.instructor,
+            }).then((arr) => arr.map((v) => v.toObject()));
+            res.send(result.map(({ passwordHash, ...rest }) => rest));
+            return;
+        }
+    );
 };

@@ -16,20 +16,28 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { currentPassword, newPassword } = req.body;
-        if (!req.session.data.userType) return res.status(400).send({ error: "User not logged in" });
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const { currentPassword, newPassword } = req.body;
+            if (!req.session.data.userType)
+                return res.status(400).send({ error: "User not logged in" });
 
-        const user = await User.findOne({ username: req.session.data.username });
-        if (!user) return res.status(400).send({ error: "User not found" });
+            const user = await User.findOne({
+                username: req.session.data.username,
+            });
+            if (!user) return res.status(400).send({ error: "User not found" });
 
-        const passwordHash = user.passwordHash || "";
-        const isCorrect = await verify(passwordHash, currentPassword);
+            const passwordHash = user.passwordHash || "";
+            const isCorrect = await verify(passwordHash, currentPassword);
 
-        if (!isCorrect) return res.status(400).send({ error: "Incorrect password" });
+            if (!isCorrect)
+                return res.status(400).send({ error: "Incorrect password" });
 
-        await user.update({ passwordHash: await hash(newPassword) });
+            await user.update({ passwordHash: await hash(newPassword) });
 
-        res.send({ success: true });
-    });
+            res.send({ success: true });
+        }
+    );
 };

@@ -1,5 +1,8 @@
 import PDFDocument from "pdfkit";
-export const generateCompletionCertificationDocument = (studentName: string, courseName: string) => {
+export const generateCompletionCertificationDocument = (
+    studentName: string,
+    courseName: string
+) => {
     const doc = new PDFDocument({
         layout: "landscape",
         size: "A4",
@@ -22,13 +25,23 @@ export const generateCompletionCertificationDocument = (studentName: string, cou
     doc.fillAndStroke("#ae8cc3")
         .lineWidth(20)
         .lineJoin("round")
-        .rect(distanceMargin, distanceMargin, doc.page.width - distanceMargin * 2, doc.page.height - distanceMargin * 2)
+        .rect(
+            distanceMargin,
+            distanceMargin,
+            doc.page.width - distanceMargin * 2,
+            doc.page.height - distanceMargin * 2
+        )
         .stroke();
 
     doc.fillAndStroke("#fff")
         .lineWidth(7)
         .lineJoin("round")
-        .rect(distanceMargin, distanceMargin, doc.page.width - distanceMargin * 2, doc.page.height - distanceMargin * 2)
+        .rect(
+            distanceMargin,
+            distanceMargin,
+            doc.page.width - distanceMargin * 2,
+            doc.page.height - distanceMargin * 2
+        )
         .stroke();
 
     // Header

@@ -16,19 +16,22 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        const { email } = req.body;
-        const user = await User.findOne({ email });
-        if (!user || user.userType == UserTypes.admin) {
-            return res.status(401).send("Invalid User");
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            const { email } = req.body;
+            const user = await User.findOne({ email });
+            if (!user || user.userType == UserTypes.admin) {
+                return res.status(401).send("Invalid User");
+            }
+            const newPassword = randomlyGeneratePassword();
+            user.passwordHash = await hash(newPassword);
+            user.save();
+            sendResetEmail(email, user.firstName ?? "", newPassword);
+            res.send({ success: true });
         }
-        const newPassword = randomlyGeneratePassword();
-        user.passwordHash = await hash(newPassword);
-        user.save();
-        sendResetEmail(email, user.firstName ?? "", newPassword);
-        res.send({ success: true });
-    });
-
+    );
 };
 
 function randomlyGeneratePassword(): string {
@@ -61,7 +64,11 @@ function randomlyGeneratePassword(): string {
     return password;
 }
 
-export function sendResetEmail(email: string, firstName: string, newPassword: string) {
+export function sendResetEmail(
+    email: string,
+    firstName: string,
+    newPassword: string
+) {
     const body = `Dear ${firstName},\nYour new password is ${newPassword}`;
     return sendEmail(email, "Password Change", body);
 }

@@ -21,8 +21,14 @@ export const Subject = mongoose.model("Subject", SubjectSchema);
 
 export const Review = mongoose.model("Review", ReviewSchema);
 
-export const ExerciseSolution = mongoose.model("ExerciseSolution", ExerciseSolutionSchema);
+export const ExerciseSolution = mongoose.model(
+    "ExerciseSolution",
+    ExerciseSolutionSchema
+);
 
 export const Enrollment = mongoose.model("Enrollment", EnrollmentSchema);
 
-export const ReportedProblem = mongoose.model("ReportedProblem", ReportedProblemSchema);
+export const ReportedProblem = mongoose.model(
+    "ReportedProblem",
+    ReportedProblemSchema
+);

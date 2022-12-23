@@ -1,3 +1,3 @@
-- [ ] Subject
-- [ ] Rating
-- [ ] Price(Can be free) (Not for corporate trainees)
+-   [ ] Subject
+-   [ ] Rating
+-   [ ] Price(Can be free) (Not for corporate trainees)

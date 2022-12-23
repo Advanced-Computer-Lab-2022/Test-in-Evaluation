@@ -21,30 +21,37 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.post(path, validateInput(Input), async (req: Request<Input>, res: Response) => {
-        if (req.session.data.userType !== UserTypes.admin) return res.status(400).send({ error: "unauthorized" });
+    app.post(
+        path,
+        validateInput(Input),
+        async (req: Request<Input>, res: Response) => {
+            if (req.session.data.userType !== UserTypes.admin)
+                return res.status(400).send({ error: "unauthorized" });
 
-        const type = req.body.type;
-        const userType = type in UserTypes && UserTypes[type as keyof typeof UserTypes];
-        if (!userType) return res.status(500).send({ error: "unknown type" });
+            const type = req.body.type;
+            const userType =
+                type in UserTypes && UserTypes[type as keyof typeof UserTypes];
+            if (!userType)
+                return res.status(500).send({ error: "unknown type" });
 
-        const newUser = {
-            username: req.body.username,
-            passwordHash: await hash(req.body.password),
-            userType,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            gender: req.body.gender,
-        };
+            const newUser = {
+                username: req.body.username,
+                passwordHash: await hash(req.body.password),
+                userType,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                gender: req.body.gender,
+            };
 
-        try{
-            await User.create(newUser);
-        } catch (err: any) {
-            res.status(500).send("Duplicate User");
-            return;
+            try {
+                await User.create(newUser);
+            } catch (err: any) {
+                res.status(500).send("Duplicate User");
+                return;
+            }
+
+            res.send({ success: true });
         }
-
-        res.send({ success: true });
-    });
+    );
 };
