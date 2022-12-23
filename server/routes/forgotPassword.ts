@@ -28,6 +28,7 @@ export const addRoute = (app: Express) => {
         sendResetEmail(email, user.firstName ?? "", newPassword);
         res.send({ success: true });
     });
+
 };
 
 function randomlyGeneratePassword(): string {

@@ -30,17 +30,23 @@ import {
     FormControl,
     Typography,
     AlertColor,
+    OutlinedInput,
+    InputAdornment,
+    IconButton,
 } from "@mui/material";
 
 import { UserContext } from "../../App";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { log } from "console";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function SignInPage() {
     const navigate = useNavigate();
     const userState = useContext(UserContext);
+    const [showPassword, setShowPassword] = React.useState(false);
 
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
     type InputObject = {
         username: string;
         password: string;
@@ -92,7 +98,12 @@ function SignInPage() {
     };
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+            sx={{
+                display: "flex",
+                justifyContent: "center",
+            }}
+        >
             <Snackbar
                 autoHideDuration={6000}
                 onClose={() =>
@@ -109,70 +120,83 @@ function SignInPage() {
             </Snackbar>
             <Box
                 sx={{
+                    display: "flex",
+                    marginInline: "3rem",
+                    width: "max(75%,25rem)",
                     boxShadow: "rgba(0, 0, 0, 0.5) 0px 5px 15px",
-                    backgroundColor: "white",
-                    width: "800px",
+                    borderRadius: "1rem",
+                    overflow: "hidden",
+                    "& > *": {
+                        width: "100%",
+                    },
+                    "& > img": {
+                        display: { md: "block", xs: "none" },
+                    },
                 }}
             >
-                <Box sx={{ width: "100%", height: "100%", paddingY: "10px" }}>
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <Typography
-                            sx={{ fontWeight: "bold", fontSize: "45px" }}
-                        >
-                            SIGN IN
-                        </Typography>
-                    </Box>
+                <img
+                    src="Book1.jpg"
+                    style={{
+                        aspectRatio: "1/1",
+                        objectFit: "cover",
+                        maxWidth: "50%",
+                    }}
+                />
+
+                <Box
+                    sx={{
+                        backgroundColor: "white",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        gap: "1rem",
+                        padding: "3rem",
+                    }}
+                >
+                    <Typography
+                        fontWeight="bold"
+                        fontSize={{ xs: "2rem", md: "2.5rem" }}
+                        variant="h2"
+                        textAlign="center"
+                    >
+                        SIGN IN
+                    </Typography>
+
                     <form onSubmit={handleSubmission}>
                         <Box
                             sx={{
                                 display: "flex",
-                                gap: "20px",
+                                gap: "1rem",
                                 flexDirection: "column",
-                                height: "90%",
                                 justifyContent: "center",
                             }}
                         >
-                            <Box
-                                sx={{
-                                    paddingX: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
+                            <TextField
+                                fullWidth
+                                required
+                                variant="outlined"
+                                label="Username"
+                                value={formInput.username}
+                                onChange={(
+                                    event: ChangeEvent<
+                                        HTMLInputElement | HTMLTextAreaElement
+                                    >
+                                ): void => {
+                                    setFormInput({
+                                        ...formInput,
+                                        username: event.target.value,
+                                    });
                                 }}
-                            >
-                                <TextField
-                                    sx={{ width: "100%" }}
+                            />
+
+                            <FormControl variant="outlined" fullWidth>
+                                <InputLabel htmlFor="outlined-adornment-password">
+                                    Password *
+                                </InputLabel>
+                                <OutlinedInput
+                                    fullWidth
                                     required
-                                    variant="outlined"
-                                    label="Username"
-                                    value={formInput.username}
-                                    onChange={(
-                                        event: ChangeEvent<
-                                            | HTMLInputElement
-                                            | HTMLTextAreaElement
-                                        >
-                                    ): void => {
-                                        setFormInput({
-                                            ...formInput,
-                                            username: event.target.value,
-                                        });
-                                    }}
-                                />
-                            </Box>
-                            <Box
-                                sx={{
-                                    paddingX: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <TextField
-                                    sx={{ width: "100%" }}
-                                    required
-                                    variant="outlined"
                                     label="Password"
-                                    type="password"
                                     value={formInput.password}
                                     onChange={(
                                         event: ChangeEvent<
@@ -185,30 +209,33 @@ function SignInPage() {
                                             password: event.target.value,
                                         });
                                     }}
+                                    id="outlined-adornment-password"
+                                    type={showPassword ? "text" : "password"}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
                                 />
-                            </Box>
-                            <Link to="/forgot_password" style={{
-                                    paddingLeft: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "left",
-                                }}>Forgot Password?</Link>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <Button
-                                    sx={{ height: "60px", width: "300px" }}
-                                    type="submit"
-                                    variant="contained"
-                                >
-                                    {" "}
-                                    SIGN IN{" "}
-                                </Button>
-                            </Box>
+                            </FormControl>
+
+                            <Link to="/forgot_password">Forgot Password?</Link>
+
+                            <Button type="submit" variant="contained" fullWidth>
+                                SIGN IN
+                            </Button>
                         </Box>
                     </form>
                 </Box>

@@ -14,6 +14,7 @@ import { apiURL, UserContext } from "../../App";
 import { useState, useContext, SetStateAction } from "react";
 import { countries } from "../../data/countries";
 import { currencyOfCountry } from "../../data/currency";
+import { useSearchParams } from "react-router-dom";
 
 function SearchResultPage() {
     const userState = useContext(UserContext);
@@ -51,8 +52,11 @@ function SearchResultPage() {
             });
     }, []);
 
+    const [searchParams, setSearchParams] = useSearchParams();
     const [courseList, setCourseList] = React.useState<CourseDetails[]>([]);
-    const [courseTitle, setCourseTitle] = React.useState("");
+    const [courseTitle, setCourseTitle] = React.useState(
+        searchParams.get("course") || ""
+    );
     const [courseSubject, setCourseSubject] = React.useState("");
     const [courseInstructor, setCourseInstructor] = React.useState("");
 
@@ -62,7 +66,6 @@ function SearchResultPage() {
     const handlePriceRange = (event: Event, newValue: number | number[]) => {
         setPriceRangeValue(newValue as number[]);
     };
-
     async function filterCourses() {
         let response = await axios.post(
             apiURL + "/search_courses",
@@ -108,6 +111,13 @@ function SearchResultPage() {
         setCourseList(crsList);
     }
 
+    React.useEffect(() => {
+        setCourseTitle((title) => searchParams.get("course") || title);
+    }, [searchParams]);
+    React.useEffect(() => {
+        filterCourses();
+    }, [courseTitle]);
+
     return (
         <div
             style={{
@@ -135,6 +145,7 @@ function SearchResultPage() {
                                 style={{ width: "100%" }}
                                 label="Course Name"
                                 variant="outlined"
+                                value={courseTitle}
                                 onChange={(e) => setCourseTitle(e.target.value)}
                             />
                             <Autocomplete
