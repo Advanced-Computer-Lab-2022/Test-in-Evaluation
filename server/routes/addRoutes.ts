@@ -31,6 +31,7 @@ import { addRoute as payToWalletAddRoute } from "./payToWallet";
 import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";
 import { addRoute as getIsEnrolled } from "./getIsEnrolled";
 import { addRoute as reportProblemAddRoute } from "./reportProblem";
+import { addRoute as getAllReportedProblemsAddRoute } from "./getAllReportedProblems";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -66,4 +67,5 @@ export const addRoutes = (app: Express) => {
     getPendingEnrollmentsAddRoute(app);
     getIsEnrolled(app);
     reportProblemAddRoute(app);
+    getAllReportedProblemsAddRoute(app);
 };

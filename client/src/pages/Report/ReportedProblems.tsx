@@ -41,7 +41,7 @@ const ReportedProblems = () => {
             <Box
                 sx={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit,minmax(20rem,1fr))",
+                    gridTemplateColumns: "repeat(auto-fit, 25rem)",
                     gap: "1rem",
                 }}
             >
