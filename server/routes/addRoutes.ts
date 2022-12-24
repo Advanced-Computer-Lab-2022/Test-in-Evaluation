@@ -30,6 +30,7 @@ import { addRoute as getUserAddRoute } from "./getUser";
 import { addRoute as payToWalletAddRoute } from "./payToWallet";
 import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";
 import { addRoute as getIsEnrolled } from "./getIsEnrolled";
+import { addRoute as reportProblemAddRoute } from "./reportProblem";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -64,4 +65,5 @@ export const addRoutes = (app: Express) => {
     payToWalletAddRoute(app);
     getPendingEnrollmentsAddRoute(app);
     getIsEnrolled(app);
+    reportProblemAddRoute(app);
 };

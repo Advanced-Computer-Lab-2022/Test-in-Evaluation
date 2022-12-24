@@ -22,6 +22,7 @@ import type { CourseWithSections, Review } from "../../types/Types";
 import { Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
+import ReportModal from "../Report/ReportModal";
 
 // /getAllReviews
 // /writeReview
@@ -269,15 +270,15 @@ const CoursePage = () => {
                                     />
                                 </Box>
                             </Box>
-                            {!isEnrolled && (
-                                <Box
-                                    sx={{
-                                        width: "40%",
-                                        display: "flex",
-                                        gap: "5px",
-                                        flexDirection: "column",
-                                    }}
-                                >
+                            <Box
+                                sx={{
+                                    width: "40%",
+                                    display: "flex",
+                                    gap: "5px",
+                                    flexDirection: "column",
+                                }}
+                            >
+                                {!isEnrolled && (
                                     <div>
                                         <Typography
                                             variant="h4"
@@ -302,7 +303,11 @@ const CoursePage = () => {
                                             </Typography>
                                         )}
                                     </div>
-                                    <Box>
+                                )}
+                                <Box>
+                                    {isEnrolled ? (
+                                        <ReportModal id={course?.course?._id} />
+                                    ) : (
                                         <Button
                                             variant="contained"
                                             size="large"
@@ -311,9 +316,9 @@ const CoursePage = () => {
                                         >
                                             Enroll Now
                                         </Button>
-                                    </Box>
+                                    )}
                                 </Box>
-                            )}
+                            </Box>
                         </Box>
                     </Box>
                     <Box
