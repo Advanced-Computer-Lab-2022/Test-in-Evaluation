@@ -48,13 +48,10 @@ export const addRoute = (app: Express) => {
                 // cancel enrollment
                 // add money to user's wallet
 
-                const session = await Enrollment.startSession();
-                session.startTransaction();
                 try {
                     const updateEnrollment = await Enrollment.updateOne(
                         { _id: enrollmentId, status: "accepted" },
-                        { status: "refunded" },
-                        { session }
+                        { status: "refunded" }
                     );
                     if (updateEnrollment.modifiedCount === 0)
                         throw new Error(
@@ -64,13 +61,9 @@ export const addRoute = (app: Express) => {
                         { _id: user.id },
                         { $inc: { wallet: enrollment.amountPaid } }
                     );
-                    await session.commitTransaction();
-                    await session.endSession();
 
                     return res.status(200).send("Refunded successfully");
                 } catch (e) {
-                    await session.abortTransaction();
-                    await session.endSession();
                     return res.status(500).send("Something went wrong");
                 }
             } else {

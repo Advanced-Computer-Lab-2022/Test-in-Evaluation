@@ -48,6 +48,7 @@ export const addRoute = (app: Express) => {
 
                 await Review.create({ reviewer, reviewed, score, text });
             }
+            await reviewedObj.save();
             res.send({ sucess: true });
         }
     );

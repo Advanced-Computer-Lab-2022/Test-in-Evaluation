@@ -29,6 +29,7 @@ import { addRoute as recordCompletedSectionAddRoute } from "./recordCompletedSec
 import { addRoute as getUserAddRoute } from "./getUser";
 import { addRoute as payToWalletAddRoute } from "./payToWallet";
 import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";
+import { addRoute as getIsEnrolled } from "./getIsEnrolled";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -62,4 +63,5 @@ export const addRoutes = (app: Express) => {
     getUserAddRoute(app);
     payToWalletAddRoute(app);
     getPendingEnrollmentsAddRoute(app);
+    getIsEnrolled(app);
 };

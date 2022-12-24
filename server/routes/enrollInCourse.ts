@@ -30,16 +30,13 @@ export const addRoute = (app: Express) => {
                     : 0;
             const price = course.price! * (1 - discount);
             if (user?.userType === UserTypes.individualTrainee) {
-                const session = await Enrollment.startSession();
-                session.startTransaction();
                 try {
                     // transaction:
                     // 1. add enrollment
                     // 2. take money from student
                     const student = await User.findOne(
                         { username: user.username },
-                        {},
-                        { session }
+                        {}
                     );
                     if (!student)
                         return res.status(404).send("Student not found");
@@ -51,25 +48,17 @@ export const addRoute = (app: Express) => {
 
                     await User.updateOne(
                         { username: user.username },
-                        { $inc: { wallet: -price } },
-                        { session }
+                        { $inc: { wallet: -price } }
                     );
 
-                    await Enrollment.create(
-                        {
-                            courseId: course._id,
-                            studentId: student._id,
-                            status: EnrollmentStatusType.accepted,
-                            amountPaid: price,
-                        },
-                        { session }
-                    );
-
-                    await session.commitTransaction();
-                    await session.endSession();
+                    await Enrollment.create({
+                        courseId: course._id,
+                        studentId: student._id,
+                        status: EnrollmentStatusType.accepted,
+                        amountPaid: price,
+                    });
                 } catch (e) {
-                    await session.abortTransaction();
-                    await session.endSession();
+                    console.dir(e);
                     return res.status(500).send("Something went wrong");
                 }
 

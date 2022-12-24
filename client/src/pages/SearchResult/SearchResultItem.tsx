@@ -14,9 +14,13 @@ import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
 import { currencyOfCountry } from "../../data/currency";
+import { Box } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 export interface CourseDetails {
+    id: string;
     name: string;
+    desc: string;
     subtitles: {
         title: string;
         hours: number;
@@ -24,6 +28,7 @@ export interface CourseDetails {
     }[];
     price: number;
     discount: number;
+    rating: number;
 }
 
 function SearchResultItem(courseInfo: CourseDetails) {
@@ -33,6 +38,8 @@ function SearchResultItem(courseInfo: CourseDetails) {
         totalHours += subtitle.hours;
     }
 
+    const navigate = useNavigate();
+
     return (
         <Accordion>
             <AccordionSummary
@@ -40,18 +47,37 @@ function SearchResultItem(courseInfo: CourseDetails) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography>{courseInfo.name}</Typography>
+                <Typography variant="h4">{courseInfo.name}</Typography>
             </AccordionSummary>
             <AccordionDetails>
                 <Card elevation={0} sx={{ minWidth: 275 }}>
                     <CardContent sx={{ padding: 0 }}>
-                        <Typography
-                            sx={{ fontSize: 14 }}
-                            color="text.secondary"
-                            gutterBottom
-                        >
-                            {totalHours} total hours
+                        <Typography variant="subtitle1">
+                            {courseInfo.desc}
                         </Typography>
+                        <Box
+                            sx={{
+                                marginTop: "10px",
+                                display: "flex",
+                                gap: "5px",
+                            }}
+                        >
+                            <Typography
+                                sx={{ fontSize: 14 }}
+                                color="text.secondary"
+                                gutterBottom
+                            >
+                                {totalHours} total hours
+                            </Typography>
+                            <strong>&#183;</strong>
+                            <Typography
+                                sx={{ fontSize: 14 }}
+                                color="text.secondary"
+                                gutterBottom
+                            >
+                                {courseInfo.rating} stars
+                            </Typography>
+                        </Box>
                         <Typography variant="h6" component="div">
                             Course Subtitles
                         </Typography>
@@ -97,13 +123,13 @@ function SearchResultItem(courseInfo: CourseDetails) {
                                 </li>
                             ))}
                         </ul>
-                        {courseInfo.discount > 0 && (
-                            <div style={{ display: "flex", gap: "5px" }}>
-                                <Typography variant="h5" gutterBottom>
-                                    {courseInfo.price +
-                                        " " +
-                                        currencyOfCountry(userState.country)}
-                                </Typography>
+                        <div style={{ display: "flex", gap: "5px" }}>
+                            <Typography variant="h5" gutterBottom>
+                                {courseInfo.price +
+                                    " " +
+                                    currencyOfCountry(userState.country)}
+                            </Typography>
+                            {courseInfo.discount > 0 && (
                                 <Typography
                                     sx={{ fontSize: 14, alignSelf: "center" }}
                                     color="green"
@@ -111,11 +137,16 @@ function SearchResultItem(courseInfo: CourseDetails) {
                                 >
                                     {courseInfo.discount}% off
                                 </Typography>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </CardContent>
                     <CardActions>
-                        <Button size="small">Learn More</Button>
+                        <Button
+                            size="small"
+                            onClick={() => navigate(`/course/${courseInfo.id}`)}
+                        >
+                            Learn More
+                        </Button>
                     </CardActions>
                 </Card>
             </AccordionDetails>

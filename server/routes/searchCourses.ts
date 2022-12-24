@@ -51,7 +51,7 @@ export const addRoute = (app: Express) => {
                   )
                 : undefined;
 
-            const rating =
+            const avgRating =
                 ratingHigh || ratingLow
                     ? {
                           ...(ratingLow ? { $gte: ratingLow } : {}),
@@ -73,7 +73,7 @@ export const addRoute = (app: Express) => {
                 ...(instructorId ? { instructor: instructorId } : {}),
                 ...(subjectId ? { subjectId: subjectId } : {}),
                 ...(title ? { title: { $regex: title } } : {}),
-                ...(rating ? { rating } : {}),
+                ...(avgRating ? { avgRating } : {}),
                 ...(price ? { price } : {}),
             };
 

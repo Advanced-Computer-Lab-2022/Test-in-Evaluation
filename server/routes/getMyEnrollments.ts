@@ -38,7 +38,7 @@ export const addRoute = (app: Express) => {
             } else {
                 const enrollments = await Enrollment.find({
                     studentId: userId,
-                });
+                }).populate("courseId");
                 return res.status(200).send(enrollments);
             }
         }

@@ -1,5 +1,5 @@
 import { apiURL, UserContext } from "../../App";
-import { useContext, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import React from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -18,9 +18,10 @@ import {
 } from "@mui/material";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
-import type { Course, Review } from "../../types/Types";
+import type { CourseWithSections, Review } from "../../types/Types";
 import { Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
+import Toast from "../../components/Toast/Toast";
 
 // /getAllReviews
 // /writeReview
@@ -66,12 +67,30 @@ const StyledRating = styled(Rating)({
 
 const CoursePage = () => {
     const { userInfo } = useContext(UserContext);
-    const [course, setCourse] = React.useState<Course>();
+    const [course, setCourse] = React.useState<CourseWithSections>();
     const { courseId } = useParams();
     const [rating, setRating] = useState<number | null>(2.5);
     const [review, setReview] = useState<string | null>("");
     const [courseReviews, setCourseReviews] = useState<any[]>([] as any[]);
     const [courseRating, setCourseRating] = useState(0);
+
+    const [isEnrolled, setIsEnrolled] = useState(false);
+    useEffect(() => {
+        axios
+            .post(`${apiURL}/get_is_enrolled`, {
+                courseId: courseId!,
+            })
+            .then((res) => {
+                console.log("is enrolled " + res.data);
+                setIsEnrolled(res.data);
+            });
+    }, [courseId]);
+
+    const [alert, setAlert] = useState({
+        isSuccess: false,
+        isError: false,
+        message: "",
+    });
 
     React.useEffect(() => {
         axios
@@ -93,12 +112,43 @@ const CoursePage = () => {
                         { withCredentials: true }
                     )
                     .then((result) => {
-                        console.dir(result);
                         setCourseReviews(result.data);
                     })
                     .catch((err) => {});
             });
     }, []);
+
+    const enrollNow = () => {
+        axios
+            .post(
+                `${apiURL}/enroll_in_course`,
+                { courseId: courseId },
+                {
+                    withCredentials: true,
+                }
+            )
+            .then((res) => {
+                if (res.status === 200) {
+                    setAlert({
+                        isSuccess: true,
+                        isError: false,
+                        message:
+                            'Enrolled in course "' +
+                            course?.course.title +
+                            '" successfully!',
+                    });
+
+                    setIsEnrolled(true);
+                }
+            })
+            .catch((err) => {
+                setAlert({
+                    isSuccess: false,
+                    isError: true,
+                    message: err.response.data,
+                });
+            });
+    };
 
     return (
         <div
@@ -109,6 +159,8 @@ const CoursePage = () => {
                 alignItems: "center",
             }}
         >
+            <Toast alert={alert} setAlert={setAlert} />
+
             <Box
                 sx={{
                     marginLeft: "20px",
@@ -167,53 +219,101 @@ const CoursePage = () => {
                                 {course?.course.summary}
                             </Typography>
                         </Box>
-
-                        <Typography sx={{ color: "white" }}>
-                            <Link
-                                to={`/instructor/${course?.course.instructor._id}`}
-                                style={{ color: "white" }}
+                        <Box sx={{ display: "flex", width: "100%" }}>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    width: "60%",
+                                    gap: "10px",
+                                    flexDirection: "column",
+                                }}
                             >
-                                {course?.course.instructor.firstName +
-                                    " " +
-                                    course?.course.instructor.lastName}
-                            </Link>
-                        </Typography>
-                        <Box sx={{ display: "flex", gap: "15px" }}>
-                            <Chip
-                                sx={{
-                                    backgroundColor: "white",
-                                    fontWeight: "bold",
-                                }}
-                                label={course?.course.subjectId.Name}
-                            />
-                            <Chip
-                                sx={{
-                                    backgroundColor: "white",
-                                    fontWeight: "bold",
-                                }}
-                                label={
-                                    course?.course.totalHours.toString() +
-                                    " Hours"
-                                }
-                            />
-                            <Chip
-                                sx={{
-                                    backgroundColor: "white",
-                                    fontWeight: "bold",
-                                }}
-                                label={
-                                    course?.course.price.toString() +
-                                    " " +
-                                    GetCurrency()
-                                }
-                            />
-                            <Chip
-                                sx={{
-                                    backgroundColor: "white",
-                                    fontWeight: "bold",
-                                }}
-                                label={courseRating.toString() + " " + "Rating"}
-                            />
+                                <Typography sx={{ color: "white" }}>
+                                    <Link
+                                        to={`/instructor/${course?.course.instructor._id}`}
+                                        style={{ color: "white" }}
+                                    >
+                                        {course?.course.instructor.firstName +
+                                            " " +
+                                            course?.course.instructor.lastName}
+                                    </Link>
+                                </Typography>
+                                <Box sx={{ display: "flex", gap: "15px" }}>
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: "white",
+                                            fontWeight: "bold",
+                                        }}
+                                        label={course?.course.subjectId.Name}
+                                    />
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: "white",
+                                            fontWeight: "bold",
+                                        }}
+                                        label={
+                                            course?.course.totalHours.toString() +
+                                            " Hours"
+                                        }
+                                    />
+                                    <Chip
+                                        sx={{
+                                            backgroundColor: "white",
+                                            fontWeight: "bold",
+                                        }}
+                                        label={
+                                            courseRating.toString() +
+                                            " " +
+                                            "Rating"
+                                        }
+                                    />
+                                </Box>
+                            </Box>
+                            {!isEnrolled && (
+                                <Box
+                                    sx={{
+                                        width: "40%",
+                                        display: "flex",
+                                        gap: "5px",
+                                        flexDirection: "column",
+                                    }}
+                                >
+                                    <div>
+                                        <Typography
+                                            variant="h4"
+                                            sx={{ color: "white" }}
+                                        >
+                                            {course?.course.price.toString() +
+                                                " " +
+                                                GetCurrency()}
+                                        </Typography>
+                                        {(course?.course?.discount?.rate ?? 0) >
+                                            0 && (
+                                            <Typography
+                                                sx={{
+                                                    fontSize: 14,
+                                                    alignSelf: "center",
+                                                }}
+                                                color="green"
+                                                gutterBottom
+                                            >
+                                                {course?.course?.discount?.rate}
+                                                % off
+                                            </Typography>
+                                        )}
+                                    </div>
+                                    <Box>
+                                        <Button
+                                            variant="contained"
+                                            size="large"
+                                            sx={{ width: "100%" }}
+                                            onClick={enrollNow}
+                                        >
+                                            Enroll Now
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            )}
                         </Box>
                     </Box>
                     <Box
@@ -225,34 +325,43 @@ const CoursePage = () => {
                         }}
                     >
                         <Box>
-                            {course?.sections.map((val, idx) => {
-                                return (
-                                    <Box>
-                                        <Accordion>
-                                            <AccordionSummary
-                                                aria-controls="panel1a-content"
-                                                id="panel1a-header"
-                                            >
-                                                <Typography>
-                                                    {"Section " +
-                                                        (idx + 1) +
-                                                        " - " +
-                                                        val.name}
-                                                </Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails>
-                                                <Subtitle subtitle={val} />
-                                            </AccordionDetails>
-                                        </Accordion>
-                                        <Divider />
-                                    </Box>
-                                );
-                            })}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    gap: "5px",
+                                    flexDirection: "column",
+                                }}
+                            >
+                                {course?.sections.map((val, idx) => {
+                                    return (
+                                        <Box>
+                                            <Accordion>
+                                                <AccordionSummary
+                                                    aria-controls="panel1a-content"
+                                                    id="panel1a-header"
+                                                >
+                                                    <Typography>
+                                                        {"Section " +
+                                                            (idx + 1) +
+                                                            " - " +
+                                                            val.name}
+                                                    </Typography>
+                                                </AccordionSummary>
+                                                <AccordionDetails>
+                                                    <Subtitle
+                                                        subtitle={val}
+                                                        isEnrolled={isEnrolled}
+                                                    />
+                                                </AccordionDetails>
+                                            </Accordion>
+                                            <Divider />
+                                        </Box>
+                                    );
+                                })}
+                            </Box>
                         </Box>
                     </Box>
                 </Box>
-
-                <Divider />
 
                 <Box
                     sx={{

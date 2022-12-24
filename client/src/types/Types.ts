@@ -34,24 +34,26 @@ type Section = {
 };
 
 type Course = {
-    course: {
-        title: string;
-        subjectId: {
-            Name: string;
-        };
-        summary: string;
-        totalHours: number;
-        price: number;
-        rating: {
-            sumOfRatings: number;
-            numberOfRatings: number;
-        };
-        reviews: Review[];
-        instructor: User;
-        videoPreviewUrl: string;
-        discount: { rate: number; startDate: Date; endDate: Date };
-        _id: string;
+    title: string;
+    subjectId: {
+        Name: string;
     };
+    summary: string;
+    totalHours: number;
+    price: number;
+    rating: {
+        sumOfRatings: number;
+        numberOfRatings: number;
+    };
+    reviews: Review[];
+    instructor: User;
+    videoPreviewUrl: string;
+    discount: { rate: number; startDate: Date; endDate: Date };
+    _id: string;
+};
+
+type CourseWithSections = {
+    course: Course;
     sections: Section[];
 };
 
@@ -62,4 +64,28 @@ type ExerciseSolution = {
     solutions: number[];
 };
 
-export type { Review, Exercise, Section, Course, ExerciseSolution, User };
+enum EnrollmentStatusType {
+    pending = "pending",
+    accepted = "accepted",
+    rejected = "rejected",
+    canceled = "canceled",
+}
+type Enrollment = {
+    status: EnrollmentStatusType;
+    courseId: Course;
+    studentId: string;
+    amountPaid: Number;
+    paymentDate: Date;
+    completedSections: string[];
+};
+
+export type {
+    Review,
+    Exercise,
+    Section,
+    Course,
+    CourseWithSections,
+    ExerciseSolution,
+    User,
+    Enrollment,
+};

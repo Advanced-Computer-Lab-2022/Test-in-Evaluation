@@ -9,7 +9,7 @@ import { UserTypes } from "../types/user";
 const path = "/api/sign_up" as const;
 
 const Input = Record({
-    username: String.withConstraint((s) => s.length > 5),
+    username: String,
     password: String.withConstraint((s) => s.length > 8),
     firstName: String.withConstraint((s) => s.length > 0),
     lastName: String.withConstraint((s) => s.length > 0),
@@ -25,11 +25,9 @@ export const addRoute = (app: Express) => {
         validateInput(Input),
         async (req: Request<Input>, res: Response) => {
             if (req.session.data.userType)
-                return res
-                    .status(400)
-                    .send({
-                        error: "You can't sign up because you are already signed in",
-                    });
+                return res.status(400).send({
+                    error: "You can't sign up because you are already signed in",
+                });
 
             const { username, password, firstName, lastName, email, gender } =
                 req.body;
