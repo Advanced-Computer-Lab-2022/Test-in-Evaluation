@@ -15,8 +15,8 @@ const CourseList = () => {
     const getCourses = async () => {
         try {
             setLoading(true);
-            const res = await axios.post(apiURL + "/get_my_enrollments");
-            setCourses(res.data.result);
+            const res = await axios.get(apiURL + "/get_my_enrollments");
+            setCourses(res.data);
             setLoading(false);
         } catch (error) {
             console.log(error);

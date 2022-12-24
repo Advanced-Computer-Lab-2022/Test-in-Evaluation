@@ -22,6 +22,7 @@ import type { ExerciseSolution, Section } from "../../types/Types";
 
 type params = {
     subtitle: Section;
+    isEnrolled: boolean;
 };
 
 const style = {
@@ -40,7 +41,7 @@ const style = {
     gap: "1rem",
 };
 
-const Subtitle = ({ subtitle }: params) => {
+const Subtitle = ({ subtitle, isEnrolled }: params) => {
     const [isVideoOpen, setVideoOpen] = React.useState(false);
     const [isExerciseOpen, setExerciseOpen] = React.useState(false);
     const [exerciseSolution, setExerciseSolution] =
@@ -59,17 +60,18 @@ const Subtitle = ({ subtitle }: params) => {
                 }
             )
             .then((res) => {
-                console.dir(res.data);
                 let exerSol: ExerciseSolution = res.data.exerciseSolutions[0];
                 setExerciseSolution(exerSol);
 
-                let score = 0;
-                exerSol.solutions.forEach((sol, i) => {
-                    if (sol === subtitle.exam.exercises[i].correctAnswer) {
-                        score++;
-                    }
-                });
-                setCurScore(score);
+                if (exerSol) {
+                    let score = 0;
+                    exerSol.solutions.forEach((sol, i) => {
+                        if (sol === subtitle.exam.exercises[i].correctAnswer) {
+                            score++;
+                        }
+                    });
+                    setCurScore(score);
+                }
             });
     }, [subtitle]);
 
@@ -121,7 +123,7 @@ const Subtitle = ({ subtitle }: params) => {
                     <Typography variant="body1" gutterBottom>
                         {subtitle.description}
                     </Typography>
-                    {exerciseSolution !== null && (
+                    {exerciseSolution && (
                         <div style={{ width: "100%", display: "flex" }}>
                             <Typography>
                                 Quiz Result: ({curScore} /{" "}
@@ -141,19 +143,22 @@ const Subtitle = ({ subtitle }: params) => {
                         </div>
                     )}
                 </CardContent>
-                <CardActions>
-                    <Button onClick={() => setVideoOpen(true)}>
-                        Watch Video
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            setIsViewingExercises(false);
-                            setExerciseOpen(true);
-                        }}
-                    >
-                        Solve Exercise
-                    </Button>
-                </CardActions>
+                {isEnrolled && (
+                    <CardActions>
+                        <Button onClick={() => setVideoOpen(true)}>
+                            Watch Video
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setIsViewingExercises(false);
+                                setExerciseOpen(true);
+                            }}
+                        >
+                            Solve Exercise
+                        </Button>
+                    </CardActions>
+                )}
+                ;
             </Card>
         </Paper>
     );
