@@ -2,7 +2,7 @@ import { Container } from "@mui/system";
 import CourseList from "./CourseList";
 const CourseListPage = () => {
     return (
-        <Container maxWidth="lg">
+        <Container>
             <CourseList />
         </Container>
     );

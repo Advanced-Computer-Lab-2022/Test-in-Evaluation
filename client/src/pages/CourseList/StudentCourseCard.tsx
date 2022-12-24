@@ -27,7 +27,7 @@ const StudentCourseCard = ({ enrollment }: props) => {
     };
 
     return (
-        <Card sx={{ textAlign: "left" }}>
+        <Card sx={{ textAlign: "left", width: "100%" }}>
             <CardActionArea
                 onClick={() => {
                     onCourseClick(course._id);
@@ -43,14 +43,20 @@ const StudentCourseCard = ({ enrollment }: props) => {
                     <Box
                         sx={{
                             display: "flex",
-                            justifyContent: "space-between",
+                            gap: "0.5rem",
                         }}
                     >
-                        <Typography variant="body2" color="text.secondary">
-                            {course?.instructor?.username}
+                        <Typography variant="subtitle1" color="text.secondary">
+                            {course?.instructor?.firstName}{" "}
+                            {course?.instructor?.lastName}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <strong>&#183;</strong>
+                        <Typography variant="subtitle1" color="text.secondary">
                             {course?.subjectId?.Name}
+                        </Typography>
+                        <strong>&#183;</strong>
+                        <Typography variant="subtitle1" color="text.secondary">
+                            {course?.totalHours} Hours
                         </Typography>
                     </Box>
 
@@ -80,17 +86,7 @@ const StudentCourseCard = ({ enrollment }: props) => {
                             display: "flex",
                             justifyContent: "space-between",
                         }}
-                    >
-                        <Typography variant="body2" fontWeight="bold">
-                            Price:{" "}
-                            {course?.price +
-                                " " +
-                                currencyOfCountry(userState.country)}
-                        </Typography>
-                        <Typography variant="subtitle1" color="text.secondary">
-                            {course?.totalHours} Hours
-                        </Typography>
-                    </Box>
+                    ></Box>
                 </CardContent>
             </CardActionArea>
         </Card>
