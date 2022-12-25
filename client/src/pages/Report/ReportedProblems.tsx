@@ -19,6 +19,7 @@ const ReportedProblems = () => {
         message: "",
     });
     const [loading, setLoading] = useState(false);
+
     const getReportedProblems = async () => {
         try {
             setLoading(true);
@@ -26,6 +27,7 @@ const ReportedProblems = () => {
                 apiURL + "/getMyReportedProblems/" + id
             );
             setProblems(res.data);
+            console.log(res.data);
             setLoading(false);
         } catch (error) {
             setLoading(false);

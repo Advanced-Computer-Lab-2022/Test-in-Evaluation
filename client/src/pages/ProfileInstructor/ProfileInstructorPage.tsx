@@ -4,6 +4,7 @@ import { useState } from "react";
 import { apiURL } from "../../App";
 import CreateCourse from "../CreateCourse/CreateCourse";
 import InstructorReviews from "../InstructorReviews/InstructorReviews";
+import ReportedProblems from "../Report/ReportedProblems";
 function ProfileInstructorPage() {
     const [optionTab, setOptionTab] = useState("profileSettings");
     const [bioValue, setBioValue] = useState("");
@@ -33,6 +34,7 @@ function ProfileInstructorPage() {
                 <Tab label="Profile Settings" value="profileSettings" />
                 <Tab label="Create a new course" value="createCourse" />
                 <Tab label="Show My Reviews" value="instructorReviews" />
+                <Tab label="Reported Problems" value="reportedProblems" />
             </Tabs>
             <Box sx={{ flexGrow: 1, p: 2 }}>
                 {optionTab === "profileSettings" && (
@@ -76,6 +78,7 @@ function ProfileInstructorPage() {
                 )}
                 {optionTab === "createCourse" && <CreateCourse />}
                 {optionTab === "instructorReviews" && <InstructorReviews />}
+                {optionTab === "reportedProblems" && <ReportedProblems />}
             </Box>
         </Box>
     );
