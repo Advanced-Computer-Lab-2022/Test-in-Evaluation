@@ -99,7 +99,7 @@ function SignUpPage() {
     };
 
     return (
-        <Container sx={{ height: "88vh" }}>
+        <Container>
             <Snackbar
                 autoHideDuration={6000}
                 onClose={() =>
@@ -123,7 +123,7 @@ function SignUpPage() {
                     gap: "3rem",
                     justifyContent: "center",
                     alignItems: "center",
-                    paddingBottom: "31.5rem",
+                    paddingBottom: "1rem",
                     "& > *": {
                         width: "100%",
                     },
