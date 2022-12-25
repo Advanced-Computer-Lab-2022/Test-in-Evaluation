@@ -5,7 +5,13 @@ import Toast from "../../components/Toast/Toast";
 import Loader from "../../components/Loader/Loader";
 import { Box, Typography } from "@mui/material";
 import ProblemCard from "./ProblemCard";
+import { useContext } from "react";
+import { UserContext } from "../../App";
+import { Problem } from "./ProblemCard";
+
 const ReportedProblems = () => {
+    const user = useContext(UserContext);
+    const id = user.userInfo.user._id;
     const [problems, setProblems] = useState([]);
     const [alert, setAlert] = useState({
         isSuccess: false,
@@ -16,7 +22,9 @@ const ReportedProblems = () => {
     const getReportedProblems = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(apiURL + "/get_all_reported_problems");
+            const res = await axios.get(
+                apiURL + "/getMyReportedProblems/" + id
+            );
             setProblems(res.data);
             setLoading(false);
         } catch (error) {
@@ -45,8 +53,8 @@ const ReportedProblems = () => {
                     gap: "1rem",
                 }}
             >
-                {problems.map((problem) => {
-                    return <ProblemCard problem={problem} />;
+                {problems.map((problem: Problem) => {
+                    return <ProblemCard key={problem?._id} problem={problem} />;
                 })}
             </Box>
         </>

@@ -106,6 +106,7 @@ const ReportModal = ({ id }: Props) => {
                             variant="outlined"
                             label="Description"
                             name="Description"
+                            multiline
                         />
                         <FormControl fullWidth>
                             <InputLabel id="Type">Type</InputLabel>

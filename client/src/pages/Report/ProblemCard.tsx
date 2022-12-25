@@ -1,5 +1,6 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
-type Problem = {
+export type Problem = {
+    _id: string;
     title: string;
     description: string;
     type: string;
