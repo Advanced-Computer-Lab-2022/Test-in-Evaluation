@@ -33,6 +33,7 @@ import { addRoute as getIsEnrolled } from "./getIsEnrolled";
 import { addRoute as reportProblemAddRoute } from "./reportProblem";
 import { addRoute as getAllReportedProblemsAddRoute } from "./getAllReportedProblems";
 import { addRoute as getMyReportedProblemsAddRoute } from "./getMyReportedProblems";
+import { addRoute as followUpOnReportedProblemAddRoute } from "./followUpOnReportedProblem";
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
     setCountryAddRoute(app);
@@ -69,4 +70,5 @@ export const addRoutes = (app: Express) => {
     reportProblemAddRoute(app);
     getAllReportedProblemsAddRoute(app);
     getMyReportedProblemsAddRoute(app);
+    followUpOnReportedProblemAddRoute(app);
 };
