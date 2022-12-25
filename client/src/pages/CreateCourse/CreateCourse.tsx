@@ -139,10 +139,7 @@ const CreateCourse = () => {
                 </Alert>
             </Snackbar>
             <Container maxWidth="lg">
-                <CreateCourseForm
-                    onSubmit={onSubmit}
-                    sx={{ background: "#eee", p: "1rem" }}
-                >
+                <CreateCourseForm onSubmit={onSubmit} sx={{ p: "1rem" }}>
                     <TextField
                         variant="outlined"
                         required

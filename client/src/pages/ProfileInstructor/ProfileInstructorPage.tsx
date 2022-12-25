@@ -10,76 +10,74 @@ function ProfileInstructorPage() {
     const [emailValue, setEmailValue] = useState("");
 
     return (
-        <Container sx={{ minHeight: "100%" }}>
-            <Box
+        <Box
+            sx={{
+                background: "white",
+                display: "flex",
+                minHeight: "100%",
+            }}
+        >
+            <Tabs
                 sx={{
-                    background: "white",
-                    display: "flex",
-                    minHeight: "80vh",
+                    paddingY: "2.5rem",
+                    borderRight: 1,
+                    borderColor: "divider",
+                    boxShadow: "rgba(0, 0, 0, 0.3) 0px 5px 15px",
+                }}
+                value={optionTab}
+                orientation="vertical"
+                onChange={(event, value) => {
+                    setOptionTab(value);
                 }}
             >
-                <Tabs
-                    sx={{
-                        paddingY: "2.5rem",
-                        borderRight: 1,
-                        borderColor: "divider",
-                        boxShadow: "rgba(0, 0, 0, 0.3) 0px 5px 15px",
-                    }}
-                    value={optionTab}
-                    orientation="vertical"
-                    onChange={(event, value) => {
-                        setOptionTab(value);
-                    }}
-                >
-                    <Tab label="Profile Settings" value="profileSettings" />
-                    <Tab label="Create a new course" value="createCourse" />
-                    <Tab label="Show My Reviews" value="instructorReviews" />
-                </Tabs>
-                <Box sx={{ flexGrow: 1, p: 2 }}>
-                    {optionTab === "profileSettings" && (
-                        <Box>
-                            <h1>Profile Settings</h1>
-                            <Input
-                                sx={{ width: "100%" }}
-                                value={emailValue}
-                                placeholder="Email"
-                                onChange={(e) => setEmailValue(e.target.value)}
-                            />
-                            <Input
-                                sx={{ width: "100%", marginTop: "20px" }}
-                                placeholder="Bio"
-                                multiline
-                                value={bioValue}
-                                onChange={(e) => setBioValue(e.target.value)}
-                            />
-                            <Button
-                                variant="contained"
-                                sx={{ marginTop: "20px" }}
-                                onClick={() => {
-                                    axios
-                                        .post(
-                                            apiURL + "/change_my_profile",
-                                            {
-                                                bio: bioValue,
-                                                email: emailValue,
-                                            },
-                                            { withCredentials: true }
-                                        )
-                                        .then((res) => {
-                                            if (res.data.success)
-                                                alert("Profile updated!");
-                                        });
-                                }}
-                            >
-                                Save
-                            </Button>
-                        </Box>
-                    )}
-                    {optionTab === "createCourse" && <CreateCourse />}
-                    {optionTab === "instructorReviews" && <InstructorReviews />}
-                </Box>
+                <Tab label="Profile Settings" value="profileSettings" />
+                <Tab label="Create a new course" value="createCourse" />
+                <Tab label="Show My Reviews" value="instructorReviews" />
+            </Tabs>
+            <Box sx={{ flexGrow: 1, p: 2 }}>
+                {optionTab === "profileSettings" && (
+                    <Box>
+                        <h1>Profile Settings</h1>
+                        <Input
+                            sx={{ width: "100%" }}
+                            value={emailValue}
+                            placeholder="Email"
+                            onChange={(e) => setEmailValue(e.target.value)}
+                        />
+                        <Input
+                            sx={{ width: "100%", marginTop: "20px" }}
+                            placeholder="Bio"
+                            multiline
+                            value={bioValue}
+                            onChange={(e) => setBioValue(e.target.value)}
+                        />
+                        <Button
+                            variant="contained"
+                            sx={{ marginTop: "20px" }}
+                            onClick={() => {
+                                axios
+                                    .post(
+                                        apiURL + "/change_my_profile",
+                                        {
+                                            bio: bioValue,
+                                            email: emailValue,
+                                        },
+                                        { withCredentials: true }
+                                    )
+                                    .then((res) => {
+                                        if (res.data.success)
+                                            alert("Profile updated!");
+                                    });
+                            }}
+                        >
+                            Save
+                        </Button>
+                    </Box>
+                )}
+                {optionTab === "createCourse" && <CreateCourse />}
+                {optionTab === "instructorReviews" && <InstructorReviews />}
             </Box>
-        </Container>
+        </Box>
     );
 }
 
