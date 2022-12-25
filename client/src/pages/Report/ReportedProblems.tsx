@@ -27,7 +27,7 @@ const ReportedProblems = () => {
                 apiURL + "/getMyReportedProblems/" + id
             );
             setProblems(res.data);
-            console.log(res.data);
+
             setLoading(false);
         } catch (error) {
             setLoading(false);

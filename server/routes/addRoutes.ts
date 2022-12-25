@@ -34,6 +34,7 @@ import { addRoute as reportProblemAddRoute } from "./reportProblem";
 import { addRoute as getAllReportedProblemsAddRoute } from "./getAllReportedProblems";
 import { addRoute as getMyReportedProblemsAddRoute } from "./getMyReportedProblems";
 import { addRoute as followUpOnReportedProblemAddRoute } from "./followUpOnReportedProblem";
+import { addRoute as markReportedProblemAddRoute } from "./markReportedProblem";
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
     setCountryAddRoute(app);
@@ -71,4 +72,5 @@ export const addRoutes = (app: Express) => {
     getAllReportedProblemsAddRoute(app);
     getMyReportedProblemsAddRoute(app);
     followUpOnReportedProblemAddRoute(app);
+    markReportedProblemAddRoute(app);
 };
