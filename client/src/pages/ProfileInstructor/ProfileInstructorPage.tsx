@@ -36,7 +36,7 @@ function ProfileInstructorPage() {
                 <Tab label="Show My Reviews" value="instructorReviews" />
                 <Tab label="Reported Problems" value="reportedProblems" />
             </Tabs>
-            <Box sx={{ flexGrow: 1, p: 2 }}>
+            <Box sx={{ flexGrow: 1, p: 2, border: "1px solid #ccc" }}>
                 {optionTab === "profileSettings" && (
                     <Box>
                         <h1>Profile Settings</h1>
