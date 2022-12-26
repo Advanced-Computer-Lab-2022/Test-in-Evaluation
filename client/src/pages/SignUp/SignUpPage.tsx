@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
-import { countries } from "../../data/countries";
 import {
     TermsOfService,
     PrivacyPolicy,
     ContentOwnershipPolicy,
 } from "../../data/policies";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { apiURL } from "../../App";
 import {
     Alert,
@@ -28,6 +29,8 @@ import {
     FormControl,
     Typography,
     AlertColor,
+    Container,
+    Divider,
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -96,11 +99,14 @@ function SignUpPage() {
     };
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Container>
             <Snackbar
                 autoHideDuration={6000}
                 onClose={() =>
-                    setSnackbarInfo({ ...snackbarInfo, snackbarOpen: false })
+                    setSnackbarInfo({
+                        ...snackbarInfo,
+                        snackbarOpen: false,
+                    })
                 }
                 open={snackbarInfo.snackbarOpen}
             >
@@ -113,316 +119,280 @@ function SignUpPage() {
             </Snackbar>
             <Box
                 sx={{
-                    boxShadow: "rgba(0, 0, 0, 0.5) 0px 5px 15px",
-                    background: "white",
-                    width: "800px",
+                    display: "flex",
+                    gap: "3rem",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingBottom: "1rem",
+                    "& > *": {
+                        width: "100%",
+                    },
+                    "& > .img-container": {
+                        display: { md: "flex", xs: "none" },
+                    },
                 }}
             >
-                <Box sx={{ width: "100%", height: "100%", paddingY: "10px" }}>
-                    <Box sx={{ display: "flex", justifyContent: "center" }}>
-                        <Typography
-                            sx={{ fontWeight: "bold", fontSize: "45px" }}
+                <Box
+                    className="img-container"
+                    sx={{
+                        maxWidth: "50%",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        gap: "1rem",
+                    }}
+                >
+                    <img
+                        src="https://bootstrapious.com/i/snippets/sn-registeration/illustration.svg"
+                        alt=""
+                        style={{ display: "block", width: "100%" }}
+                    />
+                    {/* <Divider /> */}
+                    <Typography textAlign="center">
+                        {"Already registerd? "}
+                        <Link
+                            to="/signin"
+                            style={{ textDecoration: "none", color: "blue" }}
                         >
-                            SIGN UP
-                        </Typography>
-                    </Box>
-                    <form
-                        style={{ height: "100%" }}
-                        onSubmit={handleSubmission}
+                            Sign In
+                        </Link>
+                    </Typography>
+                </Box>
+                <form onSubmit={handleSubmission}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: "20px",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                        }}
                     >
                         <Box
                             sx={{
+                                width: "100%",
                                 display: "flex",
-                                gap: "20px",
-                                flexDirection: "column",
-                                height: "90%",
                                 justifyContent: "center",
                             }}
                         >
-                            <Box
-                                sx={{
+                            <Tabs
+                                value={userType}
+                                onChange={(event, value) => setUserType(value)}
+                            >
+                                <Tab
+                                    label="individual trainee"
+                                    value="individual trainee"
+                                />
+                                <Tab label="instructor" value="instructor" />
+                            </Tabs>
+                        </Box>
+
+                        <TextField
+                            required
+                            type="email"
+                            variant="outlined"
+                            label="Email"
+                            value={formInput.email}
+                            onChange={(
+                                event: ChangeEvent<
+                                    HTMLInputElement | HTMLTextAreaElement
+                                >
+                            ): void => {
+                                setFormInput({
+                                    ...formInput,
+                                    email: event.target.value,
+                                });
+                            }}
+                        />
+
+                        <TextField
+                            required
+                            variant="outlined"
+                            label="Username"
+                            value={formInput.username}
+                            onChange={(
+                                event: ChangeEvent<
+                                    HTMLInputElement | HTMLTextAreaElement
+                                >
+                            ): void => {
+                                setFormInput({
+                                    ...formInput,
+                                    username: event.target.value,
+                                });
+                            }}
+                        />
+
+                        <Box
+                            sx={{
+                                display: "flex",
+                                gap: "1rem",
+                                "& > *": {
                                     width: "100%",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
+                                },
+                            }}
+                        >
+                            <TextField
+                                required
+                                variant="outlined"
+                                label="First name"
+                                value={formInput.firstName}
+                                onChange={(
+                                    event: ChangeEvent<
+                                        HTMLInputElement | HTMLTextAreaElement
+                                    >
+                                ): void => {
+                                    setFormInput({
+                                        ...formInput,
+                                        firstName: event.target.value,
+                                    });
+                                }}
+                            />
+                            <TextField
+                                required
+                                variant="outlined"
+                                label="Last name"
+                                value={formInput.lastName}
+                                onChange={(
+                                    event: ChangeEvent<
+                                        HTMLInputElement | HTMLTextAreaElement
+                                    >
+                                ): void => {
+                                    setFormInput({
+                                        ...formInput,
+                                        lastName: event.target.value,
+                                    });
+                                }}
+                            />
+                        </Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                gap: "1rem",
+                                "& > *": {
+                                    width: "100%",
+                                },
+                            }}
+                        >
+                            <TextField
+                                required
+                                variant="outlined"
+                                type="password"
+                                label="Password"
+                                value={formInput.password}
+                                onChange={(
+                                    event: ChangeEvent<
+                                        HTMLInputElement | HTMLTextAreaElement
+                                    >
+                                ): void => {
+                                    setFormInput({
+                                        ...formInput,
+                                        password: event.target.value,
+                                    });
+                                }}
+                            />
+
+                            <TextField
+                                required
+                                variant="outlined"
+                                type="password"
+                                label="Repeat password"
+                                value={formInput.passwordRepeat}
+                                onChange={(
+                                    event: ChangeEvent<
+                                        HTMLInputElement | HTMLTextAreaElement
+                                    >
+                                ): void => {
+                                    setFormInput({
+                                        ...formInput,
+                                        passwordRepeat: event.target.value,
+                                    });
+                                }}
+                            />
+                        </Box>
+                        <FormControl>
+                            <InputLabel id="gender">Gender *</InputLabel>
+                            <Select
+                                labelId="gender"
+                                label="gender"
+                                required
+                                onChange={(event, value) => {
+                                    setFormInput({
+                                        ...formInput,
+                                        gender: event.target.value as string,
+                                    });
                                 }}
                             >
-                                <Tabs
-                                    sx={{ borderRadius: "25px" }}
-                                    value={userType}
-                                    onChange={(event, value) =>
-                                        setUserType(value)
-                                    }
+                                <MenuItem value={"male"}>Male</MenuItem>
+                                <MenuItem value={"female"}>Female</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <Typography sx={{ fontWeight: "bold" }}>
+                            <Checkbox
+                                required
+                                icon={<CheckCircleOutlineOutlinedIcon />}
+                                checkedIcon={<CheckCircleIcon />}
+                            />
+                            By checking this box you agree to our:
+                        </Typography>
+
+                        <Box>
+                            <Accordion sx={{ fontSize: "13px" }}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
                                 >
-                                    <Tab
-                                        label="individual trainee"
-                                        value="individual trainee"
-                                    />
-                                    <Tab
-                                        label="instructor"
-                                        value="instructor"
-                                    />
-                                </Tabs>
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    paddingX: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <TextField
-                                    sx={{ width: "100%" }}
-                                    required
-                                    type="email"
-                                    variant="outlined"
-                                    label="Email"
-                                    value={formInput.email}
-                                    onChange={(
-                                        event: ChangeEvent<
-                                            | HTMLInputElement
-                                            | HTMLTextAreaElement
-                                        >
-                                    ): void => {
-                                        setFormInput({
-                                            ...formInput,
-                                            email: event.target.value,
-                                        });
-                                    }}
-                                />
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    paddingX: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <TextField
-                                    sx={{ width: "100%" }}
-                                    required
-                                    variant="outlined"
-                                    label="Username"
-                                    value={formInput.username}
-                                    onChange={(
-                                        event: ChangeEvent<
-                                            | HTMLInputElement
-                                            | HTMLTextAreaElement
-                                        >
-                                    ): void => {
-                                        setFormInput({
-                                            ...formInput,
-                                            username: event.target.value,
-                                        });
-                                    }}
-                                />
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    paddingX: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    gap: "10px",
-                                }}
-                            >
-                                <Box sx={{ width: "100%" }}>
-                                    <TextField
-                                        sx={{ width: "100%" }}
-                                        required
-                                        variant="outlined"
-                                        label="First name"
-                                        value={formInput.firstName}
-                                        onChange={(
-                                            event: ChangeEvent<
-                                                | HTMLInputElement
-                                                | HTMLTextAreaElement
-                                            >
-                                        ): void => {
-                                            setFormInput({
-                                                ...formInput,
-                                                firstName: event.target.value,
-                                            });
-                                        }}
-                                    />
-                                </Box>
-                                <Box sx={{ width: "100%" }}>
-                                    <TextField
-                                        sx={{ width: "100%" }}
-                                        required
-                                        variant="outlined"
-                                        label="Last name"
-                                        value={formInput.lastName}
-                                        onChange={(
-                                            event: ChangeEvent<
-                                                | HTMLInputElement
-                                                | HTMLTextAreaElement
-                                            >
-                                        ): void => {
-                                            setFormInput({
-                                                ...formInput,
-                                                lastName: event.target.value,
-                                            });
-                                        }}
-                                    />
-                                </Box>
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    paddingX: "80px",
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    gap: "10px",
-                                }}
-                            >
-                                <Box sx={{ width: "100%" }}>
-                                    <TextField
-                                        sx={{ width: "100%" }}
-                                        required
-                                        variant="outlined"
-                                        type="password"
-                                        label="Password"
-                                        value={formInput.password}
-                                        onChange={(
-                                            event: ChangeEvent<
-                                                | HTMLInputElement
-                                                | HTMLTextAreaElement
-                                            >
-                                        ): void => {
-                                            setFormInput({
-                                                ...formInput,
-                                                password: event.target.value,
-                                            });
-                                        }}
-                                    />
-                                </Box>
-                                <Box sx={{ width: "100%" }}>
-                                    <TextField
-                                        sx={{ width: "100%" }}
-                                        required
-                                        variant="outlined"
-                                        type="password"
-                                        label="Repeat password"
-                                        value={formInput.passwordRepeat}
-                                        onChange={(
-                                            event: ChangeEvent<
-                                                | HTMLInputElement
-                                                | HTMLTextAreaElement
-                                            >
-                                        ): void => {
-                                            setFormInput({
-                                                ...formInput,
-                                                passwordRepeat:
-                                                    event.target.value,
-                                            });
-                                        }}
-                                    />
-                                </Box>
-                            </Box>
-
-                            <Box sx={{ paddingX: "80px" }}>
-                                <InputLabel>
-                                    {" "}
-                                    <Typography> Gender *</Typography>
-                                </InputLabel>
-                                <Select
-                                    required
-                                    sx={{ width: "100%" }}
-                                    onChange={(event, value) => {
-                                        setFormInput({
-                                            ...formInput,
-                                            gender: event.target
-                                                .value as string,
-                                        });
-                                    }}
+                                    <Typography sx={{ fontWeight: "bold" }}>
+                                        Terms of Service
+                                    </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography>{TermsOfService}</Typography>
+                                </AccordionDetails>
+                            </Accordion>
+                            <Accordion sx={{ fontSize: "13px" }}>
+                                <AccordionSummary
+                                    expandIcon={<ExpandMoreIcon />}
                                 >
-                                    <MenuItem value={"male"}>Male</MenuItem>
-                                    <MenuItem value={"female"}>Female</MenuItem>
-                                </Select>
-                            </Box>
-
-                            <Box sx={{ paddingX: "80px" }}>
-                                <Typography sx={{ fontWeight: "bold" }}>
-                                    <Checkbox required />
-                                    By checking this box you agree to our:
-                                </Typography>
-                            </Box>
-                            <Box sx={{ paddingX: "80px" }}>
+                                    <Typography sx={{ fontWeight: "bold" }}>
+                                        Privacy Policy
+                                    </Typography>
+                                </AccordionSummary>
+                                <AccordionDetails>
+                                    <Typography>{PrivacyPolicy}</Typography>
+                                </AccordionDetails>
+                            </Accordion>
+                            {userType === "instructor" && (
                                 <Accordion sx={{ fontSize: "13px" }}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
-                                        sx={{ height: "10px" }}
                                     >
                                         <Typography sx={{ fontWeight: "bold" }}>
-                                            Terms of Service
+                                            Content Ownership Policy
                                         </Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <Typography>
-                                            {TermsOfService}
+                                            {ContentOwnershipPolicy}
                                         </Typography>
                                     </AccordionDetails>
                                 </Accordion>
-                                <Accordion sx={{ fontSize: "13px" }}>
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
-                                        sx={{ height: "10px" }}
-                                    >
-                                        <Typography sx={{ fontWeight: "bold" }}>
-                                            Privacy Policy
-                                        </Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Typography>{PrivacyPolicy}</Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-                                {userType === "instructor" && (
-                                    <Accordion sx={{ fontSize: "13px" }}>
-                                        <AccordionSummary
-                                            expandIcon={<ExpandMoreIcon />}
-                                            sx={{ height: "10px" }}
-                                        >
-                                            <Typography
-                                                sx={{ fontWeight: "bold" }}
-                                            >
-                                                Content Ownership Policy
-                                            </Typography>
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <Typography>
-                                                {ContentOwnershipPolicy}
-                                            </Typography>
-                                        </AccordionDetails>
-                                    </Accordion>
-                                )}
-                            </Box>
-
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <Button
-                                    sx={{ height: "60px", width: "300px" }}
-                                    type="submit"
-                                    variant="contained"
-                                >
-                                    {" "}
-                                    Sign up as {userType}{" "}
-                                </Button>
-                            </Box>
+                            )}
                         </Box>
-                    </form>
-                </Box>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            sx={{
+                                backgroundColor: "black",
+                                "&:hover": {
+                                    backgroundColor: "#222",
+                                },
+                            }}
+                        >
+                            Sign up as {userType}
+                        </Button>
+                    </Box>
+                </form>
             </Box>
-        </Box>
+        </Container>
     );
 }
 

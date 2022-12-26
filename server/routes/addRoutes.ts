@@ -30,7 +30,11 @@ import { addRoute as getUserAddRoute } from "./getUser";
 import { addRoute as payToWalletAddRoute } from "./payToWallet";
 import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";
 import { addRoute as getIsEnrolled } from "./getIsEnrolled";
-
+import { addRoute as reportProblemAddRoute } from "./reportProblem";
+import { addRoute as getAllReportedProblemsAddRoute } from "./getAllReportedProblems";
+import { addRoute as getMyReportedProblemsAddRoute } from "./getMyReportedProblems";
+import { addRoute as followUpOnReportedProblemAddRoute } from "./followUpOnReportedProblem";
+import { addRoute as markReportedProblemAddRoute } from "./markReportedProblem";
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
     setCountryAddRoute(app);
@@ -64,4 +68,9 @@ export const addRoutes = (app: Express) => {
     payToWalletAddRoute(app);
     getPendingEnrollmentsAddRoute(app);
     getIsEnrolled(app);
+    reportProblemAddRoute(app);
+    getAllReportedProblemsAddRoute(app);
+    getMyReportedProblemsAddRoute(app);
+    followUpOnReportedProblemAddRoute(app);
+    markReportedProblemAddRoute(app);
 };

@@ -115,7 +115,7 @@ export default function DrawerAppBar() {
                         </Typography>
                         <NavSearchBar />
                     </Box>
-                    <Box>
+                    <Box sx={{ display: { xs: "none", md: "block" } }}>
                         <Typography>Country:</Typography>
                         <Select
                             value={userState.country}

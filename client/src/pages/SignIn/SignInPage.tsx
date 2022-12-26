@@ -3,29 +3,12 @@ import axios from "axios";
 import { countries } from "../../data/countries";
 import { apiURL } from "../../App";
 import { useNavigate, redirect, Link } from "react-router-dom";
-
-import {
-    TermsOfService,
-    PrivacyPolicy,
-    ContentOwnershipPolicy,
-} from "../../data/policies";
 import {
     Alert,
-    Autocomplete,
     Box,
-    Tabs,
-    Tab,
-    ToggleButtonGroup,
-    ToggleButton,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     Snackbar,
-    Checkbox,
     Button,
     TextField,
-    Select,
-    MenuItem,
     InputLabel,
     FormControl,
     Typography,
@@ -33,12 +16,10 @@ import {
     OutlinedInput,
     InputAdornment,
     IconButton,
+    Divider,
 } from "@mui/material";
 
 import { UserContext } from "../../App";
-
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { log } from "console";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function SignInPage() {
@@ -102,6 +83,9 @@ function SignInPage() {
             sx={{
                 display: "flex",
                 justifyContent: "center",
+                alignItems: "center",
+                minHeight: "100%",
+                backgroundColor: "white",
             }}
         >
             <Snackbar
@@ -121,9 +105,9 @@ function SignInPage() {
             <Box
                 sx={{
                     display: "flex",
-                    marginInline: "3rem",
-                    width: "max(75%,25rem)",
-                    boxShadow: "rgba(0, 0, 0, 0.5) 0px 5px 15px",
+                    marginInline: "3rem ",
+                    // width: "100%",
+                    // boxShadow: "rgba(0, 0, 0, 0.5) 0px 5px 15px",
                     borderRadius: "1rem",
                     overflow: "hidden",
                     "& > *": {
@@ -135,17 +119,15 @@ function SignInPage() {
                 }}
             >
                 <img
-                    src="Book1.jpg"
+                    src="https://bootstrapious.com/i/snippets/sn-registeration/illustration.svg"
+                    alt=""
+                    className="img-fluid mb-3 d-none d-md-block"
                     style={{
-                        aspectRatio: "1/1",
-                        objectFit: "cover",
                         maxWidth: "50%",
                     }}
                 />
-
                 <Box
                     sx={{
-                        backgroundColor: "white",
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -153,15 +135,6 @@ function SignInPage() {
                         padding: "3rem",
                     }}
                 >
-                    <Typography
-                        fontWeight="bold"
-                        fontSize={{ xs: "2rem", md: "2.5rem" }}
-                        variant="h2"
-                        textAlign="center"
-                    >
-                        SIGN IN
-                    </Typography>
-
                     <form onSubmit={handleSubmission}>
                         <Box
                             sx={{
@@ -188,7 +161,6 @@ function SignInPage() {
                                     });
                                 }}
                             />
-
                             <FormControl variant="outlined" fullWidth>
                                 <InputLabel htmlFor="outlined-adornment-password">
                                     Password *
@@ -230,12 +202,42 @@ function SignInPage() {
                                     }
                                 />
                             </FormControl>
-
-                            <Link to="/forgot_password">Forgot Password?</Link>
-
-                            <Button type="submit" variant="contained" fullWidth>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                fullWidth
+                                sx={{
+                                    background: "black",
+                                    "&:hover": {
+                                        background: "#222",
+                                    },
+                                }}
+                            >
                                 SIGN IN
                             </Button>
+                            <Divider />
+                            <Link
+                                to="/forgot_password"
+                                style={{
+                                    textDecoration: "none",
+                                    color: "blue",
+                                    marginTop: "0.5rem",
+                                }}
+                            >
+                                Forgot Password?
+                            </Link>
+                            <Typography variant="body1">
+                                {"Don't have an account?   "}
+                                <Link
+                                    to="/signup"
+                                    style={{
+                                        textDecoration: "none",
+                                        color: "blue",
+                                    }}
+                                >
+                                    Sign Up
+                                </Link>
+                            </Typography>
                         </Box>
                     </form>
                 </Box>

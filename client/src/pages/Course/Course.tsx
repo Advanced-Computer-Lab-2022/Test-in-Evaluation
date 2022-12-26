@@ -22,6 +22,7 @@ import type { CourseWithSections, Review } from "../../types/Types";
 import { Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
+import ReportModal from "../Report/ReportModal";
 
 // /getAllReviews
 // /writeReview
@@ -269,40 +270,49 @@ const CoursePage = () => {
                                     />
                                 </Box>
                             </Box>
-                            {!isEnrolled && (
-                                <Box
-                                    sx={{
-                                        width: "40%",
-                                        display: "flex",
-                                        gap: "5px",
-                                        flexDirection: "column",
-                                    }}
-                                >
-                                    <div>
-                                        <Typography
-                                            variant="h4"
-                                            sx={{ color: "white" }}
-                                        >
-                                            {course?.course.price.toString() +
-                                                " " +
-                                                GetCurrency()}
-                                        </Typography>
-                                        {(course?.course?.discount?.rate ?? 0) >
-                                            0 && (
+                            <Box
+                                sx={{
+                                    width: "40%",
+                                    display: "flex",
+                                    gap: "5px",
+                                    flexDirection: "column",
+                                }}
+                            >
+                                {!isEnrolled ||
+                                    (userInfo.type === "instructor" && (
+                                        <div>
                                             <Typography
-                                                sx={{
-                                                    fontSize: 14,
-                                                    alignSelf: "center",
-                                                }}
-                                                color="green"
-                                                gutterBottom
+                                                variant="h4"
+                                                sx={{ color: "white" }}
                                             >
-                                                {course?.course?.discount?.rate}
-                                                % off
+                                                {course?.course.price.toString() +
+                                                    " " +
+                                                    GetCurrency()}
                                             </Typography>
-                                        )}
-                                    </div>
-                                    <Box>
+                                            {(course?.course?.discount?.rate ??
+                                                0) > 0 && (
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 14,
+                                                        alignSelf: "center",
+                                                    }}
+                                                    color="green"
+                                                    gutterBottom
+                                                >
+                                                    {
+                                                        course?.course?.discount
+                                                            ?.rate
+                                                    }
+                                                    % off
+                                                </Typography>
+                                            )}
+                                        </div>
+                                    ))}
+                                <Box>
+                                    {isEnrolled ||
+                                    userInfo.type === "instructor" ? (
+                                        <ReportModal id={course?.course?._id} />
+                                    ) : (
                                         <Button
                                             variant="contained"
                                             size="large"
@@ -311,9 +321,9 @@ const CoursePage = () => {
                                         >
                                             Enroll Now
                                         </Button>
-                                    </Box>
+                                    )}
                                 </Box>
-                            )}
+                            </Box>
                         </Box>
                     </Box>
                     <Box
