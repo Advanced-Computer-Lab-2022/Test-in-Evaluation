@@ -50,6 +50,7 @@ type Course = {
     videoPreviewUrl: string;
     discount: { rate: number; startDate: Date; endDate: Date };
     _id: string;
+    viewsCount: number;
 };
 
 type CourseWithSections = {
