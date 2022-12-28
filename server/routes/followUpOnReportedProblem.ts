@@ -23,7 +23,7 @@ export const addRoute = (app: Express) => {
 
         const { reportedProblemId, newComment } = req.body;
 
-        const reportedProblem = await ReportedProblem.updateOne({ _id: reportedProblemId, user: user.id }, { $push: { comments: newComment } });
+        const reportedProblem = await ReportedProblem.updateOne({ _id: reportedProblemId, user: user.id }, { $push: { comments: newComment, senderId: user.id } });
 
         if (reportedProblem.matchedCount === 0) return res.status(404).send("Reported problem not found");
 
