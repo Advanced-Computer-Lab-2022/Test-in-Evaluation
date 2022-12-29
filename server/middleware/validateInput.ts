@@ -8,7 +8,7 @@ export const validateInput = (record: Record<any, any>) => (req: Request, res: R
         return next();
     } catch (e) {
         if (e instanceof ValidationError) {
-            res.status(401).send({ error: e.message });
+            res.status(401).send(e.message);
         } else {
             res.status(401).send({ error: "unknown" });
         }
