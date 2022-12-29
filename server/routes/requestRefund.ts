@@ -33,20 +33,17 @@ export const addRoute = (app: Express) => {
 
             const user = await User.findOne({ username: userSession.username });
             if (!user) return res.status(404).send("User not found");
-            if (enrollment.studentId !== user.id)
-                return res.status(401).send("Unauthorized");
+        if (enrollment.studentId !== user.id) return res.status(401).send("Unauthorized");
 
-            const sections = await Section.find({
-                courseId: enrollment.courseId,
-            });
-            if (sections.length === 0)
-                return res.status(404).send("Sections not found");
+        const sections = await Section.find({ courseId: enrollment.courseId });
+        if (sections.length === 0) return res.status(404).send("Sections not found");
+        const touchedSectionsCount = new Set(enrollment.completedSections.map((v) => v.sectionId)).size;
 
-            if (enrollment.completedSections.length < sections.length / 2) {
-                // refund
-                // transaction:
-                // cancel enrollment
-                // add money to user's wallet
+        if (touchedSectionsCount < sections.length / 2) {
+            // refund
+            // transaction:
+            // cancel enrollment
+            // add money to user's wallet
 
                 try {
                     const updateEnrollment = await Enrollment.updateOne(

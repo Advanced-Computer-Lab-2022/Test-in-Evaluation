@@ -9,7 +9,7 @@ export const ReportedProblemSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: "User" },
     title: String,
     description: String,
-    comments: [String],
+    comments: [{ text: String, senderId: { type: Schema.Types.ObjectId, ref: "User" }, timeSent: { type: Date, default: () => new Date() } }],
     status: { type: String, enum: ReportedProblemStatusType },
     category: { type: String, enum: ReportedProblemCategoryType },
     createdAt: { type: Date, default: () => new Date() },
