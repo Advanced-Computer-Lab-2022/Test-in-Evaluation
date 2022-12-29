@@ -1,7 +1,7 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Box, CardActionArea, Rating } from "@mui/material";
+import { Box, CardActionArea, LinearProgress, Rating } from "@mui/material";
 import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
@@ -18,9 +18,6 @@ const StudentCourseCard = ({ enrollment }: props) => {
     const navigate = useNavigate();
 
     const course = enrollment.courseId;
-
-    const courseRating =
-        course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
 
     const onCourseClick = (id: String) => {
         navigate(`/course/${id}`);
@@ -59,34 +56,17 @@ const StudentCourseCard = ({ enrollment }: props) => {
                             {course?.totalHours} Hours
                         </Typography>
                     </Box>
-
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 0.5,
-                        }}
-                    >
-                        <Typography
-                            variant="subtitle1"
-                            fontWeight="bold"
-                            color="text.secondary"
-                        >
-                            {courseRating}
-                        </Typography>
-                        <Rating
-                            value={courseRating}
-                            precision={0.5}
-                            readOnly
-                            size="small"
-                        />
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Box sx={{ width: "100%", mr: 1 }}>
+                            <LinearProgress variant="determinate" value={0} />
+                        </Box>
+                        <Box sx={{ minWidth: 35 }}>
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                            >{`${Math.round(0)}%`}</Typography>
+                        </Box>
                     </Box>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    ></Box>
                 </CardContent>
             </CardActionArea>
         </Card>
