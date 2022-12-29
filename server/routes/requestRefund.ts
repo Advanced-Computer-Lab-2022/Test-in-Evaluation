@@ -31,8 +31,9 @@ export const addRoute = (app: Express) => {
 
         const sections = await Section.find({ courseId: enrollment.courseId });
         if (sections.length === 0) return res.status(404).send("Sections not found");
+        const touchedSectionsCount = new Set(enrollment.completedSections.map((v) => v.sectionId)).size;
 
-        if (enrollment.completedSections.length < sections.length / 2) {
+        if (touchedSectionsCount < sections.length / 2) {
             // refund
             // transaction:
             // cancel enrollment

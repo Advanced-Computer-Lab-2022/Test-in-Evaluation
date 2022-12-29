@@ -1,6 +1,6 @@
 import { Express } from "express";
 import { Schema } from "mongoose";
-import { Record, Static, String } from "runtypes";
+import { Number, Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
 import { Enrollment, Section, User } from "../mongo";
 import { Request, Response } from "../types/express";
@@ -10,6 +10,7 @@ const path = "/api/record_completed_section" as const;
 
 const Input = Record({
     sectionId: String,
+    exerciseIdx: Number,
 });
 
 type Input = Static<typeof Input>;
@@ -20,10 +21,11 @@ export const addRoute = (app: Express) => {
         const userSession = req.session.data;
         if (!userSession.userType) return res.status(401).send("Unauthorized");
 
-        const { sectionId } = req.body;
+        const { sectionId, exerciseIdx } = req.body;
         const section = await Section.findById(sectionId);
         if (!section) return res.status(400).send("Section doesn't exist");
         const courseId = section.parentCourse!;
+        if (!section.exam?.exercises[exerciseIdx]) return res.status(400).send("Exercise doesn't exist");
 
         const user = (await User.findOne({ username: userSession.username }))!;
 
@@ -31,13 +33,23 @@ export const addRoute = (app: Express) => {
         if (!enrollment) return res.status(400).send("Enrollment doesn't exist");
 
         // if not already completed mark as completed
-        const shouldUpdate = !enrollment.completedSections.map(({ sectionId }) => sectionId?.toString()).includes(sectionId);
+        const shouldUpdate = !enrollment.completedSections.some(
+            ({ sectionId: completedSectionId, exerciseIdx: completedExerciseIdx }) => sectionId === completedSectionId?.toString() && exerciseIdx === completedExerciseIdx
+        );
+        const addedCompletedSection = { sectionId, exerciseIdx };
         if (shouldUpdate) {
-            const x = await Enrollment.updateOne({ _id: enrollment._id }, { $push: { completedSections: { sectionId } } });
+            const x = await Enrollment.updateOne({ _id: enrollment._id }, { $push: { completedSections: addedCompletedSection } });
         }
 
         const allSections = await Section.find({ parentCourse: courseId });
-        if (allSections.length <= enrollment.completedSections.length + +shouldUpdate) {
+        const isEnrollmentComplete = allSections
+            .map((v) => v.toObject())
+            .every(({ _id, exam }) =>
+                exam!.exercises.every((_, idx) =>
+                    [...enrollment.completedSections, addedCompletedSection].some(({ exerciseIdx, sectionId }) => _id.toString() === sectionId?.toString() && idx === exerciseIdx)
+                )
+            );
+        if (isEnrollmentComplete) {
             const emailBody = `Congratulations! You have completed the course!\nYou can view your certificate here: http://localhost:${process.env.PORT}/api/get_certificate?enrollmentId=${enrollment._id}`;
             await sendEmail(user.email!, "Course Completed", emailBody);
         }
