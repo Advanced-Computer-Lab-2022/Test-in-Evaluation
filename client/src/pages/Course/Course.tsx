@@ -9,8 +9,11 @@ import {
     AccordionSummary,
     Box,
     Button,
+    Card,
+    CardContent,
     Chip,
     Divider,
+    LinearProgress,
     Rating,
     styled,
     TextField,
@@ -342,6 +345,38 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
+                                <Card>
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            sx={{ textAlign: "center" }}
+                                        >
+                                            Course Progress
+                                        </Typography>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <Box sx={{ width: "100%", mr: 1 }}>
+                                                <LinearProgress
+                                                    variant="determinate"
+                                                    value={0}
+                                                />
+                                            </Box>
+                                            <Box sx={{ minWidth: 35 }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                >{`${Math.round(
+                                                    0
+                                                )}%`}</Typography>
+                                            </Box>
+                                        </Box>
+                                    </CardContent>
+                                </Card>
+
                                 {course?.sections.map((val, idx) => {
                                     return (
                                         <Box>
