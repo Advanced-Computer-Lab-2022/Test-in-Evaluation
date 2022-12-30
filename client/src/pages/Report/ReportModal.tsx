@@ -75,7 +75,13 @@ const ReportModal = ({ id }: Props) => {
     return (
         <>
             <Toast alert={alert} setAlert={setAlert} />
-            <Button variant="contained" color="error" onClick={handleOpen}>
+            <Button
+                variant="contained"
+                size="large"
+                sx={{ width: "100%" }}
+                color="error"
+                onClick={handleOpen}
+            >
                 Report a Problem
             </Button>
             <Modal
