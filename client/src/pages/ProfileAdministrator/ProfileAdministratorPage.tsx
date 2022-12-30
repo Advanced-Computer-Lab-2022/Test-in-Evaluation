@@ -14,7 +14,8 @@ function ProfileAdministratorPage() {
             style={{
                 background: "white",
                 boxShadow: "rgba(0, 0, 0, 0.50) 0px 5px 15px",
-                height: "100%",
+                minHeight: "calc(100% + 1rem)",
+                translate: "0 -1rem 0",
             }}
         >
             <Box
