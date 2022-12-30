@@ -19,7 +19,7 @@ import {
 import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
 import type { CourseWithSections, Review } from "../../types/Types";
-import { Star, StarBorder } from "@mui/icons-material";
+import { ExpandMore, Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
 import ReportModal from "../Report/ReportModal";
@@ -348,6 +348,7 @@ const CoursePage = () => {
                                             <Accordion>
                                                 <AccordionSummary
                                                     aria-controls="panel1a-content"
+                                                    expandIcon={<ExpandMore />}
                                                     id="panel1a-header"
                                                 >
                                                     <Typography>
