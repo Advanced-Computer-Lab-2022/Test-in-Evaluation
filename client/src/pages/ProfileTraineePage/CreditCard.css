@@ -55,10 +55,9 @@ input {
 
 .ccicon {
     height: 38px;
-    position: absolute;
-    right: 6px;
-    top: calc(50% - 17px);
     width: 60px;
+    right: 30px;
+    position: absolute;
 }
 
 .container {

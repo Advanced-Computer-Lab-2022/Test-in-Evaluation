@@ -7,16 +7,19 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    FormControl,
     Input,
+    InputLabel,
     TextField,
     Typography,
 } from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { IMaskMixin } from "react-imask";
+import MaskInput from "react-maskinput/lib";
 import { apiURL } from "../../App";
 import { Loader, Toast } from "../../components";
 import CreditCard from "./CreditCard";
+import * as Cards from "./CardsSvgIcons";
 
 const Wallet = () => {
     const [loading, setLoading] = useState(false);
@@ -41,6 +44,39 @@ const Wallet = () => {
     const [cardNumber, setCardNumber] = useState("");
     const [cardExpDate, setCardExpDate] = useState("");
     const [cardCSV, setCardCSV] = useState("");
+
+    const swapColor = function (basecolor: string) {
+        document.querySelectorAll(".lightcolor").forEach(function (input) {
+            input.setAttribute("class", "");
+            input.setAttribute("class", "lightcolor " + basecolor);
+        });
+        document.querySelectorAll(".darkcolor").forEach(function (input) {
+            input.setAttribute("class", "");
+            input.setAttribute("class", "darkcolor " + basecolor + "dark");
+        });
+    };
+
+    const processCardValue = (e: { maskedValue: string; value: string }) => {
+        setCardNumber(e.maskedValue);
+        if (/^4\d{0,15}/.test(e.maskedValue)) {
+            document.getElementById("ccsingle")!.innerHTML = Cards.visa_single;
+            document.getElementById("ccicon")!.innerHTML = Cards.visa;
+            swapColor("lime");
+        } else if (
+            /^(5[1-5]\d{0,2}|22[2-9]\d{0,1}|2[3-7]\d{0,2})\d{0,12}/.test(
+                e.maskedValue
+            )
+        ) {
+            document.getElementById("ccsingle")!.innerHTML =
+                Cards.mastercard_single;
+            document.getElementById("ccicon")!.innerHTML = Cards.mastercard;
+            swapColor("lightblue");
+        } else {
+            document.getElementById("ccsingle")!.innerHTML = "";
+            document.getElementById("ccicon")!.innerHTML = "";
+            swapColor("grey");
+        }
+    };
 
     // if (loading) return <Loader open={loading} />;
     return (
@@ -67,36 +103,64 @@ const Wallet = () => {
                             }}
                         >
                             <TextField
-                                label="Full Name"
+                                placeholder="Full Name"
                                 onFocus={() => setCardFlipped(false)}
                                 value={cardName}
                                 onChange={(e) => setCardName(e.target.value)}
                             />
-                            <TextField
-                                label="Card Number"
-                                onFocus={() => setCardFlipped(false)}
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}
-                            />
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    width: "100%",
+                                    gap: "5px",
+                                }}
+                            >
+                                <MaskInput
+                                    mask="0000 0000 0000 0000"
+                                    value={cardNumber}
+                                    onValueChange={processCardValue}
+                                    onFocus={() => setCardFlipped(false)}
+                                    /*
+                                    // @ts-ignore */
+                                    placeholder="Card Number"
+                                />
+                                <svg
+                                    id="ccicon"
+                                    className="ccicon"
+                                    width="750"
+                                    height="471"
+                                    viewBox="0 0 750 471"
+                                    version="1.1"
+                                    style={{ alignSelf: "center" }}
+                                ></svg>
+                            </Box>
                             <Box
                                 sx={{
                                     display: "flex",
                                     gap: "1em",
                                 }}
                             >
-                                <TextField
-                                    label="Expiry Date"
+                                <MaskInput
+                                    /*
+                                    // @ts-ignore */
+                                    placeholder="Expiry Date"
+                                    mask="00/00"
                                     onFocus={() => setCardFlipped(false)}
                                     value={cardExpDate}
-                                    onChange={(e) =>
-                                        setCardExpDate(e.target.value)
+                                    onValueChange={(e) =>
+                                        setCardExpDate(e.maskedValue)
                                     }
                                 />
-                                <TextField
-                                    label="CVV"
+                                <MaskInput
+                                    /*
+                                    // @ts-ignore */
+                                    placeholder="CVV"
                                     onFocus={() => setCardFlipped(true)}
                                     value={cardCSV}
-                                    onChange={(e) => setCardCSV(e.target.value)}
+                                    mask="0000"
+                                    onValueChange={(e) =>
+                                        setCardCSV(e.maskedValue)
+                                    }
                                 />
                             </Box>
                         </Box>
