@@ -131,12 +131,11 @@ export default function DrawerAppBar() {
                         </Typography>
                         <NavSearchBar />
                     </Box>
-                    <Box sx={{ display: { xs: "none", md: "block" } }}>
+                    <Box sx={{ display: { md: "block" }, marginRight: "5px" }}>
                         <Select
                             value={userState.country}
                             label="Select Country"
-                            sx={{ background: "white" }}
-                            variant="standard"
+                            style={{ color: "white" }}
                             onChange={(event) => {
                                 userState.setCountry(event.target.value);
                                 console.log(event.target.value);
