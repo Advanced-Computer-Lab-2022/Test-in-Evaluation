@@ -2,9 +2,10 @@ import { Tab, Tabs } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
 import ReportedProblems from "../Report/ReportedProblems";
+import Wallet from "./Wallet";
 
 const ProfileTraineePage = () => {
-    const [optionTab, setOptionTab] = useState("reportedProblems");
+    const [optionTab, setOptionTab] = useState("wallet");
 
     return (
         <Box
@@ -27,6 +28,7 @@ const ProfileTraineePage = () => {
                     setOptionTab(value);
                 }}
             >
+                <Tab label="Wallet" value="wallet" />
                 <Tab label="Reported Problems" value="reportedProblems" />
             </Tabs>
             <Box
@@ -37,6 +39,7 @@ const ProfileTraineePage = () => {
                 }}
             >
                 {optionTab === "reportedProblems" && <ReportedProblems />}
+                {optionTab === "wallet" && <Wallet />}
             </Box>
         </Box>
     );
