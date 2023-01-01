@@ -19,7 +19,6 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
 import type { CourseWithSections, Review } from "../../types/Types";
 import { ExpandMore, Star, StarBorder } from "@mui/icons-material";
@@ -27,6 +26,8 @@ import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
 import ReportModal from "../Report/ReportModal";
 import RechargeModal from "../ProfileTraineePage/RechargeWindow/RechargeModal";
+
+import ReactPlayer from "react-player/youtube";
 
 // /getAllReviews
 // /writeReview
@@ -181,15 +182,23 @@ const CoursePage = () => {
     };
     const [openPayment, setOpenPayment] = useState(false);
 
-    useEffect(() => {
+    const fetchCourseProgress = () => {
         axios
             .post(apiURL + "/get_completed_course_ratio", {
                 courseId: courseId,
             })
             .then((res) => {
-                console.dir(res.data);
+                console.log(
+                    "new course progress ",
+                    res.data.count,
+                    res.data.total
+                );
                 setCourseProgress(res.data);
             });
+    };
+
+    useEffect(() => {
+        fetchCourseProgress();
     }, [courseId]);
 
     return (
@@ -258,8 +267,9 @@ const CoursePage = () => {
                                 {course?.course.title}
                             </Typography>
                         </Box>
-                        <YoutubeEmbed
+                        <ReactPlayer
                             style={{ aspectRatio: "16 / 9", width: "100%" }}
+                            controls={true}
                             url={course?.course.videoPreviewUrl}
                         />
                         <Box>
@@ -452,6 +462,9 @@ const CoursePage = () => {
                                                     <Subtitle
                                                         subtitle={val}
                                                         isEnrolled={isEnrolled}
+                                                        fetchCourseProgress={
+                                                            fetchCourseProgress
+                                                        }
                                                     />
                                                 </AccordionDetails>
                                             </Accordion>

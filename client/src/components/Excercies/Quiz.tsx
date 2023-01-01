@@ -23,6 +23,7 @@ type QuizProps = {
     section: Section;
     questions: Exercise[];
     setExerciseOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    fetchCourseProgress: () => void;
 };
 
 const Quiz = ({
@@ -31,6 +32,7 @@ const Quiz = ({
     section,
     questions,
     setExerciseOpen,
+    fetchCourseProgress,
 }: QuizProps) => {
     const { userInfo } = useContext(UserContext);
 
@@ -103,7 +105,7 @@ const Quiz = ({
                 })
                 .then((res) => {
                     if (res.data.success) {
-                        console.log("recorded");
+                        fetchCourseProgress();
                     }
                 });
         }
