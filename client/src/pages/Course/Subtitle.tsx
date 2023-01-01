@@ -1,5 +1,5 @@
 import { apiURL, UserContext } from "../../App";
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,11 @@ import {
     CardActions,
     Button,
     Modal,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    DialogActions,
+    TextField,
 } from "@mui/material";
 import ReactPlayer from "react-player/youtube";
 import { Quiz } from "../../components";
@@ -76,40 +81,67 @@ const Subtitle = ({ subtitle, isEnrolled, fetchCourseProgress }: params) => {
             });
     }, [subtitle, isExerciseOpen]);
 
+    const [notes, setNotes] = useState("");
+
+    const downloadNotes = () => {
+        axios.post(`${apiURL}/gen_notes_pdf`, { notes: notes }).then((res) => {
+            const file = res.data;
+            console.dir(file);
+            const fileURL = window.URL.createObjectURL(file);
+            let alink = document.createElement("a");
+            alink.href = fileURL;
+            alink.download = subtitle.name + " notes.pdf";
+            alink.click();
+        });
+    };
+
     return (
         <Paper>
-            <Modal open={isVideoOpen}>
-                <Box sx={style}>
-                    <ReactPlayer
-                        style={{ aspectRatio: "16 / 9", width: "100%" }}
-                        controls={true}
-                        url={subtitle.videoUrl}
-                        onEnded={() =>
-                            axios
-                                .post(`${apiURL}/record_completed_video`, {
-                                    sectionId: subtitle._id,
-                                })
-                                .then((res) => {
-                                    fetchCourseProgress();
-                                })
-                        }
-                    />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "flex-end",
-                            width: "100%",
-                        }}
-                    >
-                        <Button
-                            variant="contained"
-                            onClick={() => setVideoOpen(false)}
-                        >
-                            Close
-                        </Button>
+            <Dialog open={isVideoOpen} maxWidth="lg">
+                <DialogTitle>{subtitle.name}</DialogTitle>
+                <DialogContent>
+                    <Box sx={{ display: "flex", gap: "1em" }}>
+                        <ReactPlayer
+                            style={{ aspectRatio: "16 / 9", width: "100%" }}
+                            controls={true}
+                            url={subtitle.videoUrl}
+                            onEnded={() =>
+                                axios
+                                    .post(`${apiURL}/record_completed_video`, {
+                                        sectionId: subtitle._id,
+                                    })
+                                    .then((res) => {
+                                        fetchCourseProgress();
+                                    })
+                            }
+                        />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            <TextField
+                                label="Notes"
+                                multiline
+                                rows={14}
+                                sx={{ width: "25vw" }}
+                                value={notes}
+                                onChange={(e) => setNotes(e.target.value)}
+                            />
+                            <Button
+                                sx={{ alignSelf: "flex-end" }}
+                                onClick={downloadNotes}
+                            >
+                                Download Notes
+                            </Button>
+                        </Box>
                     </Box>
-                </Box>
-            </Modal>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        variant="contained"
+                        onClick={() => setVideoOpen(false)}
+                    >
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
             <Modal open={isExerciseOpen}>
                 <Box sx={style}>
