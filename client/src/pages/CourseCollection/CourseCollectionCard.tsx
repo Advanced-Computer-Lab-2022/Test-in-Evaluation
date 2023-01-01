@@ -31,7 +31,7 @@ export interface CourseDetails {
     rating: number;
 }
 
-function SearchResultItem(courseInfo: CourseDetails) {
+function CourseCollectionCard(courseInfo: CourseDetails) {
     let totalHours = 0;
     const userState = useContext(UserContext);
     for (let subtitle of courseInfo.subtitles) {
@@ -154,4 +154,4 @@ function SearchResultItem(courseInfo: CourseDetails) {
     );
 }
 
-export default SearchResultItem;
+export default CourseCollectionCard;

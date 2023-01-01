@@ -15,7 +15,6 @@ import {
 import Grid2 from "@mui/material/Unstable_Grid2";
 import React from "react";
 import axios from "axios";
-import SearchResultItem, { CourseDetails } from "./SearchResultItem";
 import { apiURL, UserContext } from "../../App";
 import { useState, useEffect, useContext, SetStateAction } from "react";
 import { countries } from "../../data/countries";
