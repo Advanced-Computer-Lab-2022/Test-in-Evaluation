@@ -39,7 +39,7 @@ export const addRoute = (app: Express) => {
                 if (!user)
                     return res.status(400).send({ error: "user not found" });
 
-                if (course.instructor !== user?._id)
+                if (course.instructor?.toString() !== user?._id?.toString())
                     return res.status(400).send({ error: "unauthorized" });
             } else if (client.userType !== "admin") {
                 return res.status(400).send({ error: "unauthorized" });
