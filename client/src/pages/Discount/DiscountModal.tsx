@@ -57,18 +57,33 @@ const DiscountModal = ({ courses }: Props) => {
             return;
         }
         selectedCourses.forEach(async (course) => {
-            axios.post(
-                apiURL + "/set_course_discount",
-                {
-                    courseId: course.courseId,
-                    discount: discount / 100,
-                    startDateTimestamp: startTime,
-                    endDateTimestamp: endTime,
-                },
-                {
-                    withCredentials: true,
-                }
-            );
+            axios
+                .post(
+                    apiURL + "/set_course_discount",
+                    {
+                        courseId: course.courseId,
+                        discount: discount / 100,
+                        startDateTimestamp: startTime,
+                        endDateTimestamp: endTime,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .then((response) => {
+                    setAlert({
+                        isSuccess: true,
+                        isError: false,
+                        message: "Successfully set course discount(s)",
+                    });
+                })
+                .catch((err) => {
+                    setAlert({
+                        isSuccess: false,
+                        isError: true,
+                        message: "Error occurred " + err,
+                    });
+                });
         });
     };
     return (

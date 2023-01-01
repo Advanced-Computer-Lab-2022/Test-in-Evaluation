@@ -255,7 +255,7 @@ const CourseCollectionPage = () => {
                 <Grid2 xs={8}>
                     <Paper style={{ padding: "1em" }} elevation={3}>
                         <Typography variant="h4" gutterBottom>
-                            Search Results
+                            Filter Results
                         </Typography>
                         {courseList.map((course) => (
                             <CourseCollectionCard {...course} />

@@ -13,7 +13,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useState, useContext, SetStateAction } from "react";
 import { apiURL, UserContext } from "../../App";
 import { countries } from "../../data/countries";
-import { currencyOfCountry } from "../../data/currency";
+import { currencyOfCountry, GetCurrency } from "../../data/currency";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
@@ -125,9 +125,8 @@ function CourseCollectionCard(courseInfo: CourseDetails) {
                         </ul>
                         <div style={{ display: "flex", gap: "5px" }}>
                             <Typography variant="h5" gutterBottom>
-                                {courseInfo.price +
-                                    " " +
-                                    currencyOfCountry(userState.country)}
+                                {courseInfo.price !== undefined &&
+                                    courseInfo.price + " " + GetCurrency()}
                             </Typography>
                             {courseInfo.discount > 0 && (
                                 <Typography

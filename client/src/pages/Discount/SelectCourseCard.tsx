@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Course } from "../../types/Types";
+import { GetCurrency } from "../../data/currency";
 
 type SelectedCourse = Course & { isSelected: boolean };
 type Props = {
@@ -61,7 +62,7 @@ const SelectCourseCard = ({ course, setSelected }: Props) => {
                             (course.summary.length > 20 ? "..." : "")}
                     </Typography>
                     <Typography variant="subtitle1">
-                        Price: {course.price}$
+                        Price: {course.price + " " + GetCurrency()}
                     </Typography>
                 </CardContent>
             </CardActionArea>
