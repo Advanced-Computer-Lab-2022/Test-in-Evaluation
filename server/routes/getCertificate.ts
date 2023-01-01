@@ -29,7 +29,8 @@ export const addRoute = (app: Express) => {
                 parentCourse: enrollment.courseId,
             });
             const enrollmentRatio = await getCompletedCourseRatio(enrollmentId);
-            const isEnrollmentComplete = enrollmentRatio[0] === enrollmentRatio[1];
+            const isEnrollmentComplete =
+                enrollmentRatio[0] === enrollmentRatio[1];
             if (!isEnrollmentComplete)
                 return res.status(404).send("Enrollment not complete");
 
