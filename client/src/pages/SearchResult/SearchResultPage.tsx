@@ -2,6 +2,11 @@ import {
     Autocomplete,
     Box,
     Button,
+    Card,
+    CardActions,
+    CardContent,
+    Divider,
+    Grid,
     Paper,
     Slider,
     TextField,
@@ -17,6 +22,7 @@ import { countries } from "../../data/countries";
 import { currencyOfCountry } from "../../data/currency";
 import { useSearchParams } from "react-router-dom";
 import { Course } from "../../types/Types";
+import SearchResultCard from "./SearchResultCard";
 
 function SearchResultPage() {
     const userState = useContext(UserContext);
@@ -24,50 +30,117 @@ function SearchResultPage() {
     const [courseList, setCourseList] = useState<Course[]>([]);
 
     const filterCourse = (courseObject: Course): boolean => {
-        if (searchParams.get("course") === "") return true;
+        const searchString = searchParams.get("course");
+        if (searchString === "" || searchString === null) return true;
 
-        let result = false;
-        // const courseSearchArray = searchParams.get("course").split(" ");
-        // let titleSearch:boolean = (userState.searchTitles && courseSearchArray.some((elm) => {courseObject.title.toLowerCase().includes(elm.toLowerCase());
+        const splitSearchString = searchString.split(" ");
+        if (userState.searchTitles)
+            if (
+                splitSearchString.some((elm) =>
+                    courseObject.title
+                        ?.toLowerCase()
+                        .includes(elm.toLowerCase())
+                )
+            )
+                return true;
+
+        if (userState.searchSubjects)
+            if (
+                splitSearchString.some((elm) =>
+                    courseObject.subjectId?.Name.toLowerCase().includes(
+                        elm.toLowerCase()
+                    )
+                )
+            )
+                return true;
+
+        if (userState.searchInstructor)
+            if (
+                splitSearchString.some((elm) =>
+                    (
+                        courseObject.instructor.firstName +
+                        " " +
+                        courseObject.instructor.lastName
+                    )
+                        .toLowerCase()
+                        .includes(elm.toLowerCase())
+                )
+            )
+                return true;
 
         return false;
     };
 
+    const pageLoad = async () => {
+        let allCourses = await axios.post(
+            apiURL + "/search_courses",
+            {},
+            { withCredentials: true }
+        );
+
+        let courseArray: Course[] = allCourses.data.result as Course[];
+
+        courseArray = courseArray.filter((course: Course) => {
+            return filterCourse(course);
+        });
+
+        setCourseList(courseArray);
+    };
+
     useEffect(() => {
-        axios
-            .post(apiURL + "/search_courses", {}, { withCredentials: true })
-            .then((response) => {
-                let courseArray = response.data.result;
-                courseArray = courseArray.filter((elm: Course) => {
-                    return filterCourse(elm);
-                });
-                setCourseList(courseArray);
-            })
-            .catch((_error) => {});
+        pageLoad();
     }, [
-        useSearchParams(),
+        searchParams,
         userState.searchInstructor,
         userState.searchSubjects,
         userState.searchTitles,
     ]);
 
     return (
-        <div>
-            <Box sx={{ dispaly: "flex", flexDirection: "column" }}>
-                <Typography
+        <div style={{ width: "100%" }}>
+            <Box style={{ width: "100%" }}>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography
+                        sx={{
+                            fontSize: "40px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        Search results:
+                    </Typography>
+                </Box>
+                <Box
                     sx={{
-                        fontSize: "40px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        padding: "10px",
+                        width: "100%",
                     }}
                 >
-                    Search results:
-                </Typography>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            width: "100%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: "10px",
+                            flexBasis: "33.333%",
+                            flexWrap: "wrap",
+                            padding: "1em",
+                        }}
+                    >
+                        {courseList.map((course: Course) => {
+                            return (
+                                <>
+                                    <SearchResultCard course={course} />
+                                    <Divider />
+                                </>
+                            );
+                        })}
+                    </Box>
+                </Box>
             </Box>
-            {courseList.map((elm: Course) => {
-                return <div>bruh</div>;
-            })}
         </div>
     );
 }
