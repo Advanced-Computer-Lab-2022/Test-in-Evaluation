@@ -79,7 +79,10 @@ export const addRoute = (app: Express) => {
 
             await Promise.all(
                 sections.map(
-                    ({ description, title, totalHours, videoUrl, exam }) =>
+                    (
+                        { description, title, totalHours, videoUrl, exam },
+                        index
+                    ) =>
                         Section.create({
                             description,
                             name: title,
@@ -87,6 +90,7 @@ export const addRoute = (app: Express) => {
                             totalHours,
                             videoUrl: videoUrl,
                             exam: exam,
+                            index,
                         })
                 )
             );
