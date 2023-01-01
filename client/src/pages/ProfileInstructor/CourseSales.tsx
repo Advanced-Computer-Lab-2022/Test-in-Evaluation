@@ -5,6 +5,7 @@ import { apiURL, UserContext } from "../../App";
 import { Loader, Toast } from "../../components";
 import { Box } from "@mui/system";
 import { Card, CardContent, Typography } from "@mui/material";
+
 type CourseRevenue = {
     courseId: string;
     revenue: number;
@@ -98,6 +99,7 @@ const CourseSales = () => {
             <Typography variant="h4">
                 Total Revenue: <strong>{totalRevenue}</strong>
             </Typography>
+
             <Box
                 sx={{
                     display: "grid",
