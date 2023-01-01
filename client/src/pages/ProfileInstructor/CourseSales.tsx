@@ -4,7 +4,8 @@ import axios from "axios";
 import { apiURL, UserContext } from "../../App";
 import { Loader, Toast } from "../../components";
 import { Box } from "@mui/system";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
+
 type CourseRevenue = {
     courseId: string;
     revenue: number;
@@ -90,9 +91,15 @@ const CourseSales = () => {
         {}
     );
 
+    const totalRevenue = revenue.reduce((acc, rev) => acc + rev.revenue, 0);
+
     return (
         <>
             <Toast alert={alert} setAlert={setAlert} />
+            <Typography variant="h4">
+                Total Revenue: <strong>{totalRevenue}</strong>
+            </Typography>
+
             <Box
                 sx={{
                     display: "grid",

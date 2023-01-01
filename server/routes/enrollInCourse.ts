@@ -44,7 +44,9 @@ export const addRoute = (app: Express) => {
                     if (student.wallet < price)
                         return res
                             .status(400)
-                            .send("Not enough money in your wallet");
+                            .send(
+                                "Not enough money in your wallet. Paying with card directly."
+                            );
 
                     await User.updateOne(
                         { username: user.username },
@@ -62,7 +64,9 @@ export const addRoute = (app: Express) => {
                     return res.status(500).send("Something went wrong");
                 }
 
-                return res.status(200).send("Enrolled successfully");
+                return res
+                    .status(200)
+                    .send("Enrolled successfully in the course.");
             } else if (user?.userType === UserTypes.corporateTrainee) {
                 const student = await User.findOne({ username: user.username });
                 if (!student) return res.status(404).send("Student not found");
@@ -74,7 +78,7 @@ export const addRoute = (app: Express) => {
                     amountPaid: 0,
                 });
 
-                return res.status(200).send("Enrollment request sent");
+                return res.status(200).send("Enrollment request sent.");
             } else {
                 return res.status(401).send("Unauthorized");
             }

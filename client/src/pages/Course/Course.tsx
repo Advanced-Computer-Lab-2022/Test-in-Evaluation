@@ -92,16 +92,19 @@ const CoursePage = () => {
         total: 1,
     });
 
-    const [isEnrolled, setIsEnrolled] = useState(false);
-    useEffect(() => {
+    const [enrollStatus, setEnrollStatus] = useState<string | null>(null);
+    const updateEnrolledStatus = () => {
         axios
             .post(`${apiURL}/get_is_enrolled`, {
                 courseId: courseId!,
             })
             .then((res) => {
-                setIsEnrolled(res.data.isEnrolled);
+                setEnrollStatus(res.data.enrollStatus);
                 setEnrollmentId(res.data.enrollmentId);
             });
+    };
+    useEffect(() => {
+        updateEnrolledStatus();
     }, [courseId]);
 
     const [alert, setAlert] = useState({
@@ -152,20 +155,17 @@ const CoursePage = () => {
                     setAlert({
                         isSuccess: true,
                         isError: false,
-                        message:
-                            'Enrolled in course "' +
-                            course?.course.title +
-                            '" successfully!',
+                        message: res.data,
                     });
 
-                    setIsEnrolled(true);
+                    updateEnrolledStatus();
                 }
             })
             .catch((err) => {
                 setAlert({
                     isSuccess: false,
                     isError: true,
-                    message: "Not enough money in wallet. Paying with card.",
+                    message: err.response.data,
                 });
                 setOpenPayment(true);
             });
@@ -179,7 +179,7 @@ const CoursePage = () => {
             .then((res) => {
                 enrollNow();
                 setOpenPayment(false);
-                setIsEnrolled(true);
+                updateEnrolledStatus();
             });
     };
     const [openPayment, setOpenPayment] = useState(false);
@@ -214,7 +214,7 @@ const CoursePage = () => {
                     isError: false,
                     message: res.data,
                 });
-                setIsEnrolled(false);
+                updateEnrolledStatus();
             })
             .catch((err) => {
                 setAlert({
@@ -357,41 +357,42 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
-                                {(!isEnrolled ||
-                                    userInfo.type === "instructor") && (
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            gap: "1rem",
-                                        }}
-                                    >
-                                        <Typography
-                                            variant="h4"
-                                            sx={{ color: "white" }}
+                                {(enrollStatus != "accepted" ||
+                                    userInfo.type === "instructor") &&
+                                    userInfo.type == "individualTrainee" && (
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                gap: "1rem",
+                                            }}
                                         >
-                                            {course?.course.price.toString() +
-                                                " " +
-                                                GetCurrency()}
-                                        </Typography>
-                                        {(course?.course?.discount?.rate ?? 0) >
-                                            0 && (
                                             <Typography
-                                                sx={{
-                                                    fontSize: 14,
-                                                    alignSelf: "center",
-                                                }}
-                                                color="green"
-                                                gutterBottom
+                                                variant="h4"
+                                                sx={{ color: "white" }}
                                             >
-                                                {(course?.course?.discount
-                                                    ?.rate || 0) * 100}
-                                                % off
+                                                {course?.course.price.toString() +
+                                                    " " +
+                                                    GetCurrency()}
                                             </Typography>
-                                        )}
-                                    </Box>
-                                )}
+                                            {(course?.course?.discount?.rate ??
+                                                0) > 0 && (
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: 14,
+                                                        alignSelf: "center",
+                                                    }}
+                                                    color="green"
+                                                    gutterBottom
+                                                >
+                                                    {(course?.course?.discount
+                                                        ?.rate || 0) * 100}
+                                                    % off
+                                                </Typography>
+                                            )}
+                                        </Box>
+                                    )}
                                 <Box>
-                                    {isEnrolled ||
+                                    {enrollStatus == "accepted" ||
                                     userInfo.type === "instructor" ? (
                                         <Box
                                             sx={{
@@ -404,27 +405,41 @@ const CoursePage = () => {
                                             />
                                             {courseProgress.count /
                                                 courseProgress.total <
-                                                0.5 && (
-                                                <Button
-                                                    variant="contained"
-                                                    onClick={requestRefund}
-                                                >
-                                                    Refund
-                                                </Button>
-                                            )}
+                                                0.5 &&
+                                                userInfo.type ===
+                                                    "individualTrainee" && (
+                                                    <Button
+                                                        variant="contained"
+                                                        onClick={requestRefund}
+                                                    >
+                                                        Refund
+                                                    </Button>
+                                                )}
                                         </Box>
                                     ) : (
-                                        <Button
-                                            variant="contained"
-                                            size="large"
-                                            sx={{ width: "100%" }}
-                                            onClick={enrollNow}
-                                        >
-                                            {userInfo.type ===
-                                            "individualTrainee"
-                                                ? "Purchase Now"
-                                                : "Enroll Now"}
-                                        </Button>
+                                        <Box>
+                                            {enrollStatus !== "pending" && (
+                                                <Button
+                                                    variant="contained"
+                                                    size="large"
+                                                    sx={{ width: "100%" }}
+                                                    onClick={enrollNow}
+                                                >
+                                                    {userInfo.type ===
+                                                    "individualTrainee"
+                                                        ? "Purchase Now"
+                                                        : "Enroll Now"}
+                                                </Button>
+                                            )}
+                                            {enrollStatus === "pending" && (
+                                                <Typography
+                                                    sx={{ color: "white" }}
+                                                    variant="subtitle1"
+                                                >
+                                                    Enrollment request sent.
+                                                </Typography>
+                                            )}
+                                        </Box>
                                     )}
                                 </Box>
                             </Box>
@@ -446,7 +461,7 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
-                                {isEnrolled && (
+                                {enrollStatus == "accepted" && (
                                     <Card>
                                         <CardContent
                                             sx={{
@@ -531,7 +546,10 @@ const CoursePage = () => {
                                                 <AccordionDetails>
                                                     <Subtitle
                                                         subtitle={val}
-                                                        isEnrolled={isEnrolled}
+                                                        isEnrolled={
+                                                            enrollStatus ==
+                                                            "accepted"
+                                                        }
                                                         fetchCourseProgress={
                                                             fetchCourseProgress
                                                         }
