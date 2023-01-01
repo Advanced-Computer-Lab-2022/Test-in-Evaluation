@@ -25,7 +25,8 @@ import { addRoute as acceptContractAddRoute } from "./acceptContract";
 import { addRoute as getCourseAddRoute } from "./getCourse";
 import { addRoute as enrollInCourseAddRoute } from "./enrollInCourse";
 import { addRoute as getMyEnrollmentsAddRoute } from "./getMyEnrollments";
-import { addRoute as recordCompletedSectionAddRoute } from "./recordCompletedExercises";
+import { addRoute as recordCompletedExerciseAddRoute } from "./recordCompletedExercise";
+import { addRoute as recordCompletedVideoAddRoute } from "./recordCompletedVideo";
 import { addRoute as getUserAddRoute } from "./getUser";
 import { addRoute as payToWalletAddRoute } from "./payToWallet";
 import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";
@@ -37,6 +38,7 @@ import { addRoute as followUpOnReportedProblemAddRoute } from "./followUpOnRepor
 import { addRoute as markReportedProblemAddRoute } from "./markReportedProblem";
 import { addRoute as getCompletedCourseRatioAddRoute } from "./getCompletedCourseRatio";
 import { addRoute as genNotesPDFAddRoute } from "./genNotesPDF";
+import { addRoute as getCertificateAddRoute } from "./getCertificate";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -66,7 +68,8 @@ export const addRoutes = (app: Express) => {
     getCourseAddRoute(app);
     enrollInCourseAddRoute(app);
     getMyEnrollmentsAddRoute(app);
-    recordCompletedSectionAddRoute(app);
+    recordCompletedExerciseAddRoute(app);
+    recordCompletedVideoAddRoute(app);
     getUserAddRoute(app);
     payToWalletAddRoute(app);
     getPendingEnrollmentsAddRoute(app);
@@ -78,4 +81,5 @@ export const addRoutes = (app: Express) => {
     markReportedProblemAddRoute(app);
     getCompletedCourseRatioAddRoute(app);
     genNotesPDFAddRoute(app);
+    getCertificateAddRoute(app);
 };

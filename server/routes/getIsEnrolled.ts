@@ -26,14 +26,20 @@ export const addRoute = (app: Express) => {
             if (!user) return res.status(404).send("User not found");
             const userId = user._id;
 
-            const num = await Enrollment.count({
+            const num = await Enrollment.findOne({
                 studentId: userId,
                 courseId: req.body.courseId,
             });
-            if (num > 0) {
-                return res.status(200).send(true);
+            if (num) {
+                return res.status(200).send({
+                    isEnrolled: true,
+                    enrollmentId: num._id,
+                });
             }
-            return res.status(200).send(false);
+            return res.status(200).send({
+                isEnrolled: false,
+                enrollmentId: "",
+            });
         }
     );
 };
