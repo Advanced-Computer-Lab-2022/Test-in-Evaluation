@@ -20,7 +20,11 @@ export const addRoute = (app: Express) => {
             if (userSession.userType !== UserTypes.admin)
                 return res.status(401).send("Unauthorized");
 
-            const enrollments = await Enrollment.find({ status: "pending" });
+            const enrollments = await Enrollment.find({
+                status: "pending",
+            })
+                .populate("courseId")
+                .populate("studentId");
             return res.status(200).send(enrollments);
         }
     );
