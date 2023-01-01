@@ -17,7 +17,9 @@ function NavSearchBar() {
     const userState = useContext(UserContext);
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const val = (searchRef?.current?.children[0] as HTMLInputElement).value;
+        const val = encodeURIComponent(
+            (searchRef?.current?.children[0] as HTMLInputElement).value
+        );
         navigate("/search?course=" + val);
     };
 
@@ -73,11 +75,7 @@ function NavSearchBar() {
                         <Switch
                             checked={userState.searchTitles}
                             onChange={(event) => {
-                                console.log(
-                                    userState.setSearchTitles(
-                                        event.target.checked
-                                    )
-                                );
+                                userState.setSearchTitles(event.target.checked);
                             }}
                             defaultChecked
                         />
@@ -96,10 +94,8 @@ function NavSearchBar() {
                             checked={userState.searchSubjects}
                             defaultChecked
                             onChange={(event) => {
-                                console.log(
-                                    userState.setSearchSubjects(
-                                        event.target.checked
-                                    )
+                                userState.setSearchSubjects(
+                                    event.target.checked
                                 );
                             }}
                         />
@@ -118,10 +114,8 @@ function NavSearchBar() {
                             checked={userState.searchInstructor}
                             defaultChecked
                             onChange={(event) => {
-                                console.log(
-                                    userState.setSearchInstructor(
-                                        event.target.checked
-                                    )
+                                userState.setSearchInstructor(
+                                    event.target.checked
                                 );
                             }}
                         />
