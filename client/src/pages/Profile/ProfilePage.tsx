@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import axios from "axios";
 import ProfileTraineePage from "../ProfileTraineePage/ProfileTraineePage";
+import ProfileCorporatePage from "../ProfileCorporatePage/ProfileCorporatePage";
 
 function ProfilePage() {
     const userState = useContext(UserContext);
@@ -23,6 +24,9 @@ function ProfilePage() {
             {userState.userType === "instructor" && <ProfileInstructorPage />}
             {userState.userType === "individualTrainee" && (
                 <ProfileTraineePage />
+            )}
+            {userState.userType === "corporateTrainee" && (
+                <ProfileCorporatePage />
             )}
         </>
     );
