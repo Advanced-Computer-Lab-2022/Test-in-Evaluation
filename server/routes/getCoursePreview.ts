@@ -18,8 +18,6 @@ export const addRoute = (app: Express) => {
         path,
         validateInput(Input),
         async (req: Request<Input>, res: Response) => {
-            if (req.session.data.userType === UserTypes.corporateTrainee)
-                return res.status(400).send({ error: "unauthorized" });
             const { courseId } = req.body;
 
             const [course, sections] = await Promise.all([
