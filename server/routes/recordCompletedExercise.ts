@@ -7,11 +7,10 @@ import { Request, Response } from "../types/express";
 import { getCompletedCourseRatio } from "../utils/getCompletedCourseRatio";
 import { sendEmail } from "../utils/sendEmail";
 
-const path = "/api/record_completed_exercises" as const;
+const path = "/api/record_completed_exercise" as const;
 
 const Input = Record({
     sectionId: String,
-    exerciseIdx: Number,
 });
 
 type Input = Static<typeof Input>;
@@ -26,12 +25,10 @@ export const addRoute = (app: Express) => {
             if (!userSession.userType)
                 return res.status(401).send("Unauthorized");
 
-            const { sectionId, exerciseIdx } = req.body;
+            const { sectionId } = req.body;
             const section = await Section.findById(sectionId);
             if (!section) return res.status(400).send("Section doesn't exist");
             const courseId = section.parentCourse!;
-            if (!section.exam?.exercises[exerciseIdx])
-                return res.status(400).send("Exercise doesn't exist");
 
             const user = (await User.findOne({
                 username: userSession.username,
@@ -46,18 +43,13 @@ export const addRoute = (app: Express) => {
 
             // if not already completed mark as completed
             const shouldUpdate = !enrollment.completedExercises.some(
-                ({
-                    sectionId: completedSectionId,
-                    exerciseIdx: completedExerciseIdx,
-                }) =>
-                    sectionId === completedSectionId?.toString() &&
-                    exerciseIdx === completedExerciseIdx
+                ({ sectionId: completedSectionId }) =>
+                    sectionId === completedSectionId?.toString()
             );
-            const addedCompletedSection = { sectionId, exerciseIdx };
             if (shouldUpdate) {
-                const x = await Enrollment.updateOne(
+                await Enrollment.updateOne(
                     { _id: enrollment._id },
-                    { $push: { completedExercises: addedCompletedSection } }
+                    { $push: { completedExercises: { sectionId } } }
                 );
             }
 

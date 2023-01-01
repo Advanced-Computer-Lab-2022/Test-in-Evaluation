@@ -97,6 +97,15 @@ const Quiz = ({
         );
         if (res.data.success) {
             setExerciseOpen(false);
+            axios
+                .post(apiURL + "/record_completed_exercise", {
+                    sectionId: section._id,
+                })
+                .then((res) => {
+                    if (res.data.success) {
+                        console.log("recorded");
+                    }
+                });
         }
     };
 
