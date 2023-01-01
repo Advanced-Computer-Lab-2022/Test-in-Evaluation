@@ -23,6 +23,7 @@ import {
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
 import axios from "axios";
+import { User } from "./../src/types/Types";
 // import { AnyAction } from "redux";
 
 axios.defaults.withCredentials = true;
@@ -30,7 +31,13 @@ axios.defaults.withCredentials = true;
 type userState = {
     loggedIn: boolean;
     userType: string;
-    userInfo: any;
+    userInfo: {
+        type: "individualTrainee" | "instructor" | "corporateTrainee" | "admin";
+        username: string;
+        acceptedContract: boolean;
+        isGuest: boolean;
+        user: User;
+    };
     country: string;
     searchTitles: boolean;
     searchSubjects: boolean;

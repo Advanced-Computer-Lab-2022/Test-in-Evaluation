@@ -8,6 +8,7 @@ type User = {
     phoneNumber: string;
     address: string;
     bio: string;
+    wallet: number;
 };
 
 type Review = {
