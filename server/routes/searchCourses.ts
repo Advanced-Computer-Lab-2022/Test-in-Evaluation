@@ -75,7 +75,7 @@ export const addRoute = (app: Express) => {
                 ...(title ? { title: { $regex: title } } : {}),
                 ...(avgRating ? { avgRating } : {}),
                 ...(price ? { price } : {}),
-            };
+            };            
 
             const result = await Course.find(filter)
                 .populate("instructor", "firstName lastName username")
@@ -88,6 +88,7 @@ export const addRoute = (app: Express) => {
                     })
                 );
 
+            
             res.send({ result });
             return;
         }

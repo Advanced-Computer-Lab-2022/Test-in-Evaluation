@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { apiURL } from "../../App";
 import CreateCourse from "../CreateCourse/CreateCourse";
+import Discount from "../Discount/Discount";
 import InstructorReviews from "../InstructorReviews/InstructorReviews";
 import ReportedProblems from "../Report/ReportedProblems";
 function ProfileInstructorPage() {
@@ -15,7 +16,8 @@ function ProfileInstructorPage() {
             sx={{
                 background: "white",
                 display: "flex",
-                minHeight: "100%",
+                minHeight: "calc(100% + 1rem)",
+                translate: "0 -1rem 0",
             }}
         >
             <Tabs
@@ -35,6 +37,7 @@ function ProfileInstructorPage() {
                 <Tab label="Create a new course" value="createCourse" />
                 <Tab label="Show My Reviews" value="instructorReviews" />
                 <Tab label="Reported Problems" value="reportedProblems" />
+                <Tab label="Create Discount" value="addDiscount" />
             </Tabs>
             <Box sx={{ flexGrow: 1, p: 2, border: "1px solid #ccc" }}>
                 {optionTab === "profileSettings" && (
@@ -79,6 +82,7 @@ function ProfileInstructorPage() {
                 {optionTab === "createCourse" && <CreateCourse />}
                 {optionTab === "instructorReviews" && <InstructorReviews />}
                 {optionTab === "reportedProblems" && <ReportedProblems />}
+                {optionTab === "addDiscount" && <Discount />}
             </Box>
         </Box>
     );

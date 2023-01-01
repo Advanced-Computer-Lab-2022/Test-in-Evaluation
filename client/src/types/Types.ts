@@ -8,6 +8,7 @@ type User = {
     phoneNumber: string;
     address: string;
     bio: string;
+    wallet: number;
 };
 
 type Review = {
@@ -51,6 +52,7 @@ type Course = {
     discount: { rate: number; startDate: Date; endDate: Date };
     _id: string;
     viewsCount: number;
+    avgRating: number;
 };
 
 type CourseWithSections = {

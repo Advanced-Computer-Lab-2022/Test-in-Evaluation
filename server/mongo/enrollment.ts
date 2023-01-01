@@ -13,7 +13,6 @@ export const EnrollmentSchema = new Schema({
     completedExercises: [
         {
             sectionId: { type: Schema.Types.ObjectId, ref: "Section" },
-            exerciseIdx: Number,
         },
     ],
     completedVideos: [
