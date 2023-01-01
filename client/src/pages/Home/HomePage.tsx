@@ -116,13 +116,10 @@ function HomePage() {
                 <Typography variant="h4">Popular Courses:</Typography>
                 <Box
                     sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        flexWrap: "wrap",
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(auto-fit, minmax(20rem, 1fr))",
                         gap: "3rem",
-                        "& > *": {
-                            flex: 1,
-                        },
                     }}
                 >
                     {mostPopularCourses.map((course) => (
@@ -140,13 +137,10 @@ function HomePage() {
                     <Typography variant="h4">Our Instructors:</Typography>
                     <Box
                         sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexWrap: "wrap",
+                            display: "grid",
+                            gridTemplateColumns:
+                                "repeat(auto-fit, minmax(20rem, 1fr))",
                             gap: "3rem",
-                            "& > *": {
-                                flex: 1,
-                            },
                         }}
                     >
                         {instructors.map((instructor: any) => (
@@ -159,6 +153,7 @@ function HomePage() {
                                 onClick={() =>
                                     navigate(`/instructor/${instructor._id}`)
                                 }
+                                key={instructor._id}
                             >
                                 <CardActionArea
                                     sx={{

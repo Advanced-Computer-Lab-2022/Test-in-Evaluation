@@ -9,8 +9,11 @@ import {
     AccordionSummary,
     Box,
     Button,
+    Card,
+    CardContent,
     Chip,
     Divider,
+    LinearProgress,
     Rating,
     styled,
     TextField,
@@ -19,7 +22,7 @@ import {
 import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
 import type { CourseWithSections, Review } from "../../types/Types";
-import { Star, StarBorder } from "@mui/icons-material";
+import { ExpandMore, Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
 import ReportModal from "../Report/ReportModal";
@@ -342,12 +345,45 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
+                                <Card>
+                                    <CardContent>
+                                        <Typography
+                                            variant="h5"
+                                            sx={{ textAlign: "center" }}
+                                        >
+                                            Course Progress
+                                        </Typography>
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <Box sx={{ width: "100%", mr: 1 }}>
+                                                <LinearProgress
+                                                    variant="determinate"
+                                                    value={0}
+                                                />
+                                            </Box>
+                                            <Box sx={{ minWidth: 35 }}>
+                                                <Typography
+                                                    variant="body2"
+                                                    color="text.secondary"
+                                                >{`${Math.round(
+                                                    0
+                                                )}%`}</Typography>
+                                            </Box>
+                                        </Box>
+                                    </CardContent>
+                                </Card>
+
                                 {course?.sections.map((val, idx) => {
                                     return (
                                         <Box>
                                             <Accordion>
                                                 <AccordionSummary
                                                     aria-controls="panel1a-content"
+                                                    expandIcon={<ExpandMore />}
                                                     id="panel1a-header"
                                                 >
                                                     <Typography>

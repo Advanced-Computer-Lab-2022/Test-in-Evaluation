@@ -3,15 +3,10 @@ import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { apiURL } from "../../App";
 import { Loader, Toast } from "../../components";
+import FollowUpModal from "../Report/FollowUpModal";
+
 import ProblemCard from "../Report/ProblemCard";
-export type Problem = {
-    _id: string;
-    title: string;
-    description: string;
-    type: string;
-    createdAt: string;
-    status: string;
-};
+import { Problem } from "../Report/ProblemCard";
 type Props = {
     problem: Problem;
     setProblems: (problem: any) => void;
@@ -159,6 +154,7 @@ const AdminProblemCard = ({ problem, setProblems }: Props) => {
                                     Mark Pending
                                 </Button>
                             )}
+                            <FollowUpModal problem={problem} />
                         </Box>
                     )}
                 </CardContent>
