@@ -45,26 +45,20 @@ export const addRoute = (app: Express) => {
             const enrollmentRatio = await getCompletedCourseRatio(enrollmentId);
 
             if (enrollmentRatio[0] * 2 < enrollmentRatio[1]) {
-                // refund
-                // transaction:
-                // cancel enrollment
-                // add money to user's wallet
-
                 try {
-                    const updateEnrollment = await Enrollment.deleteOne({
-                        _id: enrollmentId,
-                        status: "accepted",
-                    });
-                    if (updateEnrollment.deletedCount === 0)
-                        throw new Error(
-                            "Enrollment not found or already refunded"
-                        );
-                    await User.updateOne(
-                        { _id: user.id },
-                        { $inc: { wallet: enrollment.amountPaid } }
+                    const updateEnrollment = await Enrollment.updateOne(
+                        { _id: enrollmentId, status: "accepted" },
+                        { status: "pendingRefund" }
                     );
 
-                    return res.status(200).send("Refunded successfully");
+                    if (updateEnrollment.modifiedCount === 0)
+                        return res
+                            .status(400)
+                            .send("Refund request already sent.");
+
+                    return res
+                        .status(200)
+                        .send("Refund request sent successfully.");
                 } catch (e) {
                     return res.status(500).send("Something went wrong");
                 }

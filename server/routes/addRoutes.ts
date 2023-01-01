@@ -41,6 +41,8 @@ import { addRoute as genNotesPDFAddRoute } from "./genNotesPDF";
 import { addRoute as getCertificateAddRoute } from "./getCertificate";
 import { addRoute as requestRefundAddRoute } from "./requestRefund";
 import { addRoute as getEnrollmentAggregationAddRoute } from "./getEnrollmentAggregation";
+import { addRoute as acceptRefundAddRoute } from "./acceptRefund";
+import { addRoute as getPendingRefundsAddRoute } from "./getPendingRefunds";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -86,4 +88,6 @@ export const addRoutes = (app: Express) => {
     getCertificateAddRoute(app);
     requestRefundAddRoute(app);
     getEnrollmentAggregationAddRoute(app);
+    acceptRefundAddRoute(app);
+    getPendingRefundsAddRoute(app);
 };

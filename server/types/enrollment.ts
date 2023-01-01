@@ -3,4 +3,5 @@ export enum EnrollmentStatusType {
     accepted = "accepted",
     rejected = "rejected",
     canceled = "canceled",
+    pendingRefund = "pendingRefund",
 }
