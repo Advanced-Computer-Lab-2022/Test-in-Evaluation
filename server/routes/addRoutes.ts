@@ -39,6 +39,7 @@ import { addRoute as markReportedProblemAddRoute } from "./markReportedProblem";
 import { addRoute as getCompletedCourseRatioAddRoute } from "./getCompletedCourseRatio";
 import { addRoute as genNotesPDFAddRoute } from "./genNotesPDF";
 import { addRoute as getCertificateAddRoute } from "./getCertificate";
+import { addRoute as requestRefundAddRoute } from "./requestRefund";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -82,4 +83,5 @@ export const addRoutes = (app: Express) => {
     getCompletedCourseRatioAddRoute(app);
     genNotesPDFAddRoute(app);
     getCertificateAddRoute(app);
+    requestRefundAddRoute(app);
 };

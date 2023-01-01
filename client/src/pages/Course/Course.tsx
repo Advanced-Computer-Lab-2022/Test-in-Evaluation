@@ -203,6 +203,28 @@ const CoursePage = () => {
         fetchCourseProgress();
     }, [courseId]);
 
+    const requestRefund = () => {
+        axios
+            .post(apiURL + "/request_refund", {
+                enrollmentId: enrollmentId,
+            })
+            .then((res) => {
+                setAlert({
+                    isSuccess: true,
+                    isError: false,
+                    message: res.data,
+                });
+                setIsEnrolled(false);
+            })
+            .catch((err) => {
+                setAlert({
+                    isSuccess: false,
+                    isError: true,
+                    message: err.response.data,
+                });
+            });
+    };
+
     return (
         <div
             style={{
@@ -371,7 +393,26 @@ const CoursePage = () => {
                                 <Box>
                                     {isEnrolled ||
                                     userInfo.type === "instructor" ? (
-                                        <ReportModal id={course?.course?._id} />
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                gap: "0.5em",
+                                            }}
+                                        >
+                                            <ReportModal
+                                                id={course?.course?._id}
+                                            />
+                                            {courseProgress.count /
+                                                courseProgress.total <
+                                                0.5 && (
+                                                <Button
+                                                    variant="contained"
+                                                    onClick={requestRefund}
+                                                >
+                                                    Refund
+                                                </Button>
+                                            )}
+                                        </Box>
                                     ) : (
                                         <Button
                                             variant="contained"

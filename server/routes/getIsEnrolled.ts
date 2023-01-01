@@ -2,6 +2,7 @@ import { Express } from "express";
 import { Record, Static, String } from "runtypes";
 import { validateInput } from "../middleware/validateInput";
 import { Course, Enrollment, User } from "../mongo";
+import { EnrollmentStatusType } from "../types/enrollment";
 import { Request, Response } from "../types/express";
 import { UserTypes } from "../types/user";
 
@@ -30,7 +31,7 @@ export const addRoute = (app: Express) => {
                 studentId: userId,
                 courseId: req.body.courseId,
             });
-            if (num) {
+            if (num && num.status === EnrollmentStatusType.accepted) {
                 return res.status(200).send({
                     isEnrolled: true,
                     enrollmentId: num._id,

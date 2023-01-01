@@ -34,7 +34,7 @@ export const addRoute = (app: Express) => {
 
             const user = await User.findOne({ username: userSession.username });
             if (!user) return res.status(404).send("User not found");
-            if (enrollment.studentId !== user.id)
+            if (enrollment.studentId?.toString() !== user.id.toString())
                 return res.status(401).send("Unauthorized");
 
             const sections = await Section.find({
@@ -51,11 +51,11 @@ export const addRoute = (app: Express) => {
                 // add money to user's wallet
 
                 try {
-                    const updateEnrollment = await Enrollment.updateOne(
-                        { _id: enrollmentId, status: "accepted" },
-                        { status: "refunded" }
-                    );
-                    if (updateEnrollment.modifiedCount === 0)
+                    const updateEnrollment = await Enrollment.deleteOne({
+                        _id: enrollmentId,
+                        status: "accepted",
+                    });
+                    if (updateEnrollment.deletedCount === 0)
                         throw new Error(
                             "Enrollment not found or already refunded"
                         );

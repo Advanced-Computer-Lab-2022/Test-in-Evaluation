@@ -82,7 +82,7 @@ const ReportModal = ({ id }: Props) => {
                 color="error"
                 onClick={handleOpen}
             >
-                Report a Problem
+                Report Problem
             </Button>
             <Modal
                 open={open}
