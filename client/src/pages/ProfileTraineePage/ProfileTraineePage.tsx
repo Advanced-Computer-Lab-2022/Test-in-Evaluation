@@ -11,7 +11,8 @@ const ProfileTraineePage = () => {
             sx={{
                 background: "white",
                 display: "flex",
-                height: "100%",
+                minHeight: "calc(100% + 1rem)",
+                translate: "0 -1rem 0",
             }}
         >
             <Tabs
