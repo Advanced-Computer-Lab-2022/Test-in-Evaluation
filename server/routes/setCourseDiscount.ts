@@ -24,6 +24,7 @@ export const addRoute = (app: Express) => {
         async (req: Request<Input>, res: Response) => {
             const { discount, endDateTimestamp, courseId, startDateTimestamp } =
                 req.body;
+            console.log(startDateTimestamp, endDateTimestamp);
 
             const client = req.session.data;
 
@@ -46,8 +47,7 @@ export const addRoute = (app: Express) => {
             const startDate = new Date(startDateTimestamp);
             const endDate = new Date(endDateTimestamp);
 
-            await Course.findOneAndUpdate({
-                _id: courseId,
+            await Course.findByIdAndUpdate(courseId, {
                 discount: { rate: discount, startDate, endDate },
             });
 

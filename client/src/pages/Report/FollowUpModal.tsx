@@ -86,7 +86,7 @@ const FollowUpModal = ({ problem }: props) => {
     return (
         <>
             <Toast alert={alert} setAlert={setAlert} />
-            <Button onClick={handleOpen} variant="contained" color="warning">
+            <Button onClick={handleOpen} variant="contained">
                 Follow Up
             </Button>
             <Modal
