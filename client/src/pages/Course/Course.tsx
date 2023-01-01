@@ -85,6 +85,8 @@ const CoursePage = () => {
     const [courseReviews, setCourseReviews] = useState<any[]>([] as any[]);
     const [courseRating, setCourseRating] = useState(0);
 
+    const [enrollmentId, setEnrollmentId] = useState("");
+
     const [courseProgress, setCourseProgress] = useState<CourseProgress>({
         count: 0,
         total: 1,
@@ -97,8 +99,8 @@ const CoursePage = () => {
                 courseId: courseId!,
             })
             .then((res) => {
-                console.log("is enrolled " + res.data);
-                setIsEnrolled(res.data);
+                setIsEnrolled(res.data.isEnrolled);
+                setEnrollmentId(res.data.enrollmentId);
             });
     }, [courseId]);
 
@@ -399,7 +401,13 @@ const CoursePage = () => {
                             >
                                 {isEnrolled && (
                                     <Card>
-                                        <CardContent>
+                                        <CardContent
+                                            sx={{
+                                                display: "flex",
+                                                gap: "0.5em",
+                                                flexDirection: "column",
+                                            }}
+                                        >
                                             <Typography
                                                 variant="h5"
                                                 sx={{ textAlign: "center" }}
@@ -438,6 +446,21 @@ const CoursePage = () => {
                                                     )}%`}</Typography>
                                                 </Box>
                                             </Box>
+                                            {courseProgress.count ==
+                                                courseProgress.total && (
+                                                <Button
+                                                    variant="contained"
+                                                    href={
+                                                        "http://localhost:8000/api/get_certificate?enrollmentId=" +
+                                                        enrollmentId
+                                                    }
+                                                    sx={{
+                                                        alignSelf: "flex-end",
+                                                    }}
+                                                >
+                                                    Get Certificate
+                                                </Button>
+                                            )}
                                         </CardContent>
                                     </Card>
                                 )}
