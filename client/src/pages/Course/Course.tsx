@@ -239,9 +239,7 @@ const CoursePage = () => {
                                         to={`/instructor/${course?.course.instructor._id}`}
                                         style={{ color: "white" }}
                                     >
-                                        {course?.course.instructor.firstName +
-                                            " " +
-                                            course?.course.instructor.lastName}
+                                        {course?.course.instructor.username}
                                     </Link>
                                 </Typography>
                                 <Box sx={{ display: "flex", gap: "15px" }}>
@@ -321,7 +319,10 @@ const CoursePage = () => {
                                             sx={{ width: "100%" }}
                                             onClick={enrollNow}
                                         >
-                                            Enroll Now
+                                            {userInfo.type ===
+                                            "individualTrainee"
+                                                ? "Purchase Now"
+                                                : "Enroll Now"}
                                         </Button>
                                     )}
                                 </Box>
