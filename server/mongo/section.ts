@@ -13,4 +13,5 @@ export const SectionSchema = new Schema({
             { question: String, answers: [String], correctAnswer: Number },
         ],
     },
+    index: Number,
 });

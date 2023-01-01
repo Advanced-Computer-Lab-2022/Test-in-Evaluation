@@ -38,7 +38,9 @@ export const addRoute = (app: Express) => {
 
             res.send({
                 course: course!.toObject(),
-                sections: sections.map((v) => v.toObject()),
+                sections: sections
+                    .map((v) => v.toObject()!)
+                    .sort((a, b) => a.index! - b.index!),
             });
             return;
         }
