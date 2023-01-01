@@ -149,7 +149,9 @@ const CoursePage = () => {
                 setAlert({
                     isSuccess: false,
                     isError: true,
-                    message: err.response.data,
+                    message:
+                        err.response.data +
+                        "\nHead to Profile Page to recharge your wallet.",
                 });
             });
     };
@@ -281,36 +283,33 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
-                                {!isEnrolled ||
-                                    (userInfo.type === "instructor" && (
-                                        <div>
+                                {(!isEnrolled ||
+                                    userInfo.type === "instructor") && (
+                                    <div>
+                                        <Typography
+                                            variant="h4"
+                                            sx={{ color: "white" }}
+                                        >
+                                            {course?.course.price.toString() +
+                                                " " +
+                                                GetCurrency()}
+                                        </Typography>
+                                        {(course?.course?.discount?.rate ?? 0) >
+                                            0 && (
                                             <Typography
-                                                variant="h4"
-                                                sx={{ color: "white" }}
+                                                sx={{
+                                                    fontSize: 14,
+                                                    alignSelf: "center",
+                                                }}
+                                                color="green"
+                                                gutterBottom
                                             >
-                                                {course?.course.price.toString() +
-                                                    " " +
-                                                    GetCurrency()}
+                                                {course?.course?.discount?.rate}
+                                                % off
                                             </Typography>
-                                            {(course?.course?.discount?.rate ??
-                                                0) > 0 && (
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: 14,
-                                                        alignSelf: "center",
-                                                    }}
-                                                    color="green"
-                                                    gutterBottom
-                                                >
-                                                    {
-                                                        course?.course?.discount
-                                                            ?.rate
-                                                    }
-                                                    % off
-                                                </Typography>
-                                            )}
-                                        </div>
-                                    ))}
+                                        )}
+                                    </div>
+                                )}
                                 <Box>
                                     {isEnrolled ||
                                     userInfo.type === "instructor" ? (
@@ -345,37 +344,44 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
-                                <Card>
-                                    <CardContent>
-                                        <Typography
-                                            variant="h5"
-                                            sx={{ textAlign: "center" }}
-                                        >
-                                            Course Progress
-                                        </Typography>
-                                        <Box
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                            }}
-                                        >
-                                            <Box sx={{ width: "100%", mr: 1 }}>
-                                                <LinearProgress
-                                                    variant="determinate"
-                                                    value={0}
-                                                />
+                                {isEnrolled && (
+                                    <Card>
+                                        <CardContent>
+                                            <Typography
+                                                variant="h5"
+                                                sx={{ textAlign: "center" }}
+                                            >
+                                                Course Progress
+                                            </Typography>
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                }}
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        width: "100%",
+                                                        mr: 1,
+                                                    }}
+                                                >
+                                                    <LinearProgress
+                                                        variant="determinate"
+                                                        value={0}
+                                                    />
+                                                </Box>
+                                                <Box sx={{ minWidth: 35 }}>
+                                                    <Typography
+                                                        variant="body2"
+                                                        color="text.secondary"
+                                                    >{`${Math.round(
+                                                        0
+                                                    )}%`}</Typography>
+                                                </Box>
                                             </Box>
-                                            <Box sx={{ minWidth: 35 }}>
-                                                <Typography
-                                                    variant="body2"
-                                                    color="text.secondary"
-                                                >{`${Math.round(
-                                                    0
-                                                )}%`}</Typography>
-                                            </Box>
-                                        </Box>
-                                    </CardContent>
-                                </Card>
+                                        </CardContent>
+                                    </Card>
+                                )}
 
                                 {course?.sections.map((val, idx) => {
                                     return (
