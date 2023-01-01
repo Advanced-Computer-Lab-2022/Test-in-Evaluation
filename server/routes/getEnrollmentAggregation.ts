@@ -31,7 +31,7 @@ export const addRoute = (app: Express) => {
             const user = await User.findOne({ username: userSession.username });
             if (!user) return res.status(404).send("User not found");
 
-            if (course.instructor !== user.id) {
+            if (course.instructor?.toString() !== user.id?.toString()) {
                 return res.status(401).send("Unauthorized");
             }
 
@@ -50,8 +50,9 @@ export const addRoute = (app: Express) => {
                     return [0, 0];
                 }
                 return [result[0].sum, result[0].count];
-            }
+            });
 
+            return res.status(200).send({ sum, count });
         }
     );
 };
