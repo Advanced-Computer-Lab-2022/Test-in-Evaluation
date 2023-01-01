@@ -44,7 +44,7 @@ const UserContext = createContext({} as userState);
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userType, setUserType] = useState("none");
+  const [userType, setUserType] = useState("guest");
   const [country, setCountry] = useState("Egypt");
   const [userInfo, setUserInfo] = useState("" as any);
 

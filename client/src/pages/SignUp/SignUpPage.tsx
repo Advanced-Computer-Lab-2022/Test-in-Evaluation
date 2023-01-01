@@ -182,7 +182,6 @@ function SignUpPage() {
                                     label="individual trainee"
                                     value="individual trainee"
                                 />
-                                <Tab label="instructor" value="instructor" />
                             </Tabs>
                         </Box>
 
