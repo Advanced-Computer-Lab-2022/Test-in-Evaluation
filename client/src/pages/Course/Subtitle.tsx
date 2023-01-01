@@ -170,7 +170,6 @@ const Subtitle = ({ subtitle, isEnrolled, fetchCourseProgress }: params) => {
                         </Button>
                     </CardActions>
                 )}
-                ;
             </Card>
         </Paper>
     );

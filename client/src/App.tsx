@@ -19,6 +19,7 @@ import {
     Contract,
     Course,
     Instructor,
+    CourseCollectionPage,
 } from "./pages";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
@@ -114,6 +115,10 @@ function App() {
                             <Route
                                 path="/search"
                                 element={<SearchResult />}
+                            ></Route>
+                            <Route
+                                path="/course_collection"
+                                element={<CourseCollectionPage />}
                             ></Route>
                             <Route>
                                 <Route

@@ -11,3 +11,4 @@ export { default as Contract } from "./ContractPage/ContractPage";
 export { default as Course } from "./Course/Course";
 export { default as InstructorReviews } from "./InstructorReviews/InstructorReviews";
 export { default as Instructor } from "./Instructor/Instructor";
+export { default as CourseCollectionPage } from "./CourseCollection/CourseCollectionPage";
