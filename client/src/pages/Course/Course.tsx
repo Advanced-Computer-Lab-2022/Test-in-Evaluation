@@ -337,7 +337,12 @@ const CoursePage = () => {
                             >
                                 {(!isEnrolled ||
                                     userInfo.type === "instructor") && (
-                                    <div>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            gap: "1rem",
+                                        }}
+                                    >
                                         <Typography
                                             variant="h4"
                                             sx={{ color: "white" }}
@@ -356,11 +361,12 @@ const CoursePage = () => {
                                                 color="green"
                                                 gutterBottom
                                             >
-                                                {course?.course?.discount?.rate}
+                                                {(course?.course?.discount
+                                                    ?.rate || 0) * 100}
                                                 % off
                                             </Typography>
                                         )}
-                                    </div>
+                                    </Box>
                                 )}
                                 <Box>
                                     {isEnrolled ||
