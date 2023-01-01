@@ -15,7 +15,8 @@ function ProfileInstructorPage() {
             sx={{
                 background: "white",
                 display: "flex",
-                minHeight: "100%",
+                minHeight: "calc(100% + 1rem)",
+                translate: "0 -1rem 0",
             }}
         >
             <Tabs

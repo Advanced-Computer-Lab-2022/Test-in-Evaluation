@@ -37,9 +37,7 @@ export default function DrawerAppBar() {
     const commonNavItems: NavItem[] = [
         { text: "Courses", onClick: () => navigate("/search") },
     ];
-    const loggedInList: NavItem[] = [
-        { text: "My Courses", onClick: () => navigate("/courses") },
-        ...commonNavItems,
+    const commonUserItems: NavItem[] = [
         { text: "Profile", onClick: () => navigate("/profile") },
         {
             text: "Logout",
@@ -48,13 +46,13 @@ export default function DrawerAppBar() {
                     .post(apiURL + "/logout", {}, { withCredentials: true })
                     .then((response) => {
                         userState.setLoggedIn(false);
-                        userState.setUserType("none");
+                        userState.setUserType("guest");
                         navigate("/");
                     });
             },
         },
     ];
-    const loggedOutList: NavItem[] = [
+    const guestNavList: NavItem[] = [
         ...commonNavItems,
         { text: "Sign Up", onClick: () => navigate("/signup") },
         {
@@ -64,9 +62,27 @@ export default function DrawerAppBar() {
             },
         },
     ];
-    const navItems: NavItem[] = userState.loggedIn
-        ? loggedInList
-        : loggedOutList;
+    const traineeNavList: NavItem[] = [
+        ...commonNavItems,
+        { text: "My Courses", onClick: () => navigate("/courses") },
+        ...commonUserItems,
+    ];
+    const instructorNavList: NavItem[] = [
+        ...commonNavItems,
+        ...commonUserItems,
+    ];
+    const adminNavList: NavItem[] = [...commonNavItems, ...commonUserItems];
+
+    const navItems: NavItem[] =
+        userState.userType === "guest"
+            ? guestNavList
+            : userState.userType === "individualTrainee"
+            ? traineeNavList
+            : userState.userType === "corporateTrainee"
+            ? traineeNavList
+            : userState.userType === "instructor"
+            ? instructorNavList
+            : adminNavList;
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -122,6 +138,7 @@ export default function DrawerAppBar() {
                             style={{ color: "white" }}
                             onChange={(event) => {
                                 userState.setCountry(event.target.value);
+                                console.log(event.target.value);
                             }}
                         >
                             {countries.map((element, index) => {

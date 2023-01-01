@@ -10,6 +10,8 @@ export const Search = styled("form")(({ theme }) => ({
     marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
+    display: "flex",
+    flexDirection: "row",
     [theme.breakpoints.up("md")]: {
         marginLeft: theme.spacing(3),
         width: "auto",
@@ -17,6 +19,16 @@ export const Search = styled("form")(({ theme }) => ({
 }));
 
 export const SearchIconWrapper = styled("div")(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+}));
+
+export const SearchOptionsWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
     position: "absolute",

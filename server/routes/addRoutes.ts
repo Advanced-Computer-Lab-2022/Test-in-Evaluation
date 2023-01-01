@@ -25,7 +25,7 @@ import { addRoute as acceptContractAddRoute } from "./acceptContract";
 import { addRoute as getCourseAddRoute } from "./getCourse";
 import { addRoute as enrollInCourseAddRoute } from "./enrollInCourse";
 import { addRoute as getMyEnrollmentsAddRoute } from "./getMyEnrollments";
-import { addRoute as recordCompletedSectionAddRoute } from "./recordCompletedSection";
+import { addRoute as recordCompletedSectionAddRoute } from "./recordCompletedExercises";
 import { addRoute as getUserAddRoute } from "./getUser";
 import { addRoute as payToWalletAddRoute } from "./payToWallet";
 import { addRoute as getPendingEnrollmentsAddRoute } from "./getPendingEnrollments";

@@ -75,21 +75,26 @@ function SearchResultPage() {
   };
 
   async function filterCourses() {
-    let response = await axios.post(
-      apiURL + "/search_courses",
-      {
-        title: courseTitle,
-        subject: courseSubject,
-        instructor: courseInstructor,
+    let postObject: any = {
+      title: courseTitle,
+      subject: courseSubject,
+      instructor: courseInstructor,
+
+      ratingLow: ratingRangeValue[0],
+      ratingHigh: ratingRangeValue[1],
+    };
+
+    if (userState.userType !== "corporateTrainee") {
+      postObject = {
+        ...postObject,
         priceLow: priceRangeValue[0],
         priceHigh: priceRangeValue[1],
-        ratingLow: ratingRangeValue[0],
-        ratingHigh: ratingRangeValue[1],
-      },
-      {
-        withCredentials: true,
-      }
-    );
+      };
+    }
+
+    let response = await axios.post(apiURL + "/search_courses", postObject, {
+      withCredentials: true,
+    });
 
     let crsList = response.data.result.map((itm: any) => {
       return {

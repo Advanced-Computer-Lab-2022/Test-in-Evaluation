@@ -1,5 +1,10 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import FollowUpModal from "./FollowUpModal";
+export type Comment = {
+    _id: string;
+    text: string;
+    senderId: string;
+};
 export type Problem = {
     _id: string;
     title: string;
@@ -7,11 +12,15 @@ export type Problem = {
     type: string;
     createdAt: string;
     status: string;
+    user: string;
+    comments: Comment[];
 };
 type Props = {
     problem: Problem;
 };
+
 const ProblemCard = ({ problem }: Props) => {
+    console.log(problem);
     return (
         <Card>
             <CardContent
@@ -42,7 +51,7 @@ const ProblemCard = ({ problem }: Props) => {
                 </Box>
                 <Typography variant="body1">{problem.description}</Typography>
                 {problem.status !== "resolved" && (
-                    <FollowUpModal problemId={problem._id} />
+                    <FollowUpModal problem={problem} />
                 )}
             </CardContent>
         </Card>

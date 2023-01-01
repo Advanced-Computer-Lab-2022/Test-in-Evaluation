@@ -10,7 +10,15 @@ export const EnrollmentSchema = new Schema({
     studentId: { type: Schema.Types.ObjectId, ref: "User" },
     amountPaid: Number,
     paymentDate: { type: Date, default: () => new Date() },
-    completedSections: [{ sectionId: { type: Schema.Types.ObjectId, ref: "Section" }, exerciseIdx: Number }],
+    completedExercises: [
+        {
+            sectionId: { type: Schema.Types.ObjectId, ref: "Section" },
+            exerciseIdx: Number,
+        },
+    ],
+    completedVideos: [
+        { sectionId: { type: Schema.Types.ObjectId, ref: "Section" } },
+    ],
 });
 
 EnrollmentSchema.index({ courseId: 1, studentId: 1 }, { unique: true });

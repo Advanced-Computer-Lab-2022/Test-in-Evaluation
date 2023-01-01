@@ -54,9 +54,8 @@ function SignInPage() {
                     .get(apiURL + "/who_am_i", { withCredentials: true })
                     .then((response) => {
                         userState.setLoggedIn(true);
-                        userState.setUserType(response.data.type);
                         userState.setUserInfo(response.data);
-
+                        userState.setUserType(response.data.type);
                         navigate("/");
                     })
                     .catch((error) => {
