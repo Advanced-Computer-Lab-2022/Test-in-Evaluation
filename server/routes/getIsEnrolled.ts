@@ -31,14 +31,14 @@ export const addRoute = (app: Express) => {
                 studentId: userId,
                 courseId: req.body.courseId,
             });
-            if (num && num.status === EnrollmentStatusType.accepted) {
+            if (num) {
                 return res.status(200).send({
-                    isEnrolled: true,
+                    enrollStatus: num.status,
                     enrollmentId: num._id,
                 });
             }
             return res.status(200).send({
-                isEnrolled: false,
+                enrollStatus: null,
                 enrollmentId: "",
             });
         }
