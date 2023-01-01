@@ -36,22 +36,15 @@ export const addRoute = (app: Express) => {
             }
 
             // get the sum of amount paid and the count of enrollments
-            const [sum, count] = await Enrollment.aggregate([
-                { $match: { courseId } },
-                {
-                    $group: {
-                        _id: null,
-                        sum: { $sum: "$amountPaid" },
-                        count: { $sum: 1 },
-                    },
-                },
-            ]).then((result) => {
-                if (result.length === 0) {
-                    return [0, 0];
-                }
-                return [result[0].sum, result[0].count];
+            const enrollments = await Enrollment.find({
+                courseId: courseId,
             });
+            const count = enrollments.length;
 
+            const sum = enrollments.reduce(
+                (acc: number, curr) => acc + (curr.amountPaid as number),
+                0
+            );
             return res.status(200).send({ sum, count });
         }
     );

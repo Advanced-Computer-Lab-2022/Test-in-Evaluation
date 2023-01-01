@@ -6,6 +6,7 @@ import CreateCourse from "../CreateCourse/CreateCourse";
 import Discount from "../Discount/Discount";
 import InstructorReviews from "../InstructorReviews/InstructorReviews";
 import ReportedProblems from "../Report/ReportedProblems";
+import CourseSales from "./CourseSales";
 function ProfileInstructorPage() {
     const [optionTab, setOptionTab] = useState("profileSettings");
     const [bioValue, setBioValue] = useState("");
@@ -38,6 +39,7 @@ function ProfileInstructorPage() {
                 <Tab label="Show My Reviews" value="instructorReviews" />
                 <Tab label="Reported Problems" value="reportedProblems" />
                 <Tab label="Create Discount" value="addDiscount" />
+                <Tab label="Course Sales" value="courseSales" />
             </Tabs>
             <Box sx={{ flexGrow: 1, p: 2, border: "1px solid #ccc" }}>
                 {optionTab === "profileSettings" && (
@@ -83,6 +85,7 @@ function ProfileInstructorPage() {
                 {optionTab === "instructorReviews" && <InstructorReviews />}
                 {optionTab === "reportedProblems" && <ReportedProblems />}
                 {optionTab === "addDiscount" && <Discount />}
+                {optionTab === "courseSales" && <CourseSales />}
             </Box>
         </Box>
     );
