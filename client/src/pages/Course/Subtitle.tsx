@@ -73,7 +73,7 @@ const Subtitle = ({ subtitle, isEnrolled }: params) => {
                     setCurScore(score);
                 }
             });
-    }, [subtitle]);
+    }, [subtitle, isExerciseOpen]);
 
     return (
         <Paper>
