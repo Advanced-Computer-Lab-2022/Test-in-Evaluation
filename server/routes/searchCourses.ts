@@ -28,7 +28,7 @@ export const addRoute = (app: Express) => {
         path,
         validateInput(Input),
         async (req: Request<Input>, res: Response) => {
-            const {
+            let {
                 instructor,
                 priceHigh,
                 priceLow,
@@ -39,11 +39,11 @@ export const addRoute = (app: Express) => {
             } = req.body;
             const isCorporate =
                 req.session.data.userType === UserTypes.corporateTrainee;
-            if (
-                (priceHigh !== undefined || priceLow !== undefined) &&
-                isCorporate
-            )
-                return res.status(400).send({ error: "unauthorized" });
+
+            if (isCorporate) {
+                priceHigh = undefined;
+                priceLow = undefined;
+            }
 
             const instructorId = instructor
                 ? await User.findOne({ username: instructor }).then(
@@ -75,7 +75,7 @@ export const addRoute = (app: Express) => {
                 ...(title ? { title: { $regex: title } } : {}),
                 ...(avgRating ? { avgRating } : {}),
                 ...(price ? { price } : {}),
-            };            
+            };
 
             const result = await Course.find(filter)
                 .populate("instructor", "firstName lastName username")
@@ -88,7 +88,6 @@ export const addRoute = (app: Express) => {
                     })
                 );
 
-            
             res.send({ result });
             return;
         }
