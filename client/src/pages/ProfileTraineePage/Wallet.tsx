@@ -7,18 +7,24 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
+    FormControl,
     Input,
+    InputLabel,
     TextField,
     Typography,
 } from "@mui/material";
 import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
-import { apiURL } from "../../App";
+import { useContext, useEffect, useState } from "react";
+import MaskInput from "react-maskinput/lib";
+import { apiURL, UserContext } from "../../App";
 import { Loader, Toast } from "../../components";
-import CreditCard from "./CreditCard";
+import { GetCurrency } from "../../data/currency";
+import RechargeModal from "./RechargeWindow/RechargeModal";
 
 const Wallet = () => {
-    const [loading, setLoading] = useState(false);
+    const user = useContext(UserContext);
+    const id = user.userInfo.user._id;
+
     const [alert, setAlert] = useState({
         isSuccess: false,
         isError: false,
@@ -26,84 +32,103 @@ const Wallet = () => {
     });
 
     const [open, setOpen] = useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
 
-    const [isCardFlipped, setCardFlipped] = useState(false);
+    const [chargeAmount, setChargeAmount] = useState(0);
     const [cardName, setCardName] = useState("");
     const [cardNumber, setCardNumber] = useState("");
     const [cardExpDate, setCardExpDate] = useState("");
     const [cardCSV, setCardCSV] = useState("");
 
-    // if (loading) return <Loader open={loading} />;
+    const rechargeBalance = () => {
+        if (chargeAmount <= 0) {
+            setAlert({
+                isError: true,
+                isSuccess: false,
+                message: "Please enter a valid amount",
+            });
+            return;
+        }
+        if (cardName === "") {
+            setAlert({
+                isError: true,
+                isSuccess: false,
+                message: "Please enter a valid name",
+            });
+            return;
+        }
+        if (cardNumber.length != 19) {
+            setAlert({
+                isError: true,
+                isSuccess: false,
+                message: "Please enter a valid card number",
+            });
+            return;
+        }
+        if (cardExpDate.length != 5) {
+            setAlert({
+                isError: true,
+                isSuccess: false,
+                message: "Please enter a valid expiration date",
+            });
+            return;
+        }
+        if (cardCSV.length < 3) {
+            setAlert({
+                isError: true,
+                isSuccess: false,
+                message: "Please enter a valid CSV",
+            });
+            return;
+        }
+
+        axios
+            .post(apiURL + "/pay_to_wallet", {
+                amount: chargeAmount,
+            })
+            .then((res) => {
+                setAlert({
+                    isError: false,
+                    isSuccess: true,
+                    message: "Payment successful",
+                });
+                user.userInfo.user.wallet += chargeAmount;
+                handleClose();
+            })
+            .catch((err: AxiosError) => {
+                setAlert({
+                    isError: true,
+                    isSuccess: false,
+                    message: err.response!.data as string,
+                });
+            });
+    };
+
     return (
         <>
             <Dialog open={open} onClose={handleClose} maxWidth="lg">
                 <DialogTitle>Payment</DialogTitle>
                 <DialogContent sx={{ width: "40vw" }}>
-                    <Box sx={{ display: "flex" }}>
-                        <CreditCard
-                            name={cardName}
-                            cardNumber={cardNumber}
-                            expDate={cardExpDate}
-                            cvv={cardCSV}
-                            flipped={isCardFlipped}
-                            onClick={() => setCardFlipped(!isCardFlipped)}
-                        />
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "1em",
-                                width: "100%",
-                                marginTop: "3em",
-                            }}
-                        >
-                            <TextField
-                                label="Full Name"
-                                onFocus={() => setCardFlipped(false)}
-                                value={cardName}
-                                onChange={(e) => setCardName(e.target.value)}
-                            />
-                            <TextField
-                                label="Card Number"
-                                onFocus={() => setCardFlipped(false)}
-                                value={cardNumber}
-                                onChange={(e) => setCardNumber(e.target.value)}
-                            />
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    gap: "1em",
-                                }}
-                            >
-                                <TextField
-                                    label="Expiry Date"
-                                    onFocus={() => setCardFlipped(false)}
-                                    value={cardExpDate}
-                                    onChange={(e) =>
-                                        setCardExpDate(e.target.value)
-                                    }
-                                />
-                                <TextField
-                                    label="CVV"
-                                    onFocus={() => setCardFlipped(true)}
-                                    value={cardCSV}
-                                    onChange={(e) => setCardCSV(e.target.value)}
-                                />
-                            </Box>
-                        </Box>
-                    </Box>
+                    <RechargeModal
+                        amountToBeCharged={chargeAmount}
+                        cardName={cardName}
+                        cardNumber={cardNumber}
+                        cardExpDate={cardExpDate}
+                        cardCSV={cardCSV}
+                        setCardName={setCardName}
+                        setCardNumber={setCardNumber}
+                        setCardExpDate={setCardExpDate}
+                        setCardCSV={setCardCSV}
+                    />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Pay Now</Button>
+                    <Button onClick={rechargeBalance}>Pay Now</Button>
                 </DialogActions>
             </Dialog>
             <Toast alert={alert} setAlert={setAlert} />
@@ -123,11 +148,22 @@ const Wallet = () => {
                             gap: "1rem",
                         }}
                     >
-                        <Typography variant="h6">Balance: $0</Typography>
-                        <Box sx={{ display: "flex", gap: "1rem" }}>
+                        <Typography variant="h6">
+                            Balance:{" "}
+                            {user.userInfo.user.wallet + " " + GetCurrency()}
+                        </Typography>
+                        <Box
+                            sx={{ display: "flex", gap: "1rem", width: "25%" }}
+                        >
                             <Input
                                 placeholder="Amount"
                                 sx={{ width: "75%" }}
+                                value={chargeAmount}
+                                onChange={(e) =>
+                                    setChargeAmount(
+                                        parseInt(e.target.value) || 0
+                                    )
+                                }
                             ></Input>
                             <Button
                                 variant="contained"
