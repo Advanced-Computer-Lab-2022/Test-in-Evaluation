@@ -77,7 +77,7 @@ type Enrollment = {
     studentId: string;
     amountPaid: Number;
     paymentDate: Date;
-    completedSections: string[];
+    completedExercises: string[];
 };
 
 export type {
