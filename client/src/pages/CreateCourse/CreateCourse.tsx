@@ -1,5 +1,6 @@
 import {
     Alert,
+    Autocomplete,
     Button,
     Container,
     FormControl,
@@ -149,22 +150,18 @@ const CreateCourse = () => {
                     />
 
                     <FormControl>
-                        <InputLabel>Subject</InputLabel>
-                        <Select
-                            required
-                            value={subject}
-                            label="Subject"
-                            onChange={(e) => setSubject(e.target.value)}
-                        >
-                            {subjects.map((subject: Subject) => (
-                                <MenuItem
-                                    value={subject.Name}
-                                    key={subject._id}
-                                >
-                                    {subject.Name}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                        <Autocomplete
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Subject"
+                                    value={subject}
+                                    required
+                                    onChange={(e) => setSubject(e.target.value)}
+                                />
+                            )}
+                            options={subjects.map((subject) => subject.Name)}
+                        />
                     </FormControl>
                     <TextField
                         required
