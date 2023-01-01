@@ -2,7 +2,7 @@ import { apiURL, UserContext } from "../../App";
 import { useContext, useEffect, useReducer, useState } from "react";
 import React from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
     Accordion,
     AccordionDetails,
@@ -19,13 +19,15 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import YoutubeEmbed from "./YoutubeEmbed";
 import { GetCurrency } from "../../data/currency";
 import type { CourseWithSections, Review } from "../../types/Types";
 import { ExpandMore, Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
 import ReportModal from "../Report/ReportModal";
+import RechargeModal from "../ProfileTraineePage/RechargeWindow/RechargeModal";
+
+import ReactPlayer from "react-player/youtube";
 
 // /getAllReviews
 // /writeReview
@@ -69,6 +71,11 @@ const StyledRating = styled(Rating)({
     },
 });
 
+type CourseProgress = {
+    count: number;
+    total: number;
+};
+
 const CoursePage = () => {
     const { userInfo } = useContext(UserContext);
     const [course, setCourse] = React.useState<CourseWithSections>();
@@ -77,6 +84,11 @@ const CoursePage = () => {
     const [review, setReview] = useState<string | null>("");
     const [courseReviews, setCourseReviews] = useState<any[]>([] as any[]);
     const [courseRating, setCourseRating] = useState(0);
+
+    const [courseProgress, setCourseProgress] = useState<CourseProgress>({
+        count: 0,
+        total: 1,
+    });
 
     const [isEnrolled, setIsEnrolled] = useState(false);
     useEffect(() => {
@@ -95,6 +107,8 @@ const CoursePage = () => {
         isError: false,
         message: "",
     });
+
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         axios
@@ -149,12 +163,43 @@ const CoursePage = () => {
                 setAlert({
                     isSuccess: false,
                     isError: true,
-                    message:
-                        err.response.data +
-                        "\nHead to Profile Page to recharge your wallet.",
+                    message: "Not enough money in wallet. Paying with card.",
                 });
+                setOpenPayment(true);
             });
     };
+
+    const onCoursePay = () => {
+        axios
+            .post(apiURL + "/pay_to_wallet", {
+                amount: course!.course.price,
+            })
+            .then((res) => {
+                enrollNow();
+                setOpenPayment(false);
+                setIsEnrolled(true);
+            });
+    };
+    const [openPayment, setOpenPayment] = useState(false);
+
+    const fetchCourseProgress = () => {
+        axios
+            .post(apiURL + "/get_completed_course_ratio", {
+                courseId: courseId,
+            })
+            .then((res) => {
+                console.log(
+                    "new course progress ",
+                    res.data.count,
+                    res.data.total
+                );
+                setCourseProgress(res.data);
+            });
+    };
+
+    useEffect(() => {
+        fetchCourseProgress();
+    }, [courseId]);
 
     return (
         <div
@@ -166,6 +211,12 @@ const CoursePage = () => {
             }}
         >
             <Toast alert={alert} setAlert={setAlert} />
+            <RechargeModal
+                amountToBeCharged={course?.course.price ?? 0}
+                onCompleted={onCoursePay}
+                open={openPayment}
+                setOpen={setOpenPayment}
+            />
 
             <Box
                 sx={{
@@ -216,8 +267,9 @@ const CoursePage = () => {
                                 {course?.course.title}
                             </Typography>
                         </Box>
-                        <YoutubeEmbed
+                        <ReactPlayer
                             style={{ aspectRatio: "16 / 9", width: "100%" }}
+                            controls={true}
                             url={course?.course.videoPreviewUrl}
                         />
                         <Box>
@@ -239,9 +291,7 @@ const CoursePage = () => {
                                         to={`/instructor/${course?.course.instructor._id}`}
                                         style={{ color: "white" }}
                                     >
-                                        {course?.course.instructor.firstName +
-                                            " " +
-                                            course?.course.instructor.lastName}
+                                        {course?.course.instructor.username}
                                     </Link>
                                 </Typography>
                                 <Box sx={{ display: "flex", gap: "15px" }}>
@@ -285,7 +335,12 @@ const CoursePage = () => {
                             >
                                 {(!isEnrolled ||
                                     userInfo.type === "instructor") && (
-                                    <div>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            gap: "1rem",
+                                        }}
+                                    >
                                         <Typography
                                             variant="h4"
                                             sx={{ color: "white" }}
@@ -304,11 +359,12 @@ const CoursePage = () => {
                                                 color="green"
                                                 gutterBottom
                                             >
-                                                {course?.course?.discount?.rate}
+                                                {(course?.course?.discount
+                                                    ?.rate || 0) * 100}
                                                 % off
                                             </Typography>
                                         )}
-                                    </div>
+                                    </Box>
                                 )}
                                 <Box>
                                     {isEnrolled ||
@@ -321,7 +377,10 @@ const CoursePage = () => {
                                             sx={{ width: "100%" }}
                                             onClick={enrollNow}
                                         >
-                                            Enroll Now
+                                            {userInfo.type ===
+                                            "individualTrainee"
+                                                ? "Purchase Now"
+                                                : "Enroll Now"}
                                         </Button>
                                     )}
                                 </Box>
@@ -367,7 +426,11 @@ const CoursePage = () => {
                                                 >
                                                     <LinearProgress
                                                         variant="determinate"
-                                                        value={0}
+                                                        value={
+                                                            (courseProgress.count /
+                                                                courseProgress.total) *
+                                                            100
+                                                        }
                                                     />
                                                 </Box>
                                                 <Box sx={{ minWidth: 35 }}>
@@ -375,7 +438,9 @@ const CoursePage = () => {
                                                         variant="body2"
                                                         color="text.secondary"
                                                     >{`${Math.round(
-                                                        0
+                                                        (courseProgress.count /
+                                                            courseProgress.total) *
+                                                            100
                                                     )}%`}</Typography>
                                                 </Box>
                                             </Box>
@@ -403,6 +468,9 @@ const CoursePage = () => {
                                                     <Subtitle
                                                         subtitle={val}
                                                         isEnrolled={isEnrolled}
+                                                        fetchCourseProgress={
+                                                            fetchCourseProgress
+                                                        }
                                                     />
                                                 </AccordionDetails>
                                             </Accordion>

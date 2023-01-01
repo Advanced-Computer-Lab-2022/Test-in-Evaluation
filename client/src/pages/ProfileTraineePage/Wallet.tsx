@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
-import MaskInput from "react-maskinput/lib";
 import { apiURL, UserContext } from "../../App";
 import { Loader, Toast } from "../../components";
 import { GetCurrency } from "../../data/currency";
@@ -31,58 +30,21 @@ const Wallet = () => {
         message: "",
     });
 
-    const [open, setOpen] = useState(false);
+    const [openPayment, setOpenPayment] = useState(false);
     const handleClickOpen = () => {
-        setOpen(true);
+        setOpenPayment(true);
     };
     const handleClose = () => {
-        setOpen(false);
+        setOpenPayment(false);
     };
 
     const [chargeAmount, setChargeAmount] = useState(0);
-    const [cardName, setCardName] = useState("");
-    const [cardNumber, setCardNumber] = useState("");
-    const [cardExpDate, setCardExpDate] = useState("");
-    const [cardCSV, setCardCSV] = useState("");
-
     const rechargeBalance = () => {
         if (chargeAmount <= 0) {
             setAlert({
                 isError: true,
                 isSuccess: false,
                 message: "Please enter a valid amount",
-            });
-            return;
-        }
-        if (cardName === "") {
-            setAlert({
-                isError: true,
-                isSuccess: false,
-                message: "Please enter a valid name",
-            });
-            return;
-        }
-        if (cardNumber.length != 19) {
-            setAlert({
-                isError: true,
-                isSuccess: false,
-                message: "Please enter a valid card number",
-            });
-            return;
-        }
-        if (cardExpDate.length != 5) {
-            setAlert({
-                isError: true,
-                isSuccess: false,
-                message: "Please enter a valid expiration date",
-            });
-            return;
-        }
-        if (cardCSV.length < 3) {
-            setAlert({
-                isError: true,
-                isSuccess: false,
-                message: "Please enter a valid CSV",
             });
             return;
         }
@@ -111,26 +73,12 @@ const Wallet = () => {
 
     return (
         <>
-            <Dialog open={open} onClose={handleClose} maxWidth="lg">
-                <DialogTitle>Payment</DialogTitle>
-                <DialogContent sx={{ width: "40vw" }}>
-                    <RechargeModal
-                        amountToBeCharged={chargeAmount}
-                        cardName={cardName}
-                        cardNumber={cardNumber}
-                        cardExpDate={cardExpDate}
-                        cardCSV={cardCSV}
-                        setCardName={setCardName}
-                        setCardNumber={setCardNumber}
-                        setCardExpDate={setCardExpDate}
-                        setCardCSV={setCardCSV}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={rechargeBalance}>Pay Now</Button>
-                </DialogActions>
-            </Dialog>
+            <RechargeModal
+                amountToBeCharged={chargeAmount}
+                onCompleted={rechargeBalance}
+                open={openPayment}
+                setOpen={setOpenPayment}
+            />
             <Toast alert={alert} setAlert={setAlert} />
             <Card sx={{ height: "fit-content" }}>
                 <CardContent

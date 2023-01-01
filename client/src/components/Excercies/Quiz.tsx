@@ -23,6 +23,7 @@ type QuizProps = {
     section: Section;
     questions: Exercise[];
     setExerciseOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    fetchCourseProgress: () => void;
 };
 
 const Quiz = ({
@@ -31,6 +32,7 @@ const Quiz = ({
     section,
     questions,
     setExerciseOpen,
+    fetchCourseProgress,
 }: QuizProps) => {
     const { userInfo } = useContext(UserContext);
 
@@ -97,6 +99,15 @@ const Quiz = ({
         );
         if (res.data.success) {
             setExerciseOpen(false);
+            axios
+                .post(apiURL + "/record_completed_exercise", {
+                    sectionId: section._id,
+                })
+                .then((res) => {
+                    if (res.data.success) {
+                        fetchCourseProgress();
+                    }
+                });
         }
     };
 
@@ -214,7 +225,11 @@ const Quiz = ({
                                 Back
                             </Button>
                             <Box sx={{ flex: "1 1 auto" }} />
-                            <Button onClick={handleNext} sx={{ mr: 1 }}>
+                            <Button
+                                onClick={handleNext}
+                                sx={{ mr: 1 }}
+                                disabled={isLastStep()}
+                            >
                                 Next
                             </Button>
                         </Box>

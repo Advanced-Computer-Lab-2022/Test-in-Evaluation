@@ -2,6 +2,7 @@ import {
     Box,
     Button,
     Card,
+    CardActionArea,
     CardActions,
     CardContent,
     CircularProgress,
@@ -13,89 +14,17 @@ import { apiURL, UserContext } from "../../App";
 import { useState, useContext, useEffect } from "react";
 import { Course } from "../../types/Types";
 import axios from "axios";
+import { useNavigate, redirect, Link } from "react-router-dom";
 import { GetCurrency } from "../../data/currency";
 
-const emails = ["username@gmail.com", "user02@gmail.com"];
-
-export interface SimpleDialogProps {
-    courseId: string;
-    open: boolean;
-    onClose: () => void;
-}
-
-function SimpleDialog(props: SimpleDialogProps) {
-    const { onClose, open, courseId } = props;
-    const [loadedInfo, setLoadedInfo] = useState<boolean>(false);
-    const [courseInfo, setCourseInfo] = useState<any>();
+const SearchResultCard = (props: any) => {
+    const navigate = useNavigate();
+    const course: Course = props.course;
+    const userState = useContext(UserContext);
 
     useEffect(() => {
-        axios
-            .post(
-                apiURL + "/get_course",
-                { courseId: courseId },
-                { withCredentials: true }
-            )
-            .then((course) => {
-                setLoadedInfo(true);
-                setCourseInfo(course.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        console.log(course);
     }, []);
-
-    const handleClose = () => {
-        onClose();
-    };
-
-    const handleListItemClick = (value: string) => {
-        onClose();
-    };
-
-    return (
-        <Dialog onClose={handleClose} open={open}>
-            <Box sx={{ width: " 30em" }}>
-                {!loadedInfo && (
-                    <Box
-                        sx={{
-                            padding: "10px",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <CircularProgress />
-                    </Box>
-                )}
-                {loadedInfo && (
-                    <Box
-                        sx={{
-                            padding: "10px",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "10px",
-                        }}
-                    >
-                        <Typography>
-                            Price:{" "}
-                            {courseInfo?.course?.price + " " + GetCurrency()}
-                        </Typography>
-                        <Typography>Discount:</Typography>
-                        <Typography>Total Hours:</Typography>
-                        <Typography>Price:</Typography>
-                        <Typography>Price:</Typography>
-                        <Typography>Price:</Typography>
-                    </Box>
-                )}
-            </Box>
-        </Dialog>
-    );
-}
-
-const SearchResultCard = (props: any) => {
-    const course: Course = props.course;
-    const [learnMore, setLearnMore] = useState(false);
-    const userState = useContext(UserContext);
 
     return (
         <>
@@ -104,21 +33,24 @@ const SearchResultCard = (props: any) => {
                 sx={{
                     display: "flex",
                     flexDirection: "row",
-                    width: "27%",
-                    padding: "10px",
-                    height: "100%",
+                    width: "25%",
+
+                    height: "10em",
                 }}
             >
-                <Box sx={{ width: " 100%" }}>
+                <CardActionArea
+                    onClick={() => {
+                        navigate("/course/" + course._id);
+                    }}
+                    sx={{ width: "100%" }}
+                >
                     <CardContent>
                         <Typography
                             sx={{ fontSize: 14 }}
                             color="text.secondary"
                             gutterBottom
                         >
-                            {course.instructor.firstName +
-                                " " +
-                                course.instructor.lastName}
+                            {course.instructor.username}
                         </Typography>
                         <Typography variant="h5" component="div">
                             {course.title}
@@ -127,46 +59,7 @@ const SearchResultCard = (props: any) => {
                             {course.subjectId?.Name}
                         </Typography>
                     </CardContent>
-                    {userState.userType !== "corporateTrainee" && (
-                        <>
-                            <CardActions>
-                                <Button
-                                    onClick={() => {
-                                        setLearnMore(!learnMore);
-                                    }}
-                                    size="small"
-                                >
-                                    Learn More
-                                </Button>
-                            </CardActions>
-                            <SimpleDialog
-                                courseId={course._id}
-                                open={learnMore}
-                                onClose={() => {
-                                    setLearnMore(false);
-                                }}
-                            />
-                        </>
-                    )}
-                </Box>
-                {(userState.userType === "corporateTraineee" ||
-                    userState.userType === "individualTrainee") && (
-                    <Box
-                        sx={{
-                            width: "40%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <div style={{ height: "100%" }}></div>
-                        <Button sx={{ height: "40%" }} variant="contained">
-                            {userState.userType === "individualTrainee"
-                                ? "Purchase"
-                                : "Enroll"}
-                        </Button>
-                    </Box>
-                )}
+                </CardActionArea>
             </Card>
         </>
     );

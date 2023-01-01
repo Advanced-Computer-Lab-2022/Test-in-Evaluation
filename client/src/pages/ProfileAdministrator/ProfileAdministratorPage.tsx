@@ -1,8 +1,8 @@
 import { CSSProperties } from "@mui/styled-engine";
 import AddUser from "./AddUser";
 import ManageRequests from "./ManageRequests";
-import ManageCourses from "./ManageCourses";
 import ManageReports from "./ManageReports";
+import Discount from "../Discount/Discount";
 import { useState } from "react";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 
@@ -33,7 +33,7 @@ function ProfileAdministratorPage() {
             >
                 <Tab label="add new users" value="addusers" />
                 <Tab label="manage trainee requests" value="managetrainee" />
-                <Tab label="manage courses" value="managecourses" />
+                <Tab label="Create Discount" value="addDiscount" />
                 <Tab label="manage problem reports" value="managereports" />
             </Tabs>
             <Box
@@ -45,7 +45,7 @@ function ProfileAdministratorPage() {
             >
                 {optionTab === "addusers" && <AddUser />}
                 {optionTab === "managetrainee" && <ManageRequests />}
-                {optionTab === "managecourses" && <ManageCourses />}
+                {optionTab === "addDiscount" && <Discount />}
                 {optionTab === "managereports" && <ManageReports />}
             </Box>
         </Box>

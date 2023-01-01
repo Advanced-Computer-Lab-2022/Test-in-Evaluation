@@ -15,7 +15,7 @@ import {
     Button,
     Modal,
 } from "@mui/material";
-import YoutubeEmbed from "./YoutubeEmbed";
+import ReactPlayer from "react-player/youtube";
 import { Quiz } from "../../components";
 
 import type { ExerciseSolution, Section } from "../../types/Types";
@@ -23,6 +23,7 @@ import type { ExerciseSolution, Section } from "../../types/Types";
 type params = {
     subtitle: Section;
     isEnrolled: boolean;
+    fetchCourseProgress: () => void;
 };
 
 const style = {
@@ -41,7 +42,7 @@ const style = {
     gap: "1rem",
 };
 
-const Subtitle = ({ subtitle, isEnrolled }: params) => {
+const Subtitle = ({ subtitle, isEnrolled, fetchCourseProgress }: params) => {
     const [isVideoOpen, setVideoOpen] = React.useState(false);
     const [isExerciseOpen, setExerciseOpen] = React.useState(false);
     const [exerciseSolution, setExerciseSolution] =
@@ -73,15 +74,25 @@ const Subtitle = ({ subtitle, isEnrolled }: params) => {
                     setCurScore(score);
                 }
             });
-    }, [subtitle]);
+    }, [subtitle, isExerciseOpen]);
 
     return (
         <Paper>
             <Modal open={isVideoOpen}>
                 <Box sx={style}>
-                    <YoutubeEmbed
+                    <ReactPlayer
                         style={{ aspectRatio: "16 / 9", width: "100%" }}
+                        controls={true}
                         url={subtitle.videoUrl}
+                        onEnded={() =>
+                            axios
+                                .post(`${apiURL}/record_completed_video`, {
+                                    sectionId: subtitle._id,
+                                })
+                                .then((res) => {
+                                    fetchCourseProgress();
+                                })
+                        }
                     />
                     <Box
                         sx={{
@@ -108,6 +119,7 @@ const Subtitle = ({ subtitle, isEnrolled }: params) => {
                         setExerciseOpen={setExerciseOpen}
                         solution={exerciseSolution}
                         isView={isViewingExercises}
+                        fetchCourseProgress={fetchCourseProgress}
                     />
                 </Box>
             </Modal>

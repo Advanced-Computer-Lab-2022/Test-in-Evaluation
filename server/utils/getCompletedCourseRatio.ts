@@ -7,23 +7,22 @@ export const getCompletedCourseRatio = async (enrollmentId: string) => {
 
     let total = 0,
         count = 0;
+
     for (const section of sections) {
-        total++;
-        if (enrollment.completedVideos.some((v) => v.sectionId === section._id))
+        total += 2;
+        if (
+            enrollment.completedVideos.some(
+                (v) => v.sectionId?.toString() === section._id?.toString()
+            )
+        )
             count++;
 
-        for (const [index, exercise] of section.exam!.exercises.entries()) {
-            total++;
-            if (
-                enrollment.completedExercises.some(
-                    ({ sectionId, exerciseIdx }) =>
-                        sectionId?.toString() === section._id.toString() &&
-                        exerciseIdx === index
-                )
-            ) {
-                count++;
-            }
-        }
+        if (
+            enrollment.completedExercises.some(
+                (v) => v.sectionId?.toString() === section._id?.toString()
+            )
+        )
+            count++;
     }
 
     return [count, total] as const;
