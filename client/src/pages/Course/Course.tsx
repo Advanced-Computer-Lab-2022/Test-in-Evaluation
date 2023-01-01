@@ -2,7 +2,7 @@ import { apiURL, UserContext } from "../../App";
 import { useContext, useEffect, useReducer, useState } from "react";
 import React from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
     Accordion,
     AccordionDetails,
@@ -26,6 +26,7 @@ import { ExpandMore, Star, StarBorder } from "@mui/icons-material";
 import Subtitle from "./Subtitle";
 import Toast from "../../components/Toast/Toast";
 import ReportModal from "../Report/ReportModal";
+import RechargeModal from "../ProfileTraineePage/RechargeWindow/RechargeModal";
 
 // /getAllReviews
 // /writeReview
@@ -69,6 +70,11 @@ const StyledRating = styled(Rating)({
     },
 });
 
+type CourseProgress = {
+    count: number;
+    total: number;
+};
+
 const CoursePage = () => {
     const { userInfo } = useContext(UserContext);
     const [course, setCourse] = React.useState<CourseWithSections>();
@@ -77,6 +83,11 @@ const CoursePage = () => {
     const [review, setReview] = useState<string | null>("");
     const [courseReviews, setCourseReviews] = useState<any[]>([] as any[]);
     const [courseRating, setCourseRating] = useState(0);
+
+    const [courseProgress, setCourseProgress] = useState<CourseProgress>({
+        count: 0,
+        total: 1,
+    });
 
     const [isEnrolled, setIsEnrolled] = useState(false);
     useEffect(() => {
@@ -95,6 +106,8 @@ const CoursePage = () => {
         isError: false,
         message: "",
     });
+
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         axios
@@ -149,12 +162,35 @@ const CoursePage = () => {
                 setAlert({
                     isSuccess: false,
                     isError: true,
-                    message:
-                        err.response.data +
-                        "\nHead to Profile Page to recharge your wallet.",
+                    message: "Not enough money in wallet. Paying with card.",
                 });
+                setOpenPayment(true);
             });
     };
+
+    const onCoursePay = () => {
+        axios
+            .post(apiURL + "/pay_to_wallet", {
+                amount: course!.course.price,
+            })
+            .then((res) => {
+                enrollNow();
+                setOpenPayment(false);
+                setIsEnrolled(true);
+            });
+    };
+    const [openPayment, setOpenPayment] = useState(false);
+
+    useEffect(() => {
+        axios
+            .post(apiURL + "/get_completed_course_ratio", {
+                courseId: courseId,
+            })
+            .then((res) => {
+                console.dir(res.data);
+                setCourseProgress(res.data);
+            });
+    }, [courseId]);
 
     return (
         <div
@@ -166,6 +202,12 @@ const CoursePage = () => {
             }}
         >
             <Toast alert={alert} setAlert={setAlert} />
+            <RechargeModal
+                amountToBeCharged={course?.course.price ?? 0}
+                onCompleted={onCoursePay}
+                open={openPayment}
+                setOpen={setOpenPayment}
+            />
 
             <Box
                 sx={{
@@ -367,7 +409,11 @@ const CoursePage = () => {
                                                 >
                                                     <LinearProgress
                                                         variant="determinate"
-                                                        value={0}
+                                                        value={
+                                                            (courseProgress.count /
+                                                                courseProgress.total) *
+                                                            100
+                                                        }
                                                     />
                                                 </Box>
                                                 <Box sx={{ minWidth: 35 }}>
@@ -375,7 +421,9 @@ const CoursePage = () => {
                                                         variant="body2"
                                                         color="text.secondary"
                                                     >{`${Math.round(
-                                                        0
+                                                        (courseProgress.count /
+                                                            courseProgress.total) *
+                                                            100
                                                     )}%`}</Typography>
                                                 </Box>
                                             </Box>

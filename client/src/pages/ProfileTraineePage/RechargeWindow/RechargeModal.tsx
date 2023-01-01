@@ -94,7 +94,7 @@ const RechargeModal = ({
                         }}
                     >
                         <Typography>
-                            You're recharging the amount:{" "}
+                            You're paying the amount:{" "}
                             {amountToBeCharged + " " + GetCurrency()}
                         </Typography>
                         <TextField
