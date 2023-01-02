@@ -5,6 +5,7 @@ import ManageReports from "./ManageReports";
 import Discount from "../Discount/Discount";
 import { useState } from "react";
 import { Box, Tab, Tabs, Typography } from "@mui/material";
+import Refunds from "./Refunds";
 
 function ProfileAdministratorPage() {
     const [optionTab, setOptionTab] = useState("addusers");
@@ -35,6 +36,7 @@ function ProfileAdministratorPage() {
                 <Tab label="manage trainee requests" value="managetrainee" />
                 <Tab label="Create Discount" value="addDiscount" />
                 <Tab label="manage problem reports" value="managereports" />
+                <Tab label="Manage Refund Requests" value="manageRefunds" />
             </Tabs>
             <Box
                 sx={{
@@ -47,6 +49,7 @@ function ProfileAdministratorPage() {
                 {optionTab === "managetrainee" && <ManageRequests />}
                 {optionTab === "addDiscount" && <Discount />}
                 {optionTab === "managereports" && <ManageReports />}
+                {optionTab === "manageRefunds" && <Refunds />}
             </Box>
         </Box>
     );
