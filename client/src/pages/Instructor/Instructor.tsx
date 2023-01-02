@@ -19,6 +19,7 @@ import { useParams } from "react-router-dom";
 import { User } from "../../types/Types";
 import axios from "axios";
 import { Person, Star, StarBorder } from "@mui/icons-material";
+import { InstructorImage } from "../Home/HomeStyles";
 
 const SubmitRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
@@ -96,7 +97,19 @@ const Instructor = () => {
             <Card sx={{ width: "50em", alignSelf: "center" }}>
                 <CardContent sx={{ display: "flex", gap: "2em" }}>
                     <Box sx={{ alignSelf: "center" }}>
-                        <Person sx={{ fontSize: "20em" }} />
+                        <InstructorImage
+                            src={
+                                instructor?.gender == "male"
+                                    ? "/man.jpg"
+                                    : "/woman.jpg"
+                            }
+                            alt=""
+                            sx={{
+                                width: "300px",
+                                height: "300px",
+                                display: "block",
+                            }}
+                        />
                     </Box>
                     <Box
                         sx={{
@@ -247,6 +260,11 @@ const Instructor = () => {
                         gap: "2px",
                     }}
                 >
+                    {instructorReviews.length === 0 && (
+                        <Typography variant="h6">
+                            No reviews yet. Be the first to review!
+                        </Typography>
+                    )}
                     {instructorReviews.map((val, idx) => {
                         return (
                             <>
@@ -298,7 +316,7 @@ const Instructor = () => {
                                     <Typography sx={{ color: "white" }}>
                                         {val.text}
                                     </Typography>
-                                    {val.reviewer === userInfo.user._id && (
+                                    {val.reviewer === userInfo?.user?._id && (
                                         <Box
                                             sx={{
                                                 display: "flex",

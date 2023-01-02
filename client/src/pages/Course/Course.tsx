@@ -347,7 +347,9 @@ const CoursePage = () => {
                                             fontWeight: "bold",
                                         }}
                                         label={
-                                            courseRating.toString() +
+                                            course?.course?.avgRating.toFixed(
+                                                2
+                                            ) +
                                             " " +
                                             "Rating"
                                         }
@@ -687,6 +689,11 @@ const CoursePage = () => {
                             gap: "2px",
                         }}
                     >
+                        {courseReviews.length === 0 && (
+                            <Typography variant="h6">
+                                No reviews yet. Be the first to review!
+                            </Typography>
+                        )}
                         {courseReviews.map((val, idx) => {
                             return (
                                 <>
@@ -738,7 +745,8 @@ const CoursePage = () => {
                                         <Typography sx={{ color: "white" }}>
                                             {val.text}
                                         </Typography>
-                                        {val.reviewer === userInfo.user._id && (
+                                        {val.reviewer ===
+                                            userInfo?.user?._id && (
                                             <Box
                                                 sx={{
                                                     display: "flex",
