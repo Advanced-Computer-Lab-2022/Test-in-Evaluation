@@ -50,6 +50,7 @@ type userState = {
     setSearchTitles: Dispatch<SetStateAction<boolean>>;
     setSearchSubjects: Dispatch<SetStateAction<boolean>>;
     setSearchInstructor: Dispatch<SetStateAction<boolean>>;
+    updateUserInfo: () => void;
 };
 
 const UserContext = createContext({} as userState);
@@ -64,6 +65,18 @@ function App() {
     const [searchTitles, setSearchTitles] = useState(true);
     const [searchSubjects, setSearchSubjects] = useState(true);
     const [searchInstructor, setSearchInstructor] = useState(true);
+
+    const updateUserInfo = () => {
+        axios
+            .get(apiURL + "/who_am_i", { withCredentials: true })
+            .then((res) => {
+                if (!res.data.isGuest) {
+                    setLoggedIn(true);
+                    setUserType(res.data.type);
+                    setUserInfo(res.data);
+                }
+            });
+    };
 
     useEffect(() => {
         axios
@@ -94,6 +107,7 @@ function App() {
                 setSearchTitles,
                 setSearchSubjects,
                 setSearchInstructor,
+                updateUserInfo,
             }}
         >
             <div className="App">

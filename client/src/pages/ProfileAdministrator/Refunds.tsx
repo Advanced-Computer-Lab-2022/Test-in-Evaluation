@@ -1,11 +1,12 @@
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { apiURL } from "../../App";
+import { useContext, useEffect, useState } from "react";
+import { apiURL, UserContext } from "../../App";
 import { Loader, Toast } from "../../components";
 import RefundCard from "./RefundCard";
 const Refunds = () => {
+    const { userInfo, updateUserInfo } = useContext(UserContext);
     const [refundRequests, setRefundRequests] = useState<any>([]);
     const [loading, setLoading] = useState(false);
     const [alert, setAlert] = useState({
@@ -26,6 +27,7 @@ const Refunds = () => {
             console.log(response.data);
             setRefundRequests(response.data);
             setLoading(false);
+            updateUserInfo();
         } catch (error) {
             console.log(error);
             setAlert({

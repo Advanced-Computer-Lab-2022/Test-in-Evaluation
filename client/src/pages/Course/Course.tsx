@@ -77,7 +77,7 @@ type CourseProgress = {
 };
 
 const CoursePage = () => {
-    const { userInfo } = useContext(UserContext);
+    const { userInfo, updateUserInfo } = useContext(UserContext);
     const [course, setCourse] = React.useState<CourseWithSections>();
     const { courseId } = useParams();
     const [rating, setRating] = useState<number | null>(2.5);
@@ -101,6 +101,7 @@ const CoursePage = () => {
             .then((res) => {
                 setEnrollStatus(res.data.enrollStatus);
                 setEnrollmentId(res.data.enrollmentId);
+                updateUserInfo();
             });
     };
     useEffect(() => {
