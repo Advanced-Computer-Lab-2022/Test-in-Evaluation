@@ -42,7 +42,7 @@ export const addRoute = (app: Express) => {
             const count = enrollments.length;
 
             const sum = enrollments.reduce(
-                (acc: number, curr) => acc + (curr.amountPaid as number),
+                (acc: number, curr) => acc + (curr.amountPaid as number) * 0.95,
                 0
             );
             return res.status(200).send({ sum, count });

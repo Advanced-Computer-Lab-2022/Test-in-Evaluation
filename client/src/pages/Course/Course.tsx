@@ -600,7 +600,9 @@ const CoursePage = () => {
                                 value={review}
                                 onChange={(e) => setReview(e.target.value)}
                                 rows={3}
-                                placeholder={"Write your own review here..."}
+                                placeholder={
+                                    "Write your own review here... If you already reviewed before, the review will be updated!"
+                                }
                                 variant="filled"
                                 sx={{ width: "85%" }}
                             />
@@ -612,6 +614,7 @@ const CoursePage = () => {
                                     flexDirection: "row",
                                     justifyContent: "space-evenly",
                                     alignItems: "center",
+                                    marginTop: "1em",
                                 }}
                             >
                                 <Box>
@@ -735,6 +738,51 @@ const CoursePage = () => {
                                         <Typography sx={{ color: "white" }}>
                                             {val.text}
                                         </Typography>
+                                        {val.reviewer === userInfo.user._id && (
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    flexDirection: "row",
+                                                    justifyContent: "flex-end",
+                                                }}
+                                            >
+                                                <Button
+                                                    variant="contained"
+                                                    color="error"
+                                                    onClick={() =>
+                                                        axios
+                                                            .post(
+                                                                `${apiURL}/delete_review`,
+                                                                {
+                                                                    reviewId:
+                                                                        val._id,
+                                                                }
+                                                            )
+                                                            .then((bla) => {
+                                                                axios
+                                                                    .post(
+                                                                        `${apiURL}/get_all_reviews`,
+                                                                        {
+                                                                            reviewed:
+                                                                                courseId,
+                                                                        }
+                                                                    )
+                                                                    .then(
+                                                                        (
+                                                                            result
+                                                                        ) => {
+                                                                            setCourseReviews(
+                                                                                result.data
+                                                                            );
+                                                                        }
+                                                                    );
+                                                            })
+                                                    }
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </Box>
+                                        )}
                                     </Box>
                                     <Divider />
                                 </>

@@ -40,6 +40,9 @@ const InstructorReviews = () => {
     }
     return (
         <>
+            {reviews.length === 0 && (
+                <Typography variant="h6">No Reviews Yet</Typography>
+            )}
             <Box>
                 {reviews.map((review) => (
                     <Card sx={{ padding: "5px" }}>

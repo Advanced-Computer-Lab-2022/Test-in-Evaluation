@@ -92,12 +92,16 @@ const CourseSales = () => {
     );
 
     const totalRevenue = revenue.reduce((acc, rev) => acc + rev.revenue, 0);
+    const totalStudents = revenue.reduce((acc, rev) => acc + rev.buys, 0);
 
     return (
         <>
             <Toast alert={alert} setAlert={setAlert} />
             <Typography variant="h4">
                 Total Revenue: <strong>{totalRevenue}</strong>
+            </Typography>
+            <Typography variant="h4">
+                Total Students: <strong>{totalStudents}</strong>
             </Typography>
 
             <Box

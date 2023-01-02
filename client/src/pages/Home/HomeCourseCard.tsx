@@ -63,7 +63,7 @@ const HomeCourseCard = ({ course }: props) => {
                             fontWeight="bold"
                             color="text.secondary"
                         >
-                            {course?.avgRating}
+                            {course?.avgRating.toFixed(2)}
                         </Typography>
                         <Rating
                             value={course?.avgRating}

@@ -47,6 +47,10 @@ const ReportedProblems = () => {
     if (loading) return <Loader open={loading} />;
     return (
         <>
+            {problems.length === 0 && (
+                <Typography variant="h6">No Reported Problems Yet</Typography>
+            )}
+
             <Toast alert={alert} setAlert={setAlert} />
             <Box
                 sx={{

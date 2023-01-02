@@ -162,7 +162,9 @@ const Instructor = () => {
                             value={review}
                             onChange={(e) => setReview(e.target.value)}
                             rows={3}
-                            placeholder={"Write your own review here..."}
+                            placeholder={
+                                "Write your own review here... If you already reviewed before, the review will be updated!"
+                            }
                             variant="filled"
                             sx={{ width: "85%" }}
                         />
