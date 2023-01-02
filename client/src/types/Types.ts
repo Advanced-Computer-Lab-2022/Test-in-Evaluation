@@ -42,6 +42,7 @@ type Course = {
     summary: string;
     totalHours: number;
     price: number;
+    realPrice: number;
     rating: {
         sumOfRatings: number;
         numberOfRatings: number;
