@@ -134,7 +134,7 @@ function CourseCollectionCard(courseInfo: CourseDetails) {
                                     color="green"
                                     gutterBottom
                                 >
-                                    {courseInfo.discount}% off
+                                    {courseInfo.discount * 100}% off
                                 </Typography>
                             )}
                         </div>
