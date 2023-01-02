@@ -298,6 +298,35 @@ const Instructor = () => {
                                     <Typography sx={{ color: "white" }}>
                                         {val.text}
                                     </Typography>
+                                    {val.reviewer === userInfo.user._id && (
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "flex-end",
+                                            }}
+                                        >
+                                            <Button
+                                                variant="contained"
+                                                color="error"
+                                                onClick={() =>
+                                                    axios
+                                                        .post(
+                                                            `${apiURL}/delete_review`,
+                                                            {
+                                                                reviewId:
+                                                                    val._id,
+                                                            }
+                                                        )
+                                                        .then((bla) => {
+                                                            getInstructorReviews();
+                                                        })
+                                                }
+                                            >
+                                                Delete
+                                            </Button>
+                                        </Box>
+                                    )}
                                 </Box>
                                 <Divider />
                             </>
