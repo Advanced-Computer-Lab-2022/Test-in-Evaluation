@@ -32,6 +32,8 @@ CourseSchema.post("init", function (doc) {
         doc.discount?.endDate! >= new Date()
     ) {
         doc.realPrice = doc.price! - doc.price! * doc.discount!.rate!;
+    } else {
+        doc.discount = undefined;
     }
 
     if (this.rating && this.rating.NumberOfRatings > 0)
