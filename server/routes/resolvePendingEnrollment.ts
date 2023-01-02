@@ -20,6 +20,8 @@ export const addRoute = (app: Express) => {
         path,
         validateInput(Input),
         async (req: Request<Input>, res: Response) => {
+            console.log("Received request");
+
             const userSession = req.session.data;
             if (userSession.userType !== UserTypes.admin)
                 return res.status(401).send("Unauthorized");
