@@ -46,6 +46,9 @@ const Refunds = () => {
 
     return (
         <>
+            {refundRequests.length === 0 && (
+                <Typography variant="h6">No Pending Refunds</Typography>
+            )}
             <Toast alert={alert} setAlert={setAlert} />
             <Box
                 sx={{

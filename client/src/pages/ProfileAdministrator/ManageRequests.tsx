@@ -29,6 +29,10 @@ function ManageRequests() {
     if (!pageLoaded) return <div>Loading...</div>;
     return (
         <Box sx={{ width: "100%" }}>
+            {courseRequests.length === 0 && (
+                <Typography variant="h6">No Requests Yet</Typography>
+            )}
+
             <Box
                 sx={{
                     display: "flex",
