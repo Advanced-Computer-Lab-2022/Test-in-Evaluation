@@ -3,6 +3,7 @@ import AddUser from "./AddUser";
 import ManageRequests from "./ManageRequests";
 import ManageReports from "./ManageReports";
 import Discount from "../Discount/Discount";
+import GrantCourseAccess from "./GrantCourseAccess";
 import { useState } from "react";
 import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import Refunds from "./Refunds";
@@ -38,6 +39,7 @@ function ProfileAdministratorPage() {
                 <Tab label="Create Discount" value="addDiscount" />
                 <Tab label="manage problem reports" value="managereports" />
                 <Tab label="Manage Refund Requests" value="manageRefunds" />
+                <Tab label="Grant Course Access" value="grantAccess" />
                 <Button
                     onClick={() => {
                         navigate("/change_password");
@@ -60,6 +62,7 @@ function ProfileAdministratorPage() {
                 {optionTab === "addDiscount" && <Discount />}
                 {optionTab === "managereports" && <ManageReports />}
                 {optionTab === "manageRefunds" && <Refunds />}
+                {optionTab === "grantAccess" && <GrantCourseAccess />}
             </Box>
         </Box>
     );
