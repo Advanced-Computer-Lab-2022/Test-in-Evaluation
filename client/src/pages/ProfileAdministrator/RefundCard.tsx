@@ -4,7 +4,7 @@ import React from "react";
 import { apiURL } from "../../App";
 import { Toast } from "../../components";
 
-const RefundCard = ({ refundRequest }: any) => {
+const RefundCard = ({ refundRequest, setRefundRequests }: any) => {
     const [alert, setAlert] = React.useState({
         isSuccess: false,
         isError: false,
@@ -18,6 +18,11 @@ const RefundCard = ({ refundRequest }: any) => {
                 { enrollmentId: refundRequest._id },
                 { withCredentials: true }
             );
+            setRefundRequests((prev: any) => {
+                return prev.filter(
+                    (refund: any) => refund._id !== refundRequest._id
+                );
+            });
             setAlert({
                 isSuccess: true,
                 isError: false,
