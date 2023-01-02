@@ -67,26 +67,12 @@ const InstructorCoursesView = () => {
             });
     }, []);
 
-    const [instructors, setInstructors] = React.useState([]);
-    React.useEffect(() => {
-        axios
-            .get(apiURL + "/get_all_instructors", { withCredentials: true })
-            .then((response) => {
-                setInstructors(response.data.map((itm: any) => itm.username));
-            });
-    }, []);
-
     const [searchParams, setSearchParams] = useSearchParams();
     const [courseList, setCourseList] = React.useState<CourseDetails[]>([]);
     const [courseTitle, setCourseTitle] = React.useState(
         searchParams.get("course") || ""
     );
     const [courseSubject, setCourseSubject] = React.useState("");
-    const [courseInstructor, setCourseInstructor] = React.useState("");
-
-    useEffect(() => {
-        setCourseInstructor(userState.userInfo.user.username);
-    }, []);
 
     const [priceRangeValue, setPriceRangeValue] = React.useState<number[]>([
         0, 10000,
@@ -103,13 +89,12 @@ const InstructorCoursesView = () => {
     };
 
     async function filterCourses() {
-        setCourseInstructor(userState.userInfo.user.username);
         let response = await axios.post(
             apiURL + "/search_courses",
             {
                 title: courseTitle,
                 subject: courseSubject,
-                instructor: courseInstructor,
+                instructor: userState.userInfo.user.username,
                 priceLow: priceRangeValue[0],
                 priceHigh: priceRangeValue[1],
                 ratingLow: ratingRangeValue[0],
