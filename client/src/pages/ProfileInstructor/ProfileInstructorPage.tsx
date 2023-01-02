@@ -8,6 +8,7 @@ import Discount from "../Discount/Discount";
 import InstructorReviews from "../InstructorReviews/InstructorReviews";
 import ReportedProblems from "../Report/ReportedProblems";
 import CourseSales from "./CourseSales";
+import InstructorCoursesView from "./InstructorCoursesView";
 function ProfileInstructorPage() {
     const navigate = useNavigate();
     const [optionTab, setOptionTab] = useState("profileSettings");
@@ -38,6 +39,7 @@ function ProfileInstructorPage() {
             >
                 <Tab label="Profile Settings" value="profileSettings" />
                 <Tab label="Create a new course" value="createCourse" />
+                <Tab label="View my courses" value="viewMyCourses" />
                 <Tab label="Show My Reviews" value="instructorReviews" />
                 <Tab label="Reported Problems" value="reportedProblems" />
                 <Tab label="Create Discount" value="addDiscount" />
@@ -93,6 +95,7 @@ function ProfileInstructorPage() {
                     </Box>
                 )}
                 {optionTab === "createCourse" && <CreateCourse />}
+                {optionTab === "viewMyCourses" && <InstructorCoursesView />}
                 {optionTab === "instructorReviews" && <InstructorReviews />}
                 {optionTab === "reportedProblems" && <ReportedProblems />}
                 {optionTab === "addDiscount" && <Discount />}
