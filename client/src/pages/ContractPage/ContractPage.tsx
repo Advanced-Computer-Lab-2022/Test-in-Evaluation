@@ -79,26 +79,55 @@ const ContractPage = () => {
                     Contract
                 </Typography>
                 <Typography variant="body1" lineHeight="1.7">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Alias quasi dolores est accusantium itaque minus, earum
-                    adipisci voluptatibus reiciendis repudiandae. Placeat quae,
-                    repellendus at atque tempora culpa eligendi aliquid deserunt
-                    doloremque quis, quia nemo eum neque eius natus eveniet,
-                    ipsam laboriosam molestias distinctio ducimus. Sint facilis
-                    officiis eaque voluptas possimus! Rem est quos sunt placeat
-                    voluptas, tempore nobis suscipit illo eum blanditiis quasi
-                    quas quam doloremque eligendi error quia explicabo
-                    repellendus officiis quibusdam similique dolore autem
-                    necessitatibus soluta. Qui, quibusdam expedita! Fugit
-                    reprehenderit ab quas, sed dolorum quod pariatur aspernatur
-                    magni minima nisi, corrupti voluptates odit debitis
-                    voluptas? Dolores impedit vero pariatur magni temporibus
-                    obcaecati incidunt, culpa excepturi harum ex suscipit,
-                    debitis cumque atque et officiis cum! Tempore non quod,
-                    itaque velit recusandae temporibus suscipit est natus quas
-                    dolores, aliquid deserunt, expedita laudantium. Ullam quod
-                    minima ipsum molestias nulla facilis voluptatibus enim
-                    libero, vel officia. Minus unde magni commodi soluta.
+                    <p>
+                        This Instructor Contract ("Contract") is entered into by
+                        [Instructor Name] ("Instructor") and Test in Evaluation
+                        ("Company"). By accepting this Contract, Instructor
+                        agrees to the terms and conditions set forth below.
+                    </p>
+
+                    <h3>Rights to Posted Videos and Materials</h3>
+                    <p>
+                        Instructor retains ownership of all intellectual
+                        property rights in the videos and materials posted by
+                        Instructor on the Company's website. However, by posting
+                        the videos and materials on the website, Instructor
+                        grants the Company a non-exclusive, worldwide,
+                        perpetual, royalty-free license to use, reproduce,
+                        distribute, and display the videos and materials for the
+                        purpose of promoting and distributing the courses on the
+                        website.
+                    </p>
+
+                    <h3>Percentage Taken by the Company</h3>
+                    <p>
+                        The Company shall take a percentage of the course fee
+                        for each registered trainee of Instructor's courses. The
+                        current percentage is 5%. The percentage may be subject
+                        to change at the discretion of the Company.
+                    </p>
+
+                    <h3>Termination</h3>
+                    <p>
+                        This Contract shall remain in effect until terminated by
+                        either party. The Instructor may terminate this Contract
+                        at any time by removing their courses from the website.
+                        The Company may terminate this Contract if the
+                        Instructor breaches any of the terms and conditions of
+                        this Contract or engages in any illegal or fraudulent
+                        activity.
+                    </p>
+
+                    <h3>Governing Law</h3>
+                    <p>
+                        This Contract shall be governed by and construed in
+                        accordance with the laws of the State of [State],
+                        without giving effect to any principles of conflicts of
+                        law. Any legal action or proceeding arising out of or
+                        relating to this Contract or the rights and obligations
+                        of the parties hereto shall be brought in the courts of
+                        the State of [State].
+                    </p>
                 </Typography>
                 <Box
                     sx={{
