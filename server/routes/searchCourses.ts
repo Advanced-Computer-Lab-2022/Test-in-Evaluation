@@ -83,7 +83,6 @@ export const addRoute = (app: Express) => {
                 .then((v) =>
                     v.map((u) => {
                         const ret = u.toObject();
-                        if (isCorporate) ret.price = undefined;
                         return ret;
                     })
                 );
