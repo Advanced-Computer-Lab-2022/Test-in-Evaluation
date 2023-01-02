@@ -60,6 +60,8 @@ const SectionModal = ({ setSections }: props) => {
         setTitle("");
         setDescription("");
         setTotalHours(0);
+        setVideoURL("");
+        setQuizQuestions([]);
     };
 
     return (

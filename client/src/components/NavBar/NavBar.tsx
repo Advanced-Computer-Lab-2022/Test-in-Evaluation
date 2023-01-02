@@ -18,6 +18,7 @@ import NavSearchBar from "../SearchBar/SearchBar";
 import axios from "axios";
 import { countries } from "../../data/countries";
 import { apiURL, UserContext } from "../../App";
+import { LocalLibrary } from "@mui/icons-material";
 
 const drawerWidth = 240;
 type NavItem = {
@@ -87,7 +88,7 @@ export default function DrawerAppBar() {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
             <Typography variant="h6" sx={{ my: 2 }}>
-                LOGO
+                <LocalLibrary />
             </Typography>
             <Divider />
             <List>
@@ -119,16 +120,14 @@ export default function DrawerAppBar() {
                         <MenuIcon />
                     </IconButton>
                     <Box sx={{ display: "flex", flexGrow: 1, gap: 0.5 }}>
-                        <Typography
-                            variant="h6"
+                        <LocalLibrary
+                            fontSize="large"
                             sx={{
                                 display: { xs: "none", md: "block" },
                                 "&:hover": { cursor: "pointer" },
                             }}
                             onClick={() => navigate("/")}
-                        >
-                            LOGO
-                        </Typography>
+                        />
                         <NavSearchBar />
                     </Box>
                     <Box sx={{ display: { md: "block" }, marginRight: "5px" }}>

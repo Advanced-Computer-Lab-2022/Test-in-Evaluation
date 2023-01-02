@@ -100,6 +100,7 @@ const CreateCourse = () => {
             setSummary("");
             setPrice(0);
             setSections([]);
+            setVideoPreviewURL("");
             setLoading(false);
             setAlert({
                 isSuccess: true,
@@ -151,6 +152,7 @@ const CreateCourse = () => {
 
                     <FormControl>
                         <Autocomplete
+                            freeSolo={true}
                             renderInput={(params) => (
                                 <TextField
                                     {...params}

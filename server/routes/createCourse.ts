@@ -64,7 +64,8 @@ export const addRoute = (app: Express) => {
             const subjectId = subject
                 ? await Subject.findOneAndUpdate(
                       { Name: subject },
-                      { upsert: true }
+                      { Name: subject },
+                      { upsert: true, new: true }
                   ).then((v) => v?._id)
                 : undefined;
             const course = await Course.create({

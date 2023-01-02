@@ -83,6 +83,18 @@ const HomeCourseCard = ({ course }: props) => {
                             {course?.realPrice +
                                 " " +
                                 currencyOfCountry(userState.country)}
+                            {course?.discount?.rate > 0 && (
+                                <Typography
+                                    sx={{
+                                        fontSize: 14,
+                                        alignSelf: "center",
+                                    }}
+                                    color="green"
+                                    gutterBottom
+                                >
+                                    {(course?.discount?.rate || 0) * 100}% off
+                                </Typography>
+                            )}
                         </Typography>
                         <Typography variant="subtitle1" color="text.secondary">
                             {course?.totalHours} Hours
