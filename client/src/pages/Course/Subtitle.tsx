@@ -192,14 +192,16 @@ const Subtitle = ({ subtitle, isEnrolled, fetchCourseProgress }: params) => {
                         <Button onClick={() => setVideoOpen(true)}>
                             Watch Video
                         </Button>
-                        <Button
-                            onClick={() => {
-                                setIsViewingExercises(false);
-                                setExerciseOpen(true);
-                            }}
-                        >
-                            Solve Exercise
-                        </Button>
+                        {subtitle.exam.exercises.length > 0 && (
+                            <Button
+                                onClick={() => {
+                                    setIsViewingExercises(false);
+                                    setExerciseOpen(true);
+                                }}
+                            >
+                                Solve Exercise
+                            </Button>
+                        )}
                     </CardActions>
                 )}
             </Card>
