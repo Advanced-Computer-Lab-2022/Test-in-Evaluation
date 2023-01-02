@@ -258,6 +258,11 @@ const CourseCollectionPage = () => {
                         <Typography variant="h4" gutterBottom>
                             Filter Results
                         </Typography>
+                        {courseList.length === 0 && (
+                            <Typography variant="h6" gutterBottom>
+                                No Results
+                            </Typography>
+                        )}
                         {courseList.map((course) => (
                             <CourseCollectionCard {...course} />
                         ))}

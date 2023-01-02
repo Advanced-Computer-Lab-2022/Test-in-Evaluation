@@ -129,6 +129,11 @@ function SearchResultPage() {
                             padding: "1em",
                         }}
                     >
+                        {courseList.length === 0 && (
+                            <Typography variant="h6">
+                                No results found. Please try again.
+                            </Typography>
+                        )}
                         {courseList.map((course: Course) => {
                             return (
                                 <>
