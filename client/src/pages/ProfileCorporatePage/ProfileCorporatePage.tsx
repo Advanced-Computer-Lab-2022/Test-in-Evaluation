@@ -1,10 +1,12 @@
-import { Tab, Tabs } from "@mui/material";
+import { Button, Tab, Tabs } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReportedProblems from "../Report/ReportedProblems";
 import RequestedCourses from "./RequestedCourses";
 
 const ProfileCorporatePage = () => {
+    const navigate = useNavigate();
     const [optionTab, setOptionTab] = useState("requestedCourses");
 
     return (
@@ -31,6 +33,15 @@ const ProfileCorporatePage = () => {
             >
                 <Tab label="Course Requests" value="requestedCourses" />
                 <Tab label="Reported Problems" value="reportedProblems" />
+                <Button
+                    onClick={() => {
+                        navigate("/change_password");
+                    }}
+                    sx={{ float: "down" }}
+                    variant="contained"
+                >
+                    Change Password
+                </Button>
             </Tabs>
             <Box
                 sx={{

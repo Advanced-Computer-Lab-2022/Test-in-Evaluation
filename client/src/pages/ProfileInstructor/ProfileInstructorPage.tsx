@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs, Container, Input, Button } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiURL } from "../../App";
 import CreateCourse from "../CreateCourse/CreateCourse";
 import Discount from "../Discount/Discount";
@@ -8,6 +9,7 @@ import InstructorReviews from "../InstructorReviews/InstructorReviews";
 import ReportedProblems from "../Report/ReportedProblems";
 import CourseSales from "./CourseSales";
 function ProfileInstructorPage() {
+    const navigate = useNavigate();
     const [optionTab, setOptionTab] = useState("profileSettings");
     const [bioValue, setBioValue] = useState("");
     const [emailValue, setEmailValue] = useState("");
@@ -40,6 +42,15 @@ function ProfileInstructorPage() {
                 <Tab label="Reported Problems" value="reportedProblems" />
                 <Tab label="Create Discount" value="addDiscount" />
                 <Tab label="Course Sales" value="courseSales" />
+                <Button
+                    onClick={() => {
+                        navigate("/change_password");
+                    }}
+                    sx={{ float: "down" }}
+                    variant="contained"
+                >
+                    Change Password
+                </Button>
             </Tabs>
             <Box sx={{ flexGrow: 1, p: 2, border: "1px solid #ccc" }}>
                 {optionTab === "profileSettings" && (

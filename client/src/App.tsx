@@ -22,6 +22,7 @@ import {
     CourseCollectionPage,
 } from "./pages";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import { LoginProtected, ContractProtected, Quiz } from "./components";
 import axios from "axios";
 import { User } from "./../src/types/Types";
@@ -106,6 +107,10 @@ function App() {
                             <Route
                                 path="/forgot_password"
                                 element={<ForgotPassword />}
+                            ></Route>
+                            <Route
+                                path="/change_password"
+                                element={<ChangePassword />}
                             ></Route>
                             <Route path="/signup" element={<SignUp />}></Route>
                             <Route

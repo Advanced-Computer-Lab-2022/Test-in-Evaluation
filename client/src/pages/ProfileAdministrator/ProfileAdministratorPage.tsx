@@ -4,12 +4,13 @@ import ManageRequests from "./ManageRequests";
 import ManageReports from "./ManageReports";
 import Discount from "../Discount/Discount";
 import { useState } from "react";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Button, Tab, Tabs, Typography } from "@mui/material";
 import Refunds from "./Refunds";
+import { useNavigate } from "react-router-dom";
 
 function ProfileAdministratorPage() {
     const [optionTab, setOptionTab] = useState("addusers");
-
+    const navigate = useNavigate();
     return (
         <Box
             sx={{
@@ -37,6 +38,15 @@ function ProfileAdministratorPage() {
                 <Tab label="Create Discount" value="addDiscount" />
                 <Tab label="manage problem reports" value="managereports" />
                 <Tab label="Manage Refund Requests" value="manageRefunds" />
+                <Button
+                    onClick={() => {
+                        navigate("/change_password");
+                    }}
+                    sx={{ float: "down" }}
+                    variant="contained"
+                >
+                    Change Password
+                </Button>
             </Tabs>
             <Box
                 sx={{
