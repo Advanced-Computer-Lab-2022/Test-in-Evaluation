@@ -6,6 +6,8 @@ import {
     AccordionSummary,
     Box,
     Button,
+    Card,
+    CardContent,
     Chip,
     Divider,
     Rating,
@@ -16,7 +18,7 @@ import {
 import { useParams } from "react-router-dom";
 import { User } from "../../types/Types";
 import axios from "axios";
-import { Star, StarBorder } from "@mui/icons-material";
+import { Person, Star, StarBorder } from "@mui/icons-material";
 
 const SubmitRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
@@ -74,6 +76,15 @@ const Instructor = () => {
     const [rating, setRating] = useState<number | null>(2.5);
     const [review, setReview] = useState<string | null>("");
 
+    const [avgRating, setAvgRating] = useState<number>(0);
+    useEffect(() => {
+        let sum = 0;
+        instructorReviews.forEach((review: any) => {
+            sum += review.score;
+        });
+        setAvgRating(sum / instructorReviews.length);
+    }, [instructorReviews]);
+
     return (
         <Box
             sx={{
@@ -82,207 +93,216 @@ const Instructor = () => {
                 gap: "1rem",
             }}
         >
-            {instructor != null && (
-                <div>
-                    <Typography variant="h4">Instructor</Typography>
+            <Card sx={{ width: "50em", alignSelf: "center" }}>
+                <CardContent sx={{ display: "flex", gap: "2em" }}>
+                    <Box sx={{ alignSelf: "center" }}>
+                        <Person sx={{ fontSize: "20em" }} />
+                    </Box>
                     <Box
                         sx={{
                             display: "flex",
                             flexDirection: "column",
-                            gap: "1rem",
+                            gap: "0.125em",
                         }}
                     >
-                        <Typography variant="h5">
-                            {instructor.firstName + " " + instructor.lastName}
+                        <Typography variant="h3">
+                            {instructor?.firstName + " " + instructor?.lastName}
                         </Typography>
-                        <Typography variant="h6">{instructor.bio}</Typography>
+                        <Rating
+                            value={avgRating}
+                            readOnly
+                            precision={0.1}
+                            sx={{ alignSelf: "center" }}
+                        />
+                        <Typography variant="body1">
+                            {instructor?.bio}
+                        </Typography>
+                    </Box>
+                </CardContent>
+            </Card>
+
+            <Box
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    width: "100%",
+                }}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            fontSize: "50px",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Reviews
+                    </Typography>
+                </Box>
+                {(userInfo.type == "corporateTrainee" ||
+                    userInfo.type == "individualTrainee") && (
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            maxWidth: "1400px",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: "10px",
+                            marginBottom: "1rem",
+                        }}
+                    >
+                        <TextField
+                            label="Add Review"
+                            multiline
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            rows={3}
+                            placeholder={"Write your own review here..."}
+                            variant="filled"
+                            sx={{ width: "85%" }}
+                        />
 
                         <Box
                             sx={{
                                 width: "100%",
                                 display: "flex",
-                                maxWidth: "1400px",
+                                flexDirection: "row",
+                                justifyContent: "space-evenly",
+                                alignItems: "center",
                             }}
                         >
-                            <Typography
-                                sx={{
-                                    fontSize: "50px",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                Reviews
-                            </Typography>
-                        </Box>
-                        {(userInfo.type == "corporateTrainee" ||
-                            userInfo.type == "individualTrainee") && (
-                            <Box
-                                sx={{
-                                    width: "100%",
-                                    display: "flex",
-                                    maxWidth: "1400px",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    gap: "10px",
-                                }}
-                            >
-                                <TextField
-                                    label="Add Review"
-                                    multiline
-                                    value={review}
-                                    onChange={(e) => setReview(e.target.value)}
-                                    rows={3}
-                                    placeholder={
-                                        "Write your own review here..."
+                            <Box>
+                                <SubmitRating
+                                    name="customized-color"
+                                    value={rating}
+                                    onChange={(event, newValue) => {
+                                        setRating(newValue);
+                                    }}
+                                    getLabelText={(value: number) =>
+                                        `${value} Heart${
+                                            value !== 1 ? "s" : ""
+                                        }`
                                     }
-                                    variant="filled"
-                                    sx={{ width: "85%" }}
+                                    precision={0.1}
+                                    icon={<Star fontSize="inherit" />}
+                                    emptyIcon={
+                                        <StarBorder
+                                            sx={{ color: "black" }}
+                                            fontSize="inherit"
+                                        />
+                                    }
                                 />
+                            </Box>
 
+                            <Button
+                                onClick={() => {
+                                    axios
+                                        .post(
+                                            `${apiURL}/write_review`,
+                                            {
+                                                reviewed: instructor?._id,
+                                                score: rating,
+                                                text: review,
+                                            },
+                                            { withCredentials: true }
+                                        )
+                                        .then((res) => {
+                                            if (res.data.sucess) {
+                                                alert(
+                                                    "Review submitted successfully!"
+                                                );
+                                                getInstructorReviews();
+                                            } else {
+                                                alert(
+                                                    "Error submitting review!"
+                                                );
+                                            }
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
+                                        });
+                                }}
+                                sx={{ width: "40%" }}
+                                variant="contained"
+                            >
+                                Submit Review
+                            </Button>
+                        </Box>
+                    </Box>
+                )}
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "100%",
+                        maxWidth: "1400px",
+                        gap: "2px",
+                    }}
+                >
+                    {instructorReviews.map((val, idx) => {
+                        return (
+                            <>
                                 <Box
                                     sx={{
-                                        width: "100%",
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        justifyContent: "space-evenly",
-                                        alignItems: "center",
+                                        backgroundColor: "#171718",
+                                        padding: "10px",
+                                        borderRadius: "10px",
                                     }}
                                 >
-                                    <Box>
-                                        <SubmitRating
-                                            name="customized-color"
-                                            value={rating}
-                                            onChange={(event, newValue) => {
-                                                setRating(newValue);
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            gap: "20px",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <Typography
+                                            sx={{
+                                                fontWeight: "bold",
+                                                fontSize: "30px",
+                                                color: "white",
                                             }}
+                                        >
+                                            {val.reviewerName + " "}
+                                        </Typography>
+                                        <StyledRating
+                                            name="customized-color"
+                                            value={val.score}
                                             getLabelText={(value: number) =>
                                                 `${value} Heart${
                                                     value !== 1 ? "s" : ""
                                                 }`
                                             }
+                                            readOnly
                                             precision={0.1}
                                             icon={<Star fontSize="inherit" />}
                                             emptyIcon={
                                                 <StarBorder
-                                                    sx={{ color: "black" }}
+                                                    sx={{
+                                                        color: "white",
+                                                    }}
                                                     fontSize="inherit"
                                                 />
                                             }
                                         />
                                     </Box>
-
-                                    <Button
-                                        onClick={() => {
-                                            axios
-                                                .post(
-                                                    `${apiURL}/write_review`,
-                                                    {
-                                                        reviewed:
-                                                            instructor._id,
-                                                        score: rating,
-                                                        text: review,
-                                                    },
-                                                    { withCredentials: true }
-                                                )
-                                                .then((res) => {
-                                                    if (res.data.sucess) {
-                                                        alert(
-                                                            "Review submitted successfully!"
-                                                        );
-                                                        getInstructorReviews();
-                                                    } else {
-                                                        alert(
-                                                            "Error submitting review!"
-                                                        );
-                                                    }
-                                                })
-                                                .catch((err) => {
-                                                    console.log(err);
-                                                });
-                                        }}
-                                        sx={{ width: "40%" }}
-                                        variant="contained"
-                                    >
-                                        Submit Review
-                                    </Button>
+                                    <Typography sx={{ color: "white" }}>
+                                        {val.text}
+                                    </Typography>
                                 </Box>
-                            </Box>
-                        )}
-
-                        <Box
-                            sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                width: "100%",
-                                maxWidth: "1400px",
-                                gap: "2px",
-                            }}
-                        >
-                            {instructorReviews.map((val, idx) => {
-                                return (
-                                    <>
-                                        <Box
-                                            sx={{
-                                                backgroundColor: "#171718",
-                                                padding: "10px",
-                                                borderRadius: "10px",
-                                            }}
-                                        >
-                                            <Box
-                                                sx={{
-                                                    display: "flex",
-                                                    flexDirection: "row",
-                                                    gap: "20px",
-                                                    alignItems: "center",
-                                                }}
-                                            >
-                                                <Typography
-                                                    sx={{
-                                                        fontWeight: "bold",
-                                                        fontSize: "30px",
-                                                        color: "white",
-                                                    }}
-                                                >
-                                                    {val.reviewerName + " "}
-                                                </Typography>
-                                                <StyledRating
-                                                    name="customized-color"
-                                                    value={val.score}
-                                                    getLabelText={(
-                                                        value: number
-                                                    ) =>
-                                                        `${value} Heart${
-                                                            value !== 1
-                                                                ? "s"
-                                                                : ""
-                                                        }`
-                                                    }
-                                                    readOnly
-                                                    precision={0.1}
-                                                    icon={
-                                                        <Star fontSize="inherit" />
-                                                    }
-                                                    emptyIcon={
-                                                        <StarBorder
-                                                            sx={{
-                                                                color: "white",
-                                                            }}
-                                                            fontSize="inherit"
-                                                        />
-                                                    }
-                                                />
-                                            </Box>
-                                            <Typography sx={{ color: "white" }}>
-                                                {val.text}
-                                            </Typography>
-                                        </Box>
-                                        <Divider />
-                                    </>
-                                );
-                            })}
-                        </Box>
-                    </Box>
-                </div>
-            )}
+                                <Divider />
+                            </>
+                        );
+                    })}
+                </Box>
+            </Box>
         </Box>
     );
 };
