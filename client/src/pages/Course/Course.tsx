@@ -203,6 +203,10 @@ const CoursePage = () => {
         fetchCourseProgress();
     }, [courseId]);
 
+    const isEnrolled = () => {
+        return enrollStatus === "accepted" || enrollStatus === "pendingRefund";
+    };
+
     const requestRefund = () => {
         axios
             .post(apiURL + "/request_refund", {
@@ -357,7 +361,7 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
-                                {(enrollStatus != "accepted" ||
+                                {(!isEnrolled() ||
                                     userInfo.type === "instructor") &&
                                     userInfo.type == "individualTrainee" && (
                                         <Box
@@ -392,7 +396,7 @@ const CoursePage = () => {
                                         </Box>
                                     )}
                                 <Box>
-                                    {enrollStatus == "accepted" ||
+                                    {isEnrolled() ||
                                     userInfo.type === "instructor" ? (
                                         <Box
                                             sx={{
@@ -461,7 +465,7 @@ const CoursePage = () => {
                                     flexDirection: "column",
                                 }}
                             >
-                                {enrollStatus == "accepted" && (
+                                {isEnrolled() && (
                                     <Card>
                                         <CardContent
                                             sx={{
@@ -546,10 +550,7 @@ const CoursePage = () => {
                                                 <AccordionDetails>
                                                     <Subtitle
                                                         subtitle={val}
-                                                        isEnrolled={
-                                                            enrollStatus ==
-                                                            "accepted"
-                                                        }
+                                                        isEnrolled={isEnrolled()}
                                                         fetchCourseProgress={
                                                             fetchCourseProgress
                                                         }

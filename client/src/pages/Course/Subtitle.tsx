@@ -167,7 +167,7 @@ const Subtitle = ({ subtitle, isEnrolled, fetchCourseProgress }: params) => {
                     <Typography variant="body1" gutterBottom>
                         {subtitle.description}
                     </Typography>
-                    {exerciseSolution && (
+                    {exerciseSolution && isEnrolled && (
                         <div style={{ width: "100%", display: "flex" }}>
                             <Typography>
                                 Quiz Result: ({curScore} /{" "}

@@ -29,8 +29,6 @@ export const addRoute = (app: Express) => {
             const enrollment = await Enrollment.findById(enrollmentId);
             if (!enrollment)
                 return res.status(404).send("Enrollment not found");
-            if (enrollment.status !== "accepted")
-                return res.status(400).send("Enrollment not accepted");
 
             const user = await User.findOne({ username: userSession.username });
             if (!user) return res.status(404).send("User not found");
