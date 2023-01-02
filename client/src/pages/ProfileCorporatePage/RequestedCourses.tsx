@@ -13,7 +13,6 @@ const RequestedCourses = () => {
             withCredentials: true,
         });
 
-        console.log(pendingCourses);
         setCourseRequests(pendingCourses.data as any[]);
         setPageLoaded(true);
     };
@@ -25,7 +24,19 @@ const RequestedCourses = () => {
     if (!pageLoaded) return <div>Loading...</div>;
     return (
         <Box sx={{ width: "100%" }}>
-            <Box sx={{ width: "80%" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "10px",
+                    flexBasis: "33.333%",
+                    flexWrap: "wrap",
+                    padding: "1em",
+                }}
+            >
                 {courseRequests.map((elm) => {
                     return <EnrollmentCard requestInfo={elm} />;
                 })}

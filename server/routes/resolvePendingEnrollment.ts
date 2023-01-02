@@ -16,7 +16,7 @@ const Input = Record({
 type Input = Static<typeof Input>;
 
 export const addRoute = (app: Express) => {
-    app.get(
+    app.post(
         path,
         validateInput(Input),
         async (req: Request<Input>, res: Response) => {
@@ -40,9 +40,11 @@ export const addRoute = (app: Express) => {
                 }
             );
 
+            console.log("Looked for enrollment");
             if (enrollment.matchedCount === 0)
                 return res.status(404).send("Enrollment not found");
 
+            console.log("Found enrollment");
             return res.status(200).send("Enrollment updated");
         }
     );
