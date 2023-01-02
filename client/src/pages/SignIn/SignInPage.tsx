@@ -225,6 +225,7 @@ function SignInPage() {
                             >
                                 Forgot Password?
                             </Link>
+
                             <Typography variant="body1">
                                 {"Don't have an account?   "}
                                 <Link

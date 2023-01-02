@@ -1,10 +1,12 @@
-import { Tab, Tabs } from "@mui/material";
+import { Button, Tab, Tabs } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReportedProblems from "../Report/ReportedProblems";
 import Wallet from "./Wallet";
 
 const ProfileTraineePage = () => {
+    const navigate = useNavigate();
     const [optionTab, setOptionTab] = useState("wallet");
 
     return (
@@ -31,6 +33,15 @@ const ProfileTraineePage = () => {
             >
                 <Tab label="Wallet" value="wallet" />
                 <Tab label="Reported Problems" value="reportedProblems" />
+                <Button
+                    onClick={() => {
+                        navigate("/change_password");
+                    }}
+                    sx={{ float: "down" }}
+                    variant="contained"
+                >
+                    Change Password
+                </Button>
             </Tabs>
             <Box
                 sx={{
