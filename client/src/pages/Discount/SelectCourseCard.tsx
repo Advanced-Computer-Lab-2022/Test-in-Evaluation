@@ -62,7 +62,7 @@ const SelectCourseCard = ({ course, setSelected }: Props) => {
                             (course.summary.length > 20 ? "..." : "")}
                     </Typography>
                     <Typography variant="subtitle1">
-                        Price: {course.price + " " + GetCurrency()}
+                        Price: {course.realPrice + " " + GetCurrency()}
                     </Typography>
                 </CardContent>
             </CardActionArea>

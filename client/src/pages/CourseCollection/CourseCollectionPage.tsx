@@ -29,6 +29,7 @@ export interface CourseDetails {
     id: string;
     name: string;
     desc: string;
+    realPrice: number;
     subtitles: {
         title: string;
         hours: number;
@@ -119,7 +120,7 @@ const CourseCollectionPage = () => {
                 id: itm._id,
                 name: itm.title,
                 desc: itm.summary,
-                price: itm.price,
+                price: itm.realPrice,
                 discount: itm.discount?.rate ?? 0,
                 rating: itm.avgRating.toFixed(2),
             };

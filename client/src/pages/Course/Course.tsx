@@ -174,7 +174,7 @@ const CoursePage = () => {
     const onCoursePay = () => {
         axios
             .post(apiURL + "/pay_to_wallet", {
-                amount: course!.course.price,
+                amount: course!.course.realPrice,
             })
             .then((res) => {
                 enrollNow();
@@ -240,7 +240,7 @@ const CoursePage = () => {
         >
             <Toast alert={alert} setAlert={setAlert} />
             <RechargeModal
-                amountToBeCharged={course?.course.price ?? 0}
+                amountToBeCharged={course?.course.realPrice ?? 0}
                 onCompleted={onCoursePay}
                 open={openPayment}
                 setOpen={setOpenPayment}
@@ -374,7 +374,7 @@ const CoursePage = () => {
                                                 variant="h4"
                                                 sx={{ color: "white" }}
                                             >
-                                                {course?.course.price.toString() +
+                                                {course?.course.realPrice.toString() +
                                                     " " +
                                                     GetCurrency()}
                                             </Typography>
@@ -720,20 +720,6 @@ const CoursePage = () => {
                         })}
                     </Box>
                 </Box>
-
-                {/* <YoutubeEmbed
-                    url={"https://www.youtube.com/embed/CermGp8bwFE"}
-                />
-
-                <Chip sx={{ backgroundColor: "blue" }} label="Chip Filled" />
-                <h2>{course?.course.subjectId.Name}</h2>
-                <h3>{course?.course.summary}</h3>
-                <h3>{course?.course.totalHours.toString()}</h3>
-                <h3>{course?.course.instructor.firstName}</h3>
-                <h3>{course?.course.instructor.lastName}</h3>
-                <h3>{course?.course.price.toString()}</h3>
-                <h3>{course?.course.rating.sumOfRatings.toString()}</h3>
-                <h3>{course?.course.rating.numberOfRatings.toString()}</h3> */}
             </Box>
         </div>
     );

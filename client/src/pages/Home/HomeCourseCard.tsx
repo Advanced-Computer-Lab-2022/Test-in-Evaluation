@@ -81,7 +81,7 @@ const HomeCourseCard = ({ course }: props) => {
                     >
                         <Typography variant="body2" fontWeight="bold">
                             Price:{" "}
-                            {course?.price +
+                            {course?.realPrice +
                                 " " +
                                 currencyOfCountry(userState.country)}
                         </Typography>
