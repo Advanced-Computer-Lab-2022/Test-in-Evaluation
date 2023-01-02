@@ -4,7 +4,7 @@ import React from "react";
 import { apiURL } from "../../App";
 import { Toast } from "../../components";
 
-const RefundCard = ({ refundRequest }: any) => {
+const RefundCard = ({ refundRequest, getRefundRequests }: any) => {
     const [alert, setAlert] = React.useState({
         isSuccess: false,
         isError: false,
@@ -23,6 +23,7 @@ const RefundCard = ({ refundRequest }: any) => {
                 isError: false,
                 message: "Refund approved",
             });
+            getRefundRequests();
         } catch (error) {
             console.log(error);
             setAlert({

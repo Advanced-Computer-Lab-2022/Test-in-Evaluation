@@ -59,6 +59,7 @@ const Refunds = () => {
                         <RefundCard
                             key={refundRequest._id}
                             refundRequest={refundRequest}
+                            getRefundRequests={getRefundRequests}
                         />
                     );
                 })}
