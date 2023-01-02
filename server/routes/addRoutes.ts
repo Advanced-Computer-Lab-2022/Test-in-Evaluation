@@ -45,6 +45,7 @@ import { addRoute as acceptRefundAddRoute } from "./acceptRefund";
 import { addRoute as getPendingRefundsAddRoute } from "./getPendingRefunds";
 import { addRoute as resolvePendingEnrollmentAddRoute } from "./resolvePendingEnrollment";
 import { addRoute as getAllCorpUsersAddRoute } from "./getAllCorpUsers";
+import { addRoute as addStudentToCourseAddRoute } from "./addStudentToCourse";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -94,4 +95,5 @@ export const addRoutes = (app: Express) => {
     getPendingRefundsAddRoute(app);
     resolvePendingEnrollmentAddRoute(app);
     getAllCorpUsersAddRoute(app);
+    addStudentToCourseAddRoute(app);
 };
