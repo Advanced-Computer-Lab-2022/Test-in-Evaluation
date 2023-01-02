@@ -11,6 +11,7 @@ import { UserContext } from "../../App";
 import { Course } from "../../types/Types";
 import { useNavigate } from "react-router-dom";
 import { currencyOfCountry } from "../../data/currency";
+import { couldStartTrivia } from "typescript";
 
 type props = {
     course: Course;
@@ -21,8 +22,6 @@ const HomeCourseCard = ({ course }: props) => {
         navigate(`/course/${id}`);
     };
     const userState = useContext(UserContext);
-    const courseRating =
-        course?.rating?.sumOfRatings / course?.rating?.numberOfRatings || 0;
 
     return (
         <Card sx={{ textAlign: "left" }} key={course._id}>
@@ -64,10 +63,10 @@ const HomeCourseCard = ({ course }: props) => {
                             fontWeight="bold"
                             color="text.secondary"
                         >
-                            {courseRating}
+                            {course?.avgRating}
                         </Typography>
                         <Rating
-                            value={courseRating}
+                            value={course?.avgRating}
                             precision={0.5}
                             readOnly
                             size="small"

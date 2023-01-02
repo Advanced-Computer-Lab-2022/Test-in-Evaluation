@@ -364,7 +364,7 @@ const CoursePage = () => {
                             >
                                 {(!isEnrolled() ||
                                     userInfo.type === "instructor") &&
-                                    userInfo.type == "individualTrainee" && (
+                                    userInfo.type != "corporateTrainee" && (
                                         <Box
                                             sx={{
                                                 display: "flex",
@@ -423,19 +423,21 @@ const CoursePage = () => {
                                         </Box>
                                     ) : (
                                         <Box>
-                                            {enrollStatus !== "pending" && (
-                                                <Button
-                                                    variant="contained"
-                                                    size="large"
-                                                    sx={{ width: "100%" }}
-                                                    onClick={enrollNow}
-                                                >
-                                                    {userInfo.type ===
-                                                    "individualTrainee"
-                                                        ? "Purchase Now"
-                                                        : "Enroll Now"}
-                                                </Button>
-                                            )}
+                                            {enrollStatus !== "pending" &&
+                                                userInfo.type !== "admin" &&
+                                                userInfo.isGuest === false && (
+                                                    <Button
+                                                        variant="contained"
+                                                        size="large"
+                                                        sx={{ width: "100%" }}
+                                                        onClick={enrollNow}
+                                                    >
+                                                        {userInfo.type ===
+                                                        "individualTrainee"
+                                                            ? "Purchase Now"
+                                                            : "Enroll Now"}
+                                                    </Button>
+                                                )}
                                             {enrollStatus === "pending" && (
                                                 <Typography
                                                     sx={{ color: "white" }}
@@ -590,69 +592,88 @@ const CoursePage = () => {
                             Reviews
                         </Typography>
                     </Box>
-                    <TextField
-                        label="Add Review"
-                        multiline
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        rows={3}
-                        placeholder={"Write your own review here..."}
-                        variant="filled"
-                        sx={{ width: "85%" }}
-                    />
-
-                    <Box
-                        sx={{
-                            width: "100%",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-evenly",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Box>
-                            <SubmitRating
-                                name="customized-color"
-                                value={rating}
-                                onChange={(event, newValue) => {
-                                    setRating(newValue);
-                                }}
-                                getLabelText={(value: number) =>
-                                    `${value} Heart${value !== 1 ? "s" : ""}`
-                                }
-                                precision={0.1}
-                                icon={<Star fontSize="inherit" />}
-                                emptyIcon={
-                                    <StarBorder
-                                        sx={{ color: "black" }}
-                                        fontSize="inherit"
-                                    />
-                                }
+                    {isEnrolled() && (
+                        <Box sx={{ width: "100%" }}>
+                            <TextField
+                                label="Add Review"
+                                multiline
+                                value={review}
+                                onChange={(e) => setReview(e.target.value)}
+                                rows={3}
+                                placeholder={"Write your own review here..."}
+                                variant="filled"
+                                sx={{ width: "85%" }}
                             />
-                        </Box>
 
-                        <Button
-                            onClick={() => {
-                                axios
-                                    .post(
-                                        `${apiURL}/write_review`,
-                                        {
-                                            reviewed: course?.course._id,
-                                            score: rating,
-                                            text: review,
-                                        },
-                                        { withCredentials: true }
-                                    )
-                                    .catch((err) => {
-                                        console.log(err);
-                                    });
-                            }}
-                            sx={{ width: "40%" }}
-                            variant="contained"
-                        >
-                            Submit Review
-                        </Button>
-                    </Box>
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-evenly",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Box>
+                                    <SubmitRating
+                                        name="customized-color"
+                                        value={rating}
+                                        onChange={(event, newValue) => {
+                                            setRating(newValue);
+                                        }}
+                                        getLabelText={(value: number) =>
+                                            `${value} Heart${
+                                                value !== 1 ? "s" : ""
+                                            }`
+                                        }
+                                        precision={0.1}
+                                        icon={<Star fontSize="inherit" />}
+                                        emptyIcon={
+                                            <StarBorder
+                                                sx={{ color: "black" }}
+                                                fontSize="inherit"
+                                            />
+                                        }
+                                    />
+                                </Box>
+
+                                <Button
+                                    onClick={() => {
+                                        axios
+                                            .post(
+                                                `${apiURL}/write_review`,
+                                                {
+                                                    reviewed:
+                                                        course?.course._id,
+                                                    score: rating,
+                                                    text: review,
+                                                },
+                                                { withCredentials: true }
+                                            )
+                                            .catch((err) => {
+                                                console.log(err);
+                                            })
+                                            .then((bla) => {
+                                                axios
+                                                    .post(
+                                                        `${apiURL}/get_all_reviews`,
+                                                        { reviewed: courseId }
+                                                    )
+                                                    .then((result) => {
+                                                        setCourseReviews(
+                                                            result.data
+                                                        );
+                                                    });
+                                            });
+                                    }}
+                                    sx={{ width: "40%" }}
+                                    variant="contained"
+                                >
+                                    Submit Review
+                                </Button>
+                            </Box>
+                        </Box>
+                    )}
 
                     <Box
                         sx={{
@@ -692,7 +713,7 @@ const CoursePage = () => {
                                             </Typography>
                                             <StyledRating
                                                 name="customized-color"
-                                                defaultValue={val.score}
+                                                value={val.score}
                                                 getLabelText={(value: number) =>
                                                     `${value} Heart${
                                                         value !== 1 ? "s" : ""
