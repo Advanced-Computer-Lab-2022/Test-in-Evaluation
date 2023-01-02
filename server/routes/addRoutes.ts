@@ -43,6 +43,7 @@ import { addRoute as requestRefundAddRoute } from "./requestRefund";
 import { addRoute as getEnrollmentAggregationAddRoute } from "./getEnrollmentAggregation";
 import { addRoute as acceptRefundAddRoute } from "./acceptRefund";
 import { addRoute as getPendingRefundsAddRoute } from "./getPendingRefunds";
+import { addRoute as resolvePendingEnrollmentAddRoute } from "./resolvePendingEnrollment";
 
 export const addRoutes = (app: Express) => {
     // list addRoutes of routes
@@ -90,4 +91,5 @@ export const addRoutes = (app: Express) => {
     getEnrollmentAggregationAddRoute(app);
     acceptRefundAddRoute(app);
     getPendingRefundsAddRoute(app);
+    resolvePendingEnrollmentAddRoute(app);
 };
