@@ -22,6 +22,8 @@ We used a prettier config file to ensure professional code formatting. The confi
 ![Login](screenshots/Login.png)
 ![FilterCourses](screenshots/FilterCourses.png)
 ![AdminDashboard](screenshots/AdminDashboard.png)
+![RechargeWallet](screenshots/RechargeWallet.png)
+![RechargeWallet2](screenshots/RechargeWallet2.png)
 
 ## Frameworks Used
 
