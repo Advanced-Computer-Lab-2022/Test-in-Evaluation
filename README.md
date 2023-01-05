@@ -168,19 +168,12 @@ export const addRoute = (app: Express) => {
 
 ## API reference
 
-### `POST /api/contract`
-
-#### Params
-
-```
-{}
-```
 
 ### `POST /api/accept_refund`
 
 #### Params
 
-```
+```js
 {
     enrollmentId: String,
 }
@@ -190,7 +183,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
     sectionId: String,
@@ -208,7 +201,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     studentId: String,
     courseId: String,
@@ -219,7 +212,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     currentPassword: String,
     newPassword: String,
@@ -230,7 +223,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     email: String.optional(),
     bio: String.optional(),
@@ -241,7 +234,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     title: String,
     subject: String,
@@ -256,7 +249,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     Name: String,
 }
@@ -266,7 +259,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     username: String.withConstraint((s) => s.length > 5),
     password: String.withConstraint((s) => s.length > 8),
@@ -278,11 +271,19 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+### `POST /api/contract`
+
+#### Params
+
+```js
+{}
+```
+
 ### `POST /api/enroll_in_course`
 
 #### Params
 
-```
+```js
 {
     courseId: String,
 }
@@ -292,7 +293,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     reportedProblemId: String,
     newComment: String,
@@ -304,7 +305,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     email: String,
 }
@@ -314,7 +315,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     notes: String,
 }
@@ -324,7 +325,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -332,7 +333,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -340,7 +341,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -348,7 +349,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     reviewed: String,
 }
@@ -358,7 +359,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -366,7 +367,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -374,7 +375,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
 }
@@ -384,7 +385,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
 }
@@ -394,7 +395,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
 }
@@ -404,7 +405,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
 }
@@ -414,7 +415,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
 }
@@ -424,7 +425,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -432,7 +433,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -440,7 +441,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -448,7 +449,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -456,7 +457,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     userId: String,
 }
@@ -466,7 +467,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     username: String,
     password: String,
@@ -477,7 +478,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -485,7 +486,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     reportedProblemId: String,
     newStatus: String,
@@ -496,7 +497,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     amount: Number,
 }
@@ -506,7 +507,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     sectionId: String,
 }
@@ -516,7 +517,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     sectionId: String,
 }
@@ -526,7 +527,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     courseId: String,
     title: String,
@@ -539,7 +540,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     enrollmentId: String,
 }
@@ -549,7 +550,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     enrollmentId: String,
     accepted: Boolean,
@@ -560,7 +561,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     subject: String.optional(),
     title: String.optional(),
@@ -580,7 +581,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     country: String,
 }
@@ -590,7 +591,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     discount: Number.withConstraint((n) => n >= 0 && n <= 1, {
         name: "discount must be between 0 and 1",
@@ -605,7 +606,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     username: String,
     password: String.withConstraint((s) => s.length > 8),
@@ -620,7 +621,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     sectionId: String,
     answers: Array(Number),
@@ -631,7 +632,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -639,7 +640,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     sectionId: String,
 }
@@ -649,7 +650,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {}
 ```
 
@@ -657,7 +658,7 @@ export const addRoute = (app: Express) => {
 
 #### Params
 
-```
+```js
 {
     reviewed: String,
     score: Number,
