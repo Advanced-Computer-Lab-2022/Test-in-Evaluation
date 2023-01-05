@@ -10,6 +10,8 @@ This project was created part of the course `CSEN704 Advanced Computer lab` in t
 
 ## Build Status
 
+![BuildStatus](https://badgen.net/badge/color/builds-successfully/green?icon=github&label=Test-In-Evaluation&)
+
 Project builds successfully and is fully functional. However, project is currently in development and improvements could be made.
 
 ## Code Style
