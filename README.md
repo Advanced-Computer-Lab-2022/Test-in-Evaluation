@@ -179,6 +179,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows an admin to accept a refund requested by a trainee for a specific course
+
 ### `POST /api/set_subtitle_exercise`
 
 #### Params
@@ -208,6 +212,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows an admin to add a trainee to a course
+
 ### `POST /api/change_current_password`
 
 #### Params
@@ -219,6 +227,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to change their current password
+
 ### `POST /api/change_my_profile`
 
 #### Params
@@ -229,6 +241,10 @@ export const addRoute = (app: Express) => {
     bio: String.optional(),
 }
 ```
+
+#### Description
+
+Allows a user to change their own bio
 
 ### `POST /api/create_course`
 
@@ -245,6 +261,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows an instructor to create a course
+
 ### `POST /api/create_subject`
 
 #### Params
@@ -254,6 +274,10 @@ export const addRoute = (app: Express) => {
     Name: String,
 }
 ```
+
+#### Description
+
+Allows an admin to create a new subject ( categories for courses )
 
 ### `POST /api/create_user`
 
@@ -271,6 +295,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows an admin to create a new user
+
 ### `POST /api/contract`
 
 #### Params
@@ -278,6 +306,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows an instructor to accept their contract
 
 ### `POST /api/enroll_in_course`
 
@@ -288,6 +320,10 @@ export const addRoute = (app: Express) => {
     courseId: String,
 }
 ```
+
+#### Description
+
+Allows a trainee to enroll in a course
 
 ### `POST /api/follow_up_on_reported_problem`
 
@@ -301,6 +337,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user(including admins) to follow up on a reported problem
+
 ### `POST /api/forgot_password`
 
 #### Params
@@ -310,6 +350,10 @@ export const addRoute = (app: Express) => {
     email: String,
 }
 ```
+
+#### Description
+
+Allows a user to request a password reset
 
 ### `POST /api/gen_notes_pdf`
 
@@ -321,6 +365,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to generate a pdf file from their notes
+
 ### `GET /api/get_corp_users`
 
 #### Params
@@ -328,6 +376,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows an admin to get all corporate trainees
 
 ### `GET /api/get_all_instructors`
 
@@ -337,6 +389,10 @@ export const addRoute = (app: Express) => {
 {}
 ```
 
+#### Description
+
+Allows an user to get all instructors
+
 ### `GET /api/get_all_reported_problems`
 
 #### Params
@@ -344,6 +400,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows a user to get all reported problems
 
 ### `POST /api/get_all_reviews`
 
@@ -355,6 +415,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to get all reviews for a specific entity
+
 ### `GET /api/get_all_subjects`
 
 #### Params
@@ -363,13 +427,23 @@ export const addRoute = (app: Express) => {
 {}
 ```
 
+#### Description
+
+Allows a user to get all subjects
+
 ### `GET /api/get_certificate`
 
 #### Params
 
 ```js
-{}
+{
+    enrollmentId: String,
+}
 ```
+
+#### Description
+
+Allows a user to get their certificate
 
 ### `POST /api/get_completed_course_ratio`
 
@@ -381,6 +455,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to get the completion ratio of a course
+
 ### `POST /api/get_course`
 
 #### Params
@@ -390,6 +468,10 @@ export const addRoute = (app: Express) => {
     courseId: String,
 }
 ```
+
+#### Description
+
+Allows a user to get a detailed course
 
 ### `POST /api/get_course_preview`
 
@@ -401,6 +483,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to get a preview of a course
+
 ### `POST /api/get_enrollment_aggregation`
 
 #### Params
@@ -410,6 +496,10 @@ export const addRoute = (app: Express) => {
     courseId: String,
 }
 ```
+
+#### Description
+
+Allows a user to get the number of enrollments and the sum of the prices of all enrollments for a specific course
 
 ### `POST /api/get_is_enrolled`
 
@@ -421,6 +511,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to get their enrollment status for a specific course
+
 ### `GET /api/get_my_enrollments`
 
 #### Params
@@ -428,6 +522,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows a user to get all their enrollments
 
 ### `GET /api/getMyReportedProblems/:id`
 
@@ -437,6 +535,10 @@ export const addRoute = (app: Express) => {
 {}
 ```
 
+#### Description
+
+Allows a user to get all their reported problems
+
 ### `GET /api/get_pending_enrollments`
 
 #### Params
@@ -445,6 +547,10 @@ export const addRoute = (app: Express) => {
 {}
 ```
 
+#### Description
+
+Allows an admin to get all pending enrollments
+
 ### `GET /api/get_pending_refunds`
 
 #### Params
@@ -452,6 +558,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows an admin to get all pending refunds
 
 ### `POST /api/get_user`
 
@@ -462,6 +572,10 @@ export const addRoute = (app: Express) => {
     userId: String,
 }
 ```
+
+#### Description
+
+Allows an admin to get a user
 
 ### `POST /api/login`
 
@@ -474,6 +588,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to login
+
 ### `POST /api/logout`
 
 #### Params
@@ -481,6 +599,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows a user to logout
 
 ### `POST /api/mark_reported_problem`
 
@@ -493,6 +615,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows an admin to mark a reported problem as solved
+
 ### `POST /api/pay_to_wallet`
 
 #### Params
@@ -502,6 +628,10 @@ export const addRoute = (app: Express) => {
     amount: Number,
 }
 ```
+
+#### Description
+
+Allows a user to pay to their wallet
 
 ### `POST /api/record_completed_exercise`
 
@@ -513,6 +643,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a trainee to record that they have completed an exercise
+
 ### `POST /api/record_completed_video`
 
 #### Params
@@ -522,6 +656,10 @@ export const addRoute = (app: Express) => {
     sectionId: String,
 }
 ```
+
+#### Description
+
+Allows a trainee to record that they have completed a video
 
 ### `POST /api/report_problem`
 
@@ -536,6 +674,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to report a problem
+
 ### `POST /api/request_refund`
 
 #### Params
@@ -545,6 +687,10 @@ export const addRoute = (app: Express) => {
     enrollmentId: String,
 }
 ```
+
+#### Description
+
+Allows a user to request a refund if 50% of the course has not been completed
 
 ### `POST /api/resolve_pending_enrollment`
 
@@ -556,6 +702,10 @@ export const addRoute = (app: Express) => {
     accepted: Boolean,
 }
 ```
+
+#### Description
+
+Allows an admin to resolve a pending enrollment
 
 ### `POST /api/search_courses`
 
@@ -577,6 +727,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to search for courses
+
 ### `POST /api/set_country`
 
 #### Params
@@ -586,6 +740,10 @@ export const addRoute = (app: Express) => {
     country: String,
 }
 ```
+
+#### Description
+
+Allows a user to set their country
 
 ### `POST /api/set_course_discount`
 
@@ -602,6 +760,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows an admin or instructor to set a discount for a course
+
 ### `POST /api/sign_up`
 
 #### Params
@@ -617,6 +779,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a user to sign up as an individual trainee
+
 ### `POST /api/solve_exercise`
 
 #### Params
@@ -628,13 +794,9 @@ export const addRoute = (app: Express) => {
 }
 ```
 
-### `GET /api/<MyMethod>`
+#### Description
 
-#### Params
-
-```js
-{}
-```
+Allows a trainee to solve an exercise
 
 ### `POST /api/view_exercise_result`
 
@@ -646,6 +808,10 @@ export const addRoute = (app: Express) => {
 }
 ```
 
+#### Description
+
+Allows a trainee to view the result of an exercise
+
 ### `GET /api/who_am_i`
 
 #### Params
@@ -653,6 +819,10 @@ export const addRoute = (app: Express) => {
 ```js
 {}
 ```
+
+#### Description
+
+Allows a user to get their user info
 
 ### `POST /api/write_review`
 
@@ -665,6 +835,10 @@ export const addRoute = (app: Express) => {
     text: String,
 }
 ```
+
+#### Description
+
+Allows a user to write a review
 
 ## Tests
 
