@@ -26,6 +26,10 @@ We used a prettier config file to ensure professional code formatting. The confi
 ![AdminDashboard](screenshots/AdminDashboard.png)
 ![RechargeWallet](screenshots/RechargeWallet.png)
 ![RechargeWallet2](screenshots/RechargeWallet2.png)
+![image](https://user-images.githubusercontent.com/8184424/211099364-bf4dc38c-0c5f-4217-95d1-3d4be47a6ce3.png)
+![image](https://user-images.githubusercontent.com/8184424/211099412-09523fee-862c-4091-a5e1-2678cebf3d6d.png)
+![image](https://user-images.githubusercontent.com/8184424/211099457-27c5eac5-9c2c-46eb-bdc7-3a29878ef95d.png)
+
 
 ## Frameworks Used
 
@@ -221,15 +225,10 @@ export const addRoute = (app: Express) => {
 ## Installation
 
 1. Make sure you have `npm` and `node` installed
-
 2. Go into the `server` directory and run `npm i`
-
 3. Create a `.env` file, using `.env.example` as a template
-
 4. Run `node .`
-
 5. From the parent directory, go into the `client` directory and run `npm i`
-
 6. Run `npm start`
 
 ## API reference
@@ -918,19 +917,21 @@ Allows a user to write a review
 
 ## Tests
 
-We had a peer review system where changes are done in branches and then is reviewed by others before being merged to master.
+We have implemented a peer review system for code changes. This process involves creating a separate branch for each proposed change, and then having one or more of our colleagues review the code in that branch before it is merged into the main codebase (also known as the "master" branch). This helps ensure that all code changes are thoroughly reviewed and tested before they are incorporated into the project.
 
 ## How to use
 
-After preforming the installation, simply navigate to the URL return by the `npm start` command
+To use this project, first make sure you have npm and node installed. Next, navigate to the server directory and run npm i. Create a .env file using .env.example as a template, then run node .. Finally, navigate to the client directory and run npm i, then npm start to start the application. This will start the client server, and you can access the website by navigating to the URL returned from npm start in your web browser. This will allow you to access the full range of features available on the Online Learning and Teaching Platform.
 
 ## Contribute
 
-Contributions are always welcome!
+We welcome contributions and suggestions for improvement, and we are always looking for ways to make the project better. If you have any ideas or would like to get involved, please don't hesitate to reach out.
 Please fork the project, do your additions then open a pull request!
 
 ## Credits
+This project was developed as part of the `CSEN704 Advanced Computer Lab` course at the German University in Cairo. We would like to extend our thanks to the teaching assistants who provided guidance and support throughout the project. We would also like to acknowledge the open source libraries and frameworks that were used in the development of this project, including the MERN stack (MongoDB, Express, React, and Node.js), MUI, Axios, nodemailer, and Mongoose. Without the contributions of these tools and the community behind them, this project would not have been possible. Thank you.
 
+The team behind the project: 
 -   Ahmed Mamdouh
 -   Akram Fahim
 -   Karim Mohamed
