@@ -6,7 +6,7 @@ An Online Learning and Teaching Platform
 
 ## Motivation
 
-This project was created part of the course `CSEN704 Advanced Computer lab` in the German University in Cairo.
+The motivation for this project was to create an online learning and teaching platform that would allow users to access educational resources created by instructors. This project was developed as part of the `CSEN704 Advanced Computer lab` course at the German University in Cairo, and was designed to showcase the skills and knowledge that the students had acquired during the semester. The goal was to create a platform that would be useful and accessible to a wide range of users, including individual learners, corporations, and instructors. We hope that this project will provide a valuable resource for anyone looking to learn new skills or share their knowledge with others.
 
 ## Build Status
 
@@ -16,7 +16,7 @@ Project builds successfully and is fully functional. However, project is current
 
 ## Code Style
 
-We used a prettier config file to ensure professional code formatting. The config we used is the default standard one.
+The code style used in this project is based on the standard prettier configuration, which ensures consistent and professional formatting across the codebase. By using a shared configuration, we can ensure that the code is easy to read and maintain, making it easier for new contributors to understand and work with the code. We encourage all contributors to follow the code style guidelines and to use the prettier configuration to ensure that the code remains consistent and easy to read.
 
 ## Screenshots
 
