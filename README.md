@@ -916,8 +916,7 @@ Allows a user to get their user info
 Allows a user to write a review
 
 ## Tests
-
-We have implemented a peer review system for code changes. This process involves creating a separate branch for each proposed change, and then having one or more of our colleagues review the code in that branch before it is merged into the main codebase (also known as the "master" branch). This helps ensure that all code changes are thoroughly reviewed and tested before they are incorporated into the project.
+To ensure the quality and functionality of the code, we have implemented a code review process in which changes to the codebase are reviewed by other team members before being merged into the main branch. This process allows us to catch potential issues and ensure that the code is well-written and follows best practices. In addition to the code review process, we have also tested the project manually using the postman tool to ensure that all API endpoints are functioning as expected. By using a combination of code reviews and manual testing, we can be confident that the project is reliable and ready for use.
 
 ## How to use
 
